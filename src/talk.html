@@ -4,8 +4,6 @@
 
   :root{
     --bg:#090d16;
-    --bg-2:#0d1424;
-    --panel:#121a2c;
     --panel-border:#243154;
     --ink:#eef1fb;
     --ink-dim:#9aa6c7;
@@ -28,6 +26,7 @@
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--amber); color:var(--amber-ink);}
+  a{ color:inherit; }
 
   #deck{
     position:relative; width:100vw; height:100vh; height:100dvh;
@@ -36,8 +35,9 @@
 
   .slide{
     position:absolute; inset:0;
-    display:flex; flex-direction:column; justify-content:center;
-    padding: 7vh 9vw;
+    display:flex; flex-direction:column; justify-content:flex-start;
+    align-items:flex-start;
+    padding: 6.5vh 7.5vw 4.5vh;
     opacity:0; pointer-events:none;
     transform: translateY(24px) scale(.99);
     transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1);
@@ -59,63 +59,69 @@
 
   .kicker{
     font-family:var(--font-body); font-weight:700; letter-spacing:.16em;
-    text-transform:uppercase; font-size:clamp(.72rem,1vw,.9rem);
-    color:var(--amber); margin:0 0 1.1rem; display:flex; align-items:center; gap:.6em;
+    text-transform:uppercase; font-size:clamp(.7rem,.95vw,.85rem);
+    color:var(--amber); margin:0 0 1rem; display:flex; align-items:center; gap:.6em;
   }
   .kicker .n{
     display:inline-flex; align-items:center; justify-content:center;
     width:1.9em; height:1.9em; border-radius:999px;
-    border:1px solid rgba(242,169,59,.5); font-size:.85em;
+    border:1px solid rgba(242,169,59,.5); font-size:.85em; flex:none;
   }
 
   h1.headline{
     font-family:var(--font-head); font-weight:900; letter-spacing:-.01em;
-    font-size:clamp(2.1rem, 5.4vw, 4.4rem); line-height:1.06; margin:0 0 .5rem;
-    max-width:22ch;
+    font-size:clamp(1.9rem, 4.4vw, 3.6rem); line-height:1.08; margin:0 0 1rem;
+    max-width:26ch;
   }
   h1.headline .accent{ color:var(--amber); }
   h1.headline .accent2{ color:var(--teal); }
 
   .sub{
-    font-size:clamp(1.05rem,1.6vw,1.4rem); color:var(--ink-dim); max-width:52ch;
-    margin:0 0 1.4rem; font-weight:500; line-height:1.5;
+    font-size:clamp(1rem,1.4vw,1.25rem); color:var(--ink-dim); max-width:58ch;
+    margin:0 0 1rem; font-weight:500; line-height:1.5;
   }
 
-  .content{ margin-top: 1.2rem; }
+  .body-col{
+    display:flex; flex-direction:column; flex:1; width:100%;
+    min-height:0;
+  }
+  .body-col > .fill{ flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; }
 
   /* ---- reusable pieces ---- */
-  .badge-row{ display:flex; flex-wrap:wrap; gap:.6rem; margin:.4rem 0 1rem; }
+  .badge-row{ display:flex; flex-wrap:wrap; gap:.55rem; margin:.3rem 0 .8rem; }
   .badge{
-    font-family:var(--font-body); font-weight:700; font-size:.9rem;
-    padding:.5em .95em; border-radius:999px; border:1px solid var(--panel-border);
+    font-family:var(--font-body); font-weight:700; font-size:.85rem;
+    padding:.45em .9em; border-radius:999px; border:1px solid var(--panel-border);
     background:rgba(255,255,255,.03); color:var(--ink);
   }
   .badge.amber{ border-color:rgba(242,169,59,.5); color:var(--amber); }
   .badge.teal{ border-color:rgba(62,207,192,.5); color:var(--teal); }
   .badge.red{ border-color:rgba(239,93,99,.5); color:var(--red); }
 
-  .card-grid{ display:grid; gap:1rem; }
+  .card-grid{ display:grid; gap:.9rem; width:100%; }
   .card-grid.g2{ grid-template-columns:repeat(2,1fr); }
   .card-grid.g3{ grid-template-columns:repeat(3,1fr); }
   .card-grid.g4{ grid-template-columns:repeat(4,1fr); }
 
   .card{
     background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
-    border:1px solid var(--panel-border); border-radius:16px; padding:1.3rem 1.4rem;
+    border:1px solid var(--panel-border); border-radius:16px; padding:1.15rem 1.3rem;
   }
-  .card .card-title{ font-family:var(--font-head); font-weight:800; font-size:1.05rem; margin:0 0 .4rem; }
-  .card .card-body{ color:var(--ink-dim); font-size:.94rem; line-height:1.5; }
+  .card .card-title{ font-family:var(--font-head); font-weight:800; font-size:1.02rem; margin:0 0 .35rem; }
+  .card .card-body{ color:var(--ink-dim); font-size:.9rem; line-height:1.5; }
   .card.warn{ border-color:rgba(239,93,99,.35); background:linear-gradient(180deg, rgba(239,93,99,.08), rgba(239,93,99,.02)); }
   .card.ok{ border-color:rgba(62,207,142,.35); background:linear-gradient(180deg, rgba(62,207,142,.08), rgba(62,207,142,.02)); }
+  .card.pain{ border-color:rgba(239,93,99,.4); background:linear-gradient(180deg, rgba(239,93,99,.10), rgba(239,93,99,.02)); }
+  .card.chance{ border-color:rgba(242,169,59,.4); background:linear-gradient(180deg, rgba(242,169,59,.10), rgba(242,169,59,.02)); }
 
   .stat{
     font-family:var(--font-head); font-weight:900; color:var(--amber);
-    font-size:clamp(1.8rem,3.4vw,3rem); line-height:1; margin-bottom:.35rem;
+    font-size:clamp(1.7rem,3vw,2.6rem); line-height:1; margin-bottom:.3rem;
   }
-  .stat-label{ color:var(--ink-dim); font-size:.92rem; line-height:1.4; }
+  .stat-label{ color:var(--ink-dim); font-size:.88rem; line-height:1.4; }
 
-  .timeline{ display:flex; align-items:flex-start; gap:0; margin-top:1rem; }
-  .tl-item{ flex:1; position:relative; padding-top:1.6rem; }
+  .timeline{ display:flex; align-items:flex-start; gap:0; margin-top:.8rem; width:100%; }
+  .tl-item{ flex:1; position:relative; padding-top:1.5rem; }
   .tl-item::before{
     content:""; position:absolute; top:.5rem; left:0; right:0; height:2px;
     background:var(--panel-border);
@@ -124,92 +130,132 @@
     content:""; position:absolute; top:calc(.5rem - 5px); left:0; width:12px; height:12px;
     border-radius:50%; background:var(--teal); box-shadow:0 0 0 4px rgba(62,207,192,.15);
   }
-  .tl-item .tl-year{ font-family:var(--font-head); font-weight:800; color:var(--teal); font-size:1.05rem; }
-  .tl-item .tl-what{ color:var(--ink-dim); font-size:.85rem; margin-top:.2rem; max-width:16ch; }
+  .tl-item .tl-year{ font-family:var(--font-head); font-weight:800; color:var(--teal); font-size:1rem; }
+  .tl-item .tl-what{ color:var(--ink-dim); font-size:.82rem; margin-top:.2rem; max-width:16ch; }
   .tl-item.current::after{ background:var(--amber); box-shadow:0 0 0 6px rgba(242,169,59,.22); }
   .tl-item.current .tl-year{ color:var(--amber); }
 
-  .table-wrap{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:1rem; }
-  table.cmp{ width:100%; min-width:520px; border-collapse:collapse; margin-top:0; }
+  .table-wrap{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table.cmp{ width:100%; min-width:520px; border-collapse:collapse; }
   table.cmp th, table.cmp td{
-    text-align:left; padding:.75rem 1rem; border-bottom:1px solid var(--panel-border);
-    font-size:.95rem;
+    text-align:left; padding:.65rem .9rem; border-bottom:1px solid var(--panel-border);
+    font-size:.9rem;
   }
-  table.cmp th{ color:var(--ink-dim); font-weight:700; text-transform:uppercase; font-size:.72rem; letter-spacing:.08em; }
+  table.cmp th{ color:var(--ink-dim); font-weight:700; text-transform:uppercase; font-size:.7rem; letter-spacing:.08em; }
   table.cmp td.hl{ color:var(--red); font-weight:600; }
   table.cmp td.ok{ color:var(--green); font-weight:600; }
   table.cmp td.rowlabel{ font-weight:700; color:var(--ink); }
 
-  .checklist{ list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column; gap:.85rem; max-width:56ch; }
-  .checklist li{ display:flex; gap:.8rem; align-items:flex-start; font-size:1.02rem; line-height:1.5; }
+  .checklist{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.7rem; max-width:64ch; }
+  .checklist li{ display:flex; gap:.8rem; align-items:flex-start; font-size:.98rem; line-height:1.5; }
+  .checklist li b{ color:var(--ink); }
   .checklist li .tick{
-    flex:none; width:1.6em; height:1.6em; border-radius:8px; background:rgba(62,207,142,.15);
-    color:var(--green); display:flex; align-items:center; justify-content:center; font-weight:800; margin-top:.1em;
+    flex:none; width:1.7em; height:1.7em; border-radius:8px; background:rgba(62,207,142,.15);
+    color:var(--green); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.8em; margin-top:.1em;
   }
+  .checklist.kn li .tick{ background:rgba(62,207,192,.15); color:var(--teal); font-family:var(--font-head); }
 
   .quote{
-    font-family:var(--font-head); font-weight:700; font-size:clamp(1.3rem,2.4vw,1.9rem);
-    color:var(--ink); border-left:3px solid var(--amber); padding-left:1.1rem; margin:1rem 0;
-    max-width:34ch;
+    font-family:var(--font-head); font-weight:700; font-size:clamp(1.2rem,2vw,1.7rem);
+    color:var(--ink); border-left:3px solid var(--amber); padding-left:1.1rem; margin:.6rem 0;
+    max-width:38ch;
   }
 
   .status-tag{
-    display:inline-block; font-weight:800; font-size:.85rem; letter-spacing:.04em;
+    display:inline-block; font-weight:800; font-size:.8rem; letter-spacing:.04em;
     padding:.4em .8em; border-radius:8px; background:rgba(239,93,99,.15); color:var(--red);
-    text-transform:uppercase; margin-top:.6rem;
+    text-transform:uppercase; margin-top:.5rem;
   }
+
+  /* ---- citation footnote ---- */
+  .cite{
+    margin-top:auto; padding-top:.9rem; font-size:.68rem; color:var(--ink-faint);
+    border-top:1px solid var(--panel-border); width:100%; line-height:1.55;
+  }
+  .cite b{ color:var(--ink-dim); font-weight:600; }
+  .cite .sep{ margin:0 .5em; opacity:.5; }
+
+  /* ---- photos ---- */
+  .photo-card{ position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--panel-border); background:#050810; aspect-ratio:16/10; }
+  .photo-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo-card .cap{
+    position:absolute; left:0; right:0; bottom:0; padding:.55em .8em; font-size:.68rem; color:#dfe4f5;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.82));
+  }
+  .photo-text{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.1rem; align-items:stretch; width:100%; }
+  .photo-text .ptext{ display:flex; flex-direction:column; justify-content:center; }
+
+  .photo-strip{ display:flex; gap:.6rem; width:100%; margin-top:.4rem; }
+  .photo-strip .pf{ flex:1; position:relative; border-radius:10px; overflow:hidden; aspect-ratio:4/3; border:1px solid var(--panel-border); }
+  .photo-strip .pf img{ width:100%; height:100%; object-fit:cover; filter:saturate(.92) brightness(.92); }
+  .photo-strip .pf .lbl{
+    position:absolute; left:0; right:0; bottom:0; padding:.3em .45em; font-size:.6rem; font-weight:700; color:#fff;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.88));
+  }
+  .photo-strip .pf .yr{
+    position:absolute; top:.4em; left:.4em; font-size:.62rem; font-weight:800; color:#0a0e1a;
+    background:var(--teal); padding:.15em .45em; border-radius:5px;
+  }
+
+  .quote-card{ border-left:3px solid var(--teal); padding:.85rem 1.2rem; background:rgba(62,207,192,.06); border-radius:0 10px 10px 0; }
+  .quote-card p{ font-family:var(--font-head); font-style:italic; font-weight:600; font-size:1rem; margin:0 0 .4rem; color:var(--ink); line-height:1.4; }
+  .quote-card .src{ font-size:.72rem; color:var(--ink-faint); }
+
+  .tool-card{
+    display:flex; flex-direction:column; gap:.5rem; text-decoration:none;
+    border:1px solid var(--panel-border); border-radius:18px; padding:1.6rem 1.7rem;
+    background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.01));
+    transition:.2s; height:100%;
+  }
+  .tool-card:hover{ border-color:var(--teal); }
+  .tool-card .tool-eyebrow{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); }
+  .tool-card .tool-title{ font-family:var(--font-head); font-weight:800; font-size:1.4rem; color:var(--ink); }
+  .tool-card .tool-url{ color:var(--teal); font-size:.82rem; font-weight:700; word-break:break-all; }
+  .tool-card .tool-desc{ color:var(--ink-dim); font-size:.9rem; line-height:1.5; }
+  .tool-card .tool-cta{ margin-top:auto; font-size:.78rem; font-weight:700; color:var(--amber); }
 
   /* --- title & divider slides --- */
-  .slide.cover, .slide.divider{ align-items:center; text-align:center; }
+  .slide.cover, .slide.divider{ align-items:center; text-align:center; justify-content:center; }
   .slide.cover .headline, .slide.divider .headline{ max-width:none; }
-  .slide.cover .brandline{
-    margin-top:2.2rem; display:flex; gap:1.2rem; align-items:center; font-size:.95rem; color:var(--ink-dim);
-  }
-  .slide.cover .brandline b{ color:var(--ink); }
-  .dot{ width:5px; height:5px; border-radius:50%; background:var(--ink-faint); }
-
-  .slide.divider .headline{ font-size:clamp(2.4rem,6vw,4.8rem); }
-
-  h1.headline.long{
-    font-size:clamp(1.3rem, 2.6vw, 2.1rem); line-height:1.35; max-width:38ch;
-    font-style:italic; font-weight:700; color:var(--ink); margin: 1.1rem 0 1.8rem;
-  }
-  .fields{ display:flex; flex-direction:column; gap:.55rem; margin-top:.5rem; }
-  .fields > div{ display:flex; gap:.6rem; justify-content:center; align-items:baseline; font-size:.98rem; }
-  .field-label{ color:var(--ink-faint); text-transform:uppercase; font-size:.72rem; letter-spacing:.08em; font-weight:700; min-width:9ch; text-align:right; }
+  .slide.cover .kicker, .slide.divider .kicker{ justify-content:center; width:100%; }
+  .fields{ display:flex; flex-direction:column; gap:.5rem; margin-top:.6rem; }
+  .fields > div{ display:flex; gap:.6rem; justify-content:center; align-items:baseline; font-size:.95rem; }
+  .field-label{ color:var(--ink-faint); text-transform:uppercase; font-size:.7rem; letter-spacing:.08em; font-weight:700; min-width:9ch; text-align:right; }
   .field-value{ color:var(--ink); font-weight:600; }
 
+  h1.headline.long{
+    font-size:clamp(1.2rem, 2.3vw, 1.9rem); line-height:1.35; max-width:40ch;
+    font-style:italic; font-weight:700; color:var(--ink); margin: .8rem 0 1.4rem;
+  }
+  .slide.divider .headline{ font-size:clamp(2.1rem,5vw,4rem); max-width:20ch; margin-left:auto; margin-right:auto; }
+  .brandline{ margin-top:1.6rem; display:flex; gap:1rem; align-items:center; justify-content:center; font-size:.92rem; color:var(--ink-dim); }
+  .brandline b{ color:var(--ink); }
+  .dot{ width:5px; height:5px; border-radius:50%; background:var(--ink-faint); flex:none; }
+
   /* --- footer / progress --- */
-  #chrome{ position:fixed; inset:auto 0 0 0; z-index:10; pointer-events:none; }
-  #progress-bar{ height:3px; background:var(--panel-border); }
+  #progress-bar{ position:fixed; left:0; right:0; bottom:0; height:3px; background:var(--panel-border); z-index:10; }
   #progress-fill{ height:100%; background:linear-gradient(90deg, var(--teal), var(--amber)); width:0%; transition:width .4s ease; }
   #counter{
-    position:fixed; right:9vw; bottom:2.2rem; z-index:10; font-family:var(--font-head);
-    font-weight:700; color:var(--ink-faint); font-size:.9rem; letter-spacing:.05em;
+    position:fixed; right:7.5vw; bottom:1.6rem; z-index:10; font-family:var(--font-head);
+    font-weight:700; color:var(--ink-faint); font-size:.85rem; letter-spacing:.05em;
   }
   #counter b{ color:var(--ink); }
   #dots{
-    position:fixed; right:2.2rem; top:50%; transform:translateY(-50%); z-index:10;
-    display:flex; flex-direction:column; gap:.5rem;
+    position:fixed; right:1.8rem; top:50%; transform:translateY(-50%); z-index:10;
+    display:flex; flex-direction:column; gap:.45rem;
   }
-  #dots .d{
-    width:7px; height:7px; border-radius:50%; background:var(--panel-border);
-    cursor:pointer; transition:.2s;
-  }
+  #dots .d{ width:6px; height:6px; border-radius:50%; background:var(--panel-border); cursor:pointer; transition:.2s; }
   #dots .d:hover{ background:var(--ink-faint); }
-  #dots .d.active{ background:var(--amber); width:9px; height:9px; }
+  #dots .d.active{ background:var(--amber); width:8px; height:8px; }
 
   #hint{
-    position:fixed; left:9vw; bottom:2.2rem; z-index:10; font-size:.8rem; color:var(--ink-faint);
+    position:fixed; left:7.5vw; bottom:1.6rem; z-index:10; font-size:.76rem; color:var(--ink-faint);
     display:flex; gap:.5rem; align-items:center;
   }
-  #hint kbd{
-    border:1px solid var(--panel-border); border-radius:5px; padding:.1em .45em; font-family:var(--font-body);
-    color:var(--ink-dim); font-size:.85em;
-  }
+  #hint kbd{ border:1px solid var(--panel-border); border-radius:5px; padding:.1em .45em; color:var(--ink-dim); font-size:.85em; }
   #fullscreen-btn{
-    position:fixed; right:9vw; top:2rem; z-index:10; background:transparent; border:1px solid var(--panel-border);
-    color:var(--ink-dim); border-radius:8px; padding:.5em .8em; font-size:.8rem; cursor:pointer; font-family:var(--font-body);
+    position:fixed; right:7.5vw; top:1.6rem; z-index:10; background:transparent; border:1px solid var(--panel-border);
+    color:var(--ink-dim); border-radius:8px; padding:.5em .8em; font-size:.78rem; cursor:pointer; font-family:var(--font-body);
   }
   #fullscreen-btn:hover{ color:var(--ink); border-color:var(--ink-faint); }
 
@@ -218,15 +264,16 @@
 
   @media (max-width: 820px){
     .card-grid.g2, .card-grid.g3, .card-grid.g4{ grid-template-columns:1fr; }
-    .timeline{ flex-direction:column; gap:1.2rem; }
+    .timeline{ flex-direction:column; gap:1rem; }
     .tl-item::before{ display:none; }
+    .photo-text{ grid-template-columns:1fr; }
+    .photo-strip{ flex-wrap:wrap; }
+    .photo-strip .pf{ flex:1 1 45%; }
     #dots{ display:none; }
   }
   @media (max-width: 520px){
-    .slide{ padding: 6vh 6vw; }
-    #hint{ left:6vw; }
-    #counter{ right:6vw; }
-    #fullscreen-btn{ right:6vw; top:1.2rem; padding:.4em .65em; font-size:.72rem; }
+    .slide{ padding: 5.5vh 6vw 4vh; }
+    #hint{ left:6vw; } #counter{ right:6vw; } #fullscreen-btn{ right:6vw; top:1.1rem; padding:.4em .65em; font-size:.7rem; }
   }
 </style>
 
@@ -235,227 +282,345 @@
   <section class="slide cover" data-title="Tiêu đề">
     <div class="kicker">Hội nghị Viên chức Ban Khoa học, Công nghệ và Đổi mới sáng tạo · Năm học 2025–2026</div>
     <div class="kicker" style="color:var(--teal); margin-top:-.6rem;">Tham luận</div>
-    <h1 class="headline long">"Thực trạng và các vướng mắc khi triển khai hoạt động đổi mới sáng tạo tại Đại học; đề xuất, kiến nghị"</h1>
+    <h1 class="headline long">"Triển khai hoạt động Đổi mới sáng tạo tại HaUI: Thực trạng và kiến nghị"</h1>
     <div class="fields">
       <div><span class="field-label">Người trình bày</span><span class="field-value">Bùi Tiến Sơn</span></div>
       <div><span class="field-label">Đơn vị</span><span class="field-value">Phòng Đổi mới sáng tạo</span></div>
-      <div><span class="field-label">Thời gian</span><span class="field-value">9h30, Thứ Bảy 12/9/2026 · Phòng 603, Nhà A1</span></div>
+      <div><span class="field-label">Thời gian</span><span class="field-value">Thứ Bảy, 12/9/2026 · Phòng 603, Nhà A1</span></div>
     </div>
   </section>
 
   <section class="slide" data-title="Đặt vấn đề">
     <div class="kicker"><span class="n">01</span> Đặt vấn đề</div>
-    <h1 class="headline">Cả nước đang <span class="accent">cùng lúc</span> đổi luật chơi</h1>
-    <div class="content card-grid g2">
-      <div class="card">
-        <div class="card-title">NQ57-NQ/TW · 24/12/2024</div>
-        <div class="card-body">Đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia — ưu tiên hàng đầu.</div>
+    <h1 class="headline">Cả nước đang cùng lúc<br><span class="accent">đổi luật chơi</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <div class="card">
+          <div class="card-title">NQ57-NQ/TW · 24/12/2024</div>
+          <div class="card-body">Đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia — nghị quyết xác định đây là ưu tiên hàng đầu, "đột phá quan trọng hàng đầu" cho phát triển đất nước.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">NĐ 268/2025/NĐ-CP</div>
+          <div class="card-body">Lần đầu tiên có tiêu chí pháp lý cụ thể để công nhận trung tâm ĐMST / hỗ trợ khởi nghiệp trong trường đại học (Điều 29–46) — cả nước mới có "luật chơi" từ đây.</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title">NĐ 268/2025/NĐ-CP</div>
-        <div class="card-body">Lần đầu tiên có tiêu chí pháp lý cụ thể để công nhận trung tâm ĐMST / hỗ trợ khởi nghiệp trong trường đại học (Điều 29–46).</div>
-      </div>
-    </div>
-    <div class="sub" style="margin-top:1.6rem;">→ Không riêng HaUI. Mọi đại học Việt Nam đang ở gần cùng một vạch xuất phát.</div>
+      <div class="sub" style="margin-top:1.3rem;">→ Không riêng HaUI. Mọi đại học Việt Nam đang ở gần cùng một vạch xuất phát.</div>
+    </div></div>
+    <div class="cite"><b>Trích dẫn:</b> Ban Chấp hành Trung ương Đảng. (2024). <i>Nghị quyết số 57-NQ/TW ngày 24/12/2024 về đột phá phát triển khoa học, công nghệ, đổi mới sáng tạo và chuyển đổi số quốc gia.</i><span class="sep">·</span>Chính phủ. (2025). <i>Nghị định số 268/2025/NĐ-CP</i>, Điều 29–46. Công báo Chính phủ, congbao.chinhphu.vn.</div>
   </section>
 
   <section class="slide" data-title="Khung phân tích">
     <div class="kicker"><span class="n">02</span> Khung phân tích</div>
-    <h1 class="headline">ĐMST đại học vận hành bằng <span class="accent2">4 khối</span></h1>
-    <div class="content card-grid g4">
-      <div class="card"><div class="card-title">01 · NCKH → CGCN</div><div class="card-body">Chuyển giao công nghệ ra thị trường</div></div>
-      <div class="card"><div class="card-title">02 · SHTT</div><div class="card-body">Sở hữu trí tuệ, cấp bằng sáng chế</div></div>
-      <div class="card"><div class="card-title">03 · Ươm tạo</div><div class="card-body">Spin-off, startup sinh viên</div></div>
-      <div class="card"><div class="card-title">04 · Kết nối DN</div><div class="card-body">Doanh nghiệp, vốn đầu tư</div></div>
-    </div>
+    <h1 class="headline">ĐMST đại học vận hành<br>bằng <span class="accent2">4 khối chức năng</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g4">
+        <div class="card"><div class="card-title">01 · NCKH → CGCN</div><div class="card-body">Chuyển giao công nghệ ra thị trường, hợp đồng dịch vụ KHCN</div></div>
+        <div class="card"><div class="card-title">02 · SHTT</div><div class="card-body">Sở hữu trí tuệ, cấp bằng sáng chế, định giá tài sản trí tuệ</div></div>
+        <div class="card"><div class="card-title">03 · Ươm tạo</div><div class="card-body">Spin-off từ nghiên cứu, startup sinh viên, vốn mồi</div></div>
+        <div class="card"><div class="card-title">04 · Kết nối DN</div><div class="card-body">Doanh nghiệp đặt hàng nghiên cứu, nhà đầu tư</div></div>
+      </div>
+    </div></div>
   </section>
 
   <section class="slide" data-title="Bức tranh quốc tế">
     <div class="kicker"><span class="n">03</span> Bức tranh quốc tế</div>
-    <h1 class="headline">4 mô hình quản trị — tuổi đời <span class="accent">hàng thập kỷ</span></h1>
-    <div class="timeline">
-      <div class="tl-item"><div class="tl-year">1972</div><div class="tl-what">KU Leuven LRD — TTO nội bộ</div></div>
-      <div class="tl-item"><div class="tl-year">1986</div><div class="tl-what">MIT TLO — TTO nội bộ</div></div>
-      <div class="tl-item"><div class="tl-year">1987</div><div class="tl-what">Oxford Innovation — Holdings</div></div>
-      <div class="tl-item"><div class="tl-year">1999</div><div class="tl-what">Lund — Mô hình lai</div></div>
-      <div class="tl-item"><div class="tl-year">2003</div><div class="tl-what">Tsinghua Holdings</div></div>
-    </div>
-    <div class="badge-row" style="margin-top:2rem;">
-      <span class="badge amber">TTO nội bộ trong trường</span>
-      <span class="badge teal">Holdings tách pháp nhân</span>
-      <span class="badge">Mạng lưới / nền tảng mở</span>
-      <span class="badge">Mô hình lai</span>
-    </div>
+    <h1 class="headline">4 mô hình quản trị —<br>tuổi đời <span class="accent">hàng thập kỷ</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="photo-strip">
+        <div class="pf"><img src="assets/kuleuven.jpg" alt="KU Leuven"><span class="yr">1972</span><span class="lbl">KU Leuven LRD · TTO nội bộ</span></div>
+        <div class="pf"><img src="assets/mit.jpg" alt="MIT"><span class="yr">1986</span><span class="lbl">MIT TLO · TTO nội bộ</span></div>
+        <div class="pf"><img src="assets/oxford.jpg" alt="Oxford"><span class="yr">1987</span><span class="lbl">Oxford Innovation · Holdings</span></div>
+        <div class="pf"><img src="assets/stanford.jpg" alt="Stanford"><span class="yr">1970</span><span class="lbl">Stanford OTL · TTO nội bộ</span></div>
+        <div class="pf"><img src="assets/cambridge.jpg" alt="Cambridge"><span class="yr">1995</span><span class="lbl">Cambridge Enterprise · Holdings</span></div>
+        <div class="pf"><img src="assets/harvard.jpg" alt="Harvard"><span class="yr">2005</span><span class="lbl">Harvard OTD · TTO nội bộ</span></div>
+      </div>
+      <div class="badge-row" style="margin-top:1rem;">
+        <span class="badge amber">TTO nội bộ trong trường</span>
+        <span class="badge teal">Holdings tách pháp nhân</span>
+        <span class="badge">Mạng lưới / nền tảng mở</span>
+        <span class="badge">Mô hình lai</span>
+      </div>
+    </div></div>
+    <div class="cite"><b>Ảnh:</b> Wikimedia Commons, CC BY-SA — KU Leuven Library (Wentao Jiang) · Great Dome, MIT (Mys 721tx) · Radcliffe Camera, Oxford (Zhushenje) · Stanford Main Quad (King of Hearts) · King's College Chapel, Cambridge (Martinvl) · Harvard aerial (Nick Allen).</div>
   </section>
 
   <section class="slide" data-title="Điểm chung">
     <div class="kicker"><span class="n">04</span> Điểm chung</div>
-    <h1 class="headline">3 điều case thành công <span class="accent">đều có</span></h1>
-    <div class="content card-grid g3">
-      <div class="card"><div class="stat">100%</div><div class="stat-label">Pháp nhân / đơn vị chuyên trách — không kiêm nhiệm</div></div>
-      <div class="card"><div class="stat">35%</div><div class="stat-label">Harvard OTD chia cố định tiền bản quyền ròng cho tác giả</div></div>
-      <div class="card"><div class="stat">$33tr+</div><div class="stat-label">Harvard Blavatnik Accelerator đã cấp cho 178 dự án</div></div>
-    </div>
+    <h1 class="headline">3 điều mọi case<br>thành công <span class="accent">đều có</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g3">
+        <div class="card"><div class="stat">100%</div><div class="stat-label">Có pháp nhân / đơn vị chuyên trách — không kiêm nhiệm</div></div>
+        <div class="card"><div class="stat">35%</div><div class="stat-label">Harvard OTD chia cố định tiền bản quyền ròng cho tác giả</div></div>
+        <div class="card"><div class="stat">$33tr+</div><div class="stat-label">Harvard Blavatnik Accelerator đã cấp cho 178 dự án</div></div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Innovation Center Atlas — Harvard Office of Technology Development, dữ liệu công bố FY2024–2025, tổng hợp buitienson.github.io/innovation-center-atlas.</div>
   </section>
 
   <section class="slide" data-title="Việt Nam đã đi trước">
     <div class="kicker"><span class="n">05</span> Việt Nam đã đi trước</div>
-    <h1 class="headline">Cùng khung pháp lý — <span class="accent2">đã tìm được lối đi</span></h1>
-    <div class="content card-grid g2">
-      <div class="card ok">
-        <div class="card-title">BK Holdings / BK TTO — ĐH Bách khoa Hà Nội</div>
-        <div class="card-body">Hàng chục spin-off đã hình thành: BKAV · VietSearch · VnTrack…</div>
+    <h1 class="headline">Cùng khung pháp lý —<br><span class="accent2">đã tìm được lối đi</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <figure class="photo-card" style="margin:0;">
+          <img src="assets/bk-holdings.jpg" alt="BK Holdings">
+          <div class="cap"><b>BK Holdings / BK TTO</b> — ĐH Bách khoa Hà Nội, từ 2008 · Hàng chục spin-off: BKAV, VietSearch, VnTrack…</div>
+        </figure>
+        <figure class="photo-card" style="margin:0;">
+          <img src="assets/ptit-iec.jpg" alt="PTIT IEC">
+          <div class="cap"><b>PTIT IEC</b> — Học viện CNBCVT · 2 dự án spin-off, đang ươm tạo 10 dự án công nghệ</div>
+        </figure>
       </div>
-      <div class="card ok">
-        <div class="card-title">PTIT IEC — Học viện CNBCVT</div>
-        <div class="card-body">2 dự án spin-off · đang ươm tạo 10 dự án công nghệ</div>
+      <div class="sub" style="margin-top:1rem;">Rào cản pháp lý không phải bất khả thi — chỉ cần lộ trình và quyết tâm tổ chức.</div>
+    </div></div>
+    <div class="cite"><b>Ảnh:</b> Hường Hoàng. (2023, 24/1). <i>BK Holdings tiên phong đổi mới sáng tạo trong trường đại học.</i> TheLeader. theleader.vn <span class="sep">·</span> iec.ptit.edu.vn (ảnh chính thức, 2026).</div>
+  </section>
+
+  <section class="slide" data-title="Bằng chứng báo chí">
+    <div class="kicker"><span class="n">06</span> Không chỉ HaUI mới vướng</div>
+    <h1 class="headline">Báo chí đã <span class="accent">gọi tên</span> rào cản này</h1>
+    <div class="body-col"><div class="fill" style="gap:.9rem; display:flex; flex-direction:column; justify-content:center;">
+      <div class="quote-card">
+        <p>"Nhiều trường đại học chưa đầu tư đủ vào các văn phòng chuyển giao công nghệ (TTOs)…"</p>
+        <div class="src">Hiếu Nguyễn. (2026, 16/7). <i>Những rào cản kìm hãm chuyển giao kết quả nghiên cứu từ đại học.</i> Báo Giáo dục &amp; Thời đại. giaoducthoidai.vn</div>
       </div>
-    </div>
-    <div class="sub" style="margin-top:1.6rem;">Rào cản pháp lý không phải bất khả thi — chỉ cần lộ trình và quyết tâm tổ chức.</div>
+      <div class="quote-card">
+        <p>"Việc thương mại hoá các nghiên cứu khoa học còn rất khó khăn bởi chính sách chưa đồng bộ, tạo nên rào cản."</p>
+        <div class="src">Trần Lưu. (2024, 25/4). <i>Thương mại hóa kết quả nghiên cứu khoa học: Vẫn chưa hiệu quả.</i> Báo Sài Gòn Giải Phóng. sggp.org.vn</div>
+      </div>
+    </div></div>
   </section>
 
   <section class="slide" data-title="Khung chính sách quốc gia">
-    <div class="kicker"><span class="n">06</span> Khung chính sách quốc gia</div>
-    <h1 class="headline">Sân chơi <span class="accent">đã có luật</span></h1>
-    <div class="badge-row">
-      <span class="badge amber">NQ57-NQ/TW</span>
-      <span class="badge amber">NĐ 268/2025/NĐ-CP</span>
-      <span class="badge teal">QĐ 844/QĐ-TTg</span>
-      <span class="badge teal">NIC — NĐ 94/2020/NĐ-CP</span>
-    </div>
-    <div class="card" style="margin-top:1.4rem; max-width:460px;">
-      <div class="stat">5–10</div>
-      <div class="stat-label">doanh nghiệp spin-off / năm — mục tiêu quốc gia từ kết quả nghiên cứu &amp; khởi nghiệp đại học</div>
-    </div>
+    <div class="kicker"><span class="n">07</span> Khung chính sách quốc gia</div>
+    <h1 class="headline">Sân chơi đã có luật</h1>
+    <div class="body-col"><div class="fill">
+      <div class="badge-row">
+        <span class="badge amber">NQ57-NQ/TW</span>
+        <span class="badge amber">NĐ 268/2025/NĐ-CP</span>
+        <span class="badge teal">QĐ 844/QĐ-TTg</span>
+        <span class="badge teal">NIC — NĐ 94/2020/NĐ-CP</span>
+      </div>
+      <div class="card" style="margin-top:1rem; max-width:480px;">
+        <div class="stat">5–10</div>
+        <div class="stat-label">doanh nghiệp spin-off / năm — mục tiêu quốc gia từ kết quả nghiên cứu &amp; khởi nghiệp đại học</div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Trích dẫn:</b> Thủ tướng Chính phủ. Quyết định số 844/QĐ-TTg (Đề án hỗ trợ hệ sinh thái khởi nghiệp ĐMST quốc gia) <span class="sep">·</span> Nghị định số 94/2020/NĐ-CP (chức năng NIC) <span class="sep">·</span> mst.gov.vn, 26/6/2026.</div>
   </section>
 
   <section class="slide divider" data-title="Chuyển ý">
-    <div class="kicker" style="justify-content:center;">Vậy còn HaUI?</div>
+    <div class="kicker">Vậy còn HaUI?</div>
     <h1 class="headline">HaUI đang <span class="accent">ở đâu</span> trong bức tranh này?</h1>
   </section>
 
   <section class="slide" data-title="HaUI tái định vị">
-    <div class="kicker"><span class="n">07</span> HaUI tái định vị</div>
-    <h1 class="headline">Từ "Trường Đại học" → <span class="accent2">"Đại học"</span></h1>
-    <div class="badge-row"><span class="badge amber">QĐ 2536/QĐ-TTg · 20/11/2025</span></div>
-    <div class="quote">"Đại học định hướng đổi mới sáng tạo"</div>
-    <div class="badge-row">
-      <span class="badge">Con người</span>
-      <span class="badge">Công nghệ</span>
-      <span class="badge">Hệ sinh thái</span>
+    <div class="kicker"><span class="n">08</span> HaUI tái định vị</div>
+    <div class="photo-text">
+      <div class="ptext">
+        <h1 class="headline" style="margin-top:0;">Từ "Trường Đại học"<br>→ <span class="accent2">"Đại học"</span></h1>
+        <div class="badge-row"><span class="badge amber">QĐ 2536/QĐ-TTg · 20/11/2025</span></div>
+        <div class="quote">"Đại học định hướng đổi mới sáng tạo"</div>
+        <div class="badge-row">
+          <span class="badge">Con người</span><span class="badge">Công nghệ</span><span class="badge">Hệ sinh thái</span>
+        </div>
+      </div>
+      <figure class="photo-card" style="margin:0;">
+        <img src="assets/haui.jpg" alt="HaUI">
+        <div class="cap">Đại học Công nghiệp Hà Nội — Toà nhà A1</div>
+      </figure>
     </div>
+    <div class="cite"><b>Trích dẫn:</b> Thủ tướng Chính phủ. Quyết định số 2536/QĐ-TTg, 20/11/2025 <span class="sep">·</span> Phát biểu lãnh đạo HaUI, báo Tiền Phong (2026) — cần đối chiếu văn kiện chính thức khi Chiến lược 2026–2030 ban hành. <b>Ảnh:</b> Wikimedia Commons, Huynh ICT, CC BY-SA 4.0, 3/9/2019.</div>
   </section>
 
   <section class="slide" data-title="Khoảng cách">
-    <div class="kicker"><span class="n">08</span> Nhưng…</div>
-    <h1 class="headline">Khoảng cách giữa <span class="accent">tuyên bố</span> và <span class="accent2">văn kiện</span></h1>
-    <div class="card warn" style="max-width:560px;">
-      <div class="card-title" style="font-size:1.3rem;">Chiến lược phát triển 2026–2030</div>
-      <span class="status-tag">Đang soạn · chưa ban hành</span>
-    </div>
-    <div class="sub" style="margin-top:1.4rem;">Ngay NQ57 cũng tự nhận: khung chiến lược giáo dục đại học ở cấp quốc gia "chưa ban hành đúng tiến độ".</div>
+    <div class="kicker"><span class="n">09</span> Nhưng…</div>
+    <h1 class="headline">Khoảng cách giữa <span class="accent">tuyên bố</span><br>và <span class="accent2">văn kiện</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card warn" style="max-width:560px;">
+        <div class="card-title" style="font-size:1.25rem;">Chiến lược phát triển 2026–2030</div>
+        <span class="status-tag">Đang soạn · chưa ban hành</span>
+      </div>
+      <div class="sub" style="margin-top:1.1rem;">Ngay NQ57 cũng tự nhận: khung chiến lược giáo dục đại học ở cấp quốc gia "chưa ban hành đúng tiến độ".</div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Ban KHCN&amp;ĐMST HaUI. Báo cáo dự thảo Hội nghị Viên chức năm học 2025–2026 (nội bộ), tr.1 <span class="sep">·</span> NQ57-NQ/TW, mục tồn tại-hạn chế.</div>
+  </section>
+
+  <section class="slide" data-title="Nỗi đau">
+    <div class="kicker" style="color:var(--red);"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">10</span> Cái giá của việc đứng yên</div>
+    <h1 class="headline">Mỗi năm chậm là<br>một năm <span class="accent">mất thật</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <div class="card pain"><div class="card-title">Thế hệ kế cận đang rời xa</div><div class="card-body">Sinh viên tham gia NCKH giảm 13,7% so với năm trước — trong khi cả nước đặt cược vào lớp trẻ cho làn sóng ĐMST.</div></div>
+        <div class="card pain"><div class="card-title">Tiền để trên bàn, không ai lấy</div><div class="card-body">666,6 triệu đồng doanh thu CGCN/năm — trong khi quốc gia đặt mục tiêu 5–10 spin-off/năm cho MỖI đại học có tiềm lực.</div></div>
+        <div class="card pain"><div class="card-title">9 người gánh việc của cả một trung tâm</div><div class="card-body">Không có pháp nhân chuyên trách nghĩa là rủi ro quá tải, kiệt sức, và mất người giỏi vào tay nơi khác.</div></div>
+        <div class="card pain"><div class="card-title">Đang tụt lại so với trường cùng hạng</div><div class="card-body">BK Holdings, PTIT IEC đã có spin-off thật. Mỗi năm HaUI chưa có, khoảng cách trên bảng xếp hạng ĐMST đại học càng xa.</div></div>
+      </div>
+    </div></div>
   </section>
 
   <section class="slide" data-title="Hạ tầng ĐMST">
-    <div class="kicker"><span class="n">09</span> Hạ tầng ĐMST</div>
+    <div class="kicker"><span class="n">11</span> Hạ tầng ĐMST</div>
     <h1 class="headline">So với <span class="accent2">2 trường bạn</span></h1>
+    <div class="body-col"><div class="fill">
     <div class="table-wrap">
     <table class="cmp">
       <thead><tr><th></th><th>BK Holdings/TTO</th><th>PTIT IEC</th><th>HaUI (2026)</th></tr></thead>
       <tbody>
-        <tr><td class="rowlabel">Pháp nhân chuyên trách</td><td class="ok">Có · từ nhiều năm</td><td class="ok">Có</td><td class="hl">Chưa có — mô hình trên giấy</td></tr>
+        <tr><td class="rowlabel">Pháp nhân chuyên trách</td><td class="ok">Có · từ 2008</td><td class="ok">Có</td><td class="hl">Chưa có — mô hình trên giấy</td></tr>
         <tr><td class="rowlabel">Spin-off đã hình thành</td><td class="ok">Hàng chục</td><td class="ok">2</td><td class="hl">0</td></tr>
         <tr><td class="rowlabel">Vườn ươm khởi nghiệp</td><td class="ok">Có</td><td class="ok">Có · 10 dự án</td><td class="hl">Chưa có</td></tr>
       </tbody>
     </table>
     </div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Khảo sát thực địa dự án "HaUI Innovation Center" (biên bản làm việc TBI, IEC, 8/2026) <span class="sep">·</span> Báo cáo dự thảo Hội nghị Viên chức Ban KHCN&amp;ĐMST HaUI, năm học 2025–2026.</div>
   </section>
 
   <section class="slide" data-title="Vì sao chưa có">
-    <div class="kicker"><span class="n">10</span> Vì sao chưa có</div>
-    <h1 class="headline">Nguồn lực <span class="accent">rất mỏng</span> so với khối lượng việc</h1>
-    <div class="content card-grid g2">
-      <div class="card"><div class="stat">9</div><div class="stat-label">viên chức — toàn bộ Ban KHCN&amp;ĐMST</div></div>
-      <div class="card"><div class="stat">3</div><div class="stat-label">phòng chuyên môn: Quản lý nhiệm vụ KHCN · Thông tin KHCN&amp;ĐMST · Đổi mới sáng tạo</div></div>
-    </div>
-    <div class="sub" style="margin-top:1.4rem;">Chức năng đã đủ cả — tham mưu, CGCN, SHTT, dịch vụ KHCN&amp;ĐMST. Thiếu người để vận hành hết, không thiếu trên giấy.</div>
+    <div class="kicker"><span class="n">12</span> Vì sao chưa có</div>
+    <h1 class="headline">Nguồn lực <span class="accent">rất mỏng</span><br>so với khối lượng việc</h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <div class="card"><div class="stat">9</div><div class="stat-label">viên chức — toàn bộ Ban KHCN&amp;ĐMST</div></div>
+        <div class="card"><div class="stat">3</div><div class="stat-label">phòng chuyên môn: Quản lý nhiệm vụ KHCN · Thông tin KHCN&amp;ĐMST · Đổi mới sáng tạo</div></div>
+      </div>
+      <div class="sub" style="margin-top:1.1rem;">Chức năng đã đủ cả — tham mưu, CGCN, SHTT, dịch vụ KHCN&amp;ĐMST. Thiếu người để vận hành hết, không thiếu trên giấy.</div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Chức năng nhiệm vụ Ban KHCN&amp;ĐMST HaUI, khcn.haui.edu.vn <span class="sep">·</span> Báo cáo dự thảo Hội nghị Viên chức năm học 2025–2026.</div>
   </section>
 
   <section class="slide" data-title="Lộ trình">
-    <div class="kicker"><span class="n">11</span> Lộ trình Trung tâm ĐMST HaUI</div>
+    <div class="kicker"><span class="n">13</span> Lộ trình Trung tâm ĐMST HaUI</div>
     <h1 class="headline">Đang ở <span class="accent">Pha 1 / 3</span></h1>
-    <div class="timeline" style="margin-top:2.2rem;">
-      <div class="tl-item current"><div class="tl-year">2026 · Pha 1</div><div class="tl-what">Khảo sát 9 đơn vị, mô hình đề xuất — trên giấy</div></div>
-      <div class="tl-item"><div class="tl-year">2027 · Pha 2</div><div class="tl-what">Vận hành hoá mô hình — 2,3–3 tỷ đồng</div></div>
-      <div class="tl-item"><div class="tl-year">2028 · Pha 3</div><div class="tl-what">Nhân rộng</div></div>
-    </div>
+    <div class="body-col"><div class="fill">
+      <div class="timeline">
+        <div class="tl-item current"><div class="tl-year">2026 · Pha 1</div><div class="tl-what">Khảo sát 9 đơn vị, mô hình đề xuất — trên giấy</div></div>
+        <div class="tl-item"><div class="tl-year">2027 · Pha 2</div><div class="tl-what">Vận hành hoá mô hình — 2,3–3 tỷ đồng</div></div>
+        <div class="tl-item"><div class="tl-year">2028 · Pha 3</div><div class="tl-what">Nhân rộng</div></div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Trích dẫn:</b> Bộ Công Thương. Quyết định số 359/QĐ-BCT, 27/2/2026 (phê duyệt danh mục nhiệm vụ KHCN 2026) <span class="sep">·</span> Hợp đồng số 10/HĐ-TCC, 18/3/2026.</div>
   </section>
 
   <section class="slide" data-title="Số liệu">
-    <div class="kicker"><span class="n">12</span> Số liệu 2025–2026</div>
-    <h1 class="headline">Nghiên cứu không thiếu — <span class="accent">chuyển hoá còn yếu</span></h1>
-    <div class="content card-grid g4">
-      <div class="card"><div class="stat">99</div><div class="stat-label">đề tài NCKH — 73 cơ sở · 22 Bộ/Tỉnh · 4 Nhà nước</div></div>
-      <div class="card"><div class="stat">19</div><div class="stat-label">kết quả SHTT — 3 sáng chế, 2 GPHI, 14 đơn chờ</div></div>
-      <div class="card warn"><div class="stat">666,6tr</div><div class="stat-label">doanh thu CGCN — chỉ 4 hợp đồng</div></div>
-      <div class="card warn"><div class="stat">−13,7%</div><div class="stat-label">sinh viên tham gia NCKH so với năm trước</div></div>
-    </div>
+    <div class="kicker"><span class="n">14</span> Số liệu 2025–2026</div>
+    <h1 class="headline">Nghiên cứu không thiếu —<br><span class="accent">chuyển hoá còn yếu</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g4">
+        <div class="card"><div class="stat">99</div><div class="stat-label">đề tài NCKH — 73 cơ sở · 22 Bộ/Tỉnh · 4 Nhà nước</div></div>
+        <div class="card"><div class="stat">19</div><div class="stat-label">kết quả SHTT — 3 sáng chế, 2 GPHI, 14 đơn chờ</div></div>
+        <div class="card warn"><div class="stat">666,6tr</div><div class="stat-label">doanh thu CGCN — chỉ 4 hợp đồng</div></div>
+        <div class="card warn"><div class="stat">−13,7%</div><div class="stat-label">sinh viên tham gia NCKH so với năm trước</div></div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Ban KHCN&amp;ĐMST HaUI. Báo cáo dự thảo Hội nghị Viên chức năm học 2025–2026 (nội bộ), tr.2–5.</div>
   </section>
 
   <section class="slide" data-title="Nút thắt pháp lý">
-    <div class="kicker"><span class="n">13</span> Nút thắt pháp lý</div>
-    <h1 class="headline">Gốc rễ: đơn vị sự nghiệp công lập <span class="accent">không đứng tên cổ phần</span></h1>
-    <ul class="checklist" style="max-width:60ch;">
-      <li><span class="tick" style="background:rgba(239,93,99,.18); color:var(--red);">→</span> Muốn thương mại hoá phải lập công ty TNHH MTV do trường sở hữu 100% vốn</li>
-      <li><span class="tick" style="background:rgba(239,93,99,.18); color:var(--red);">→</span> Khoảng trống định giá tài sản trí tuệ — xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa</li>
-    </ul>
+    <div class="kicker"><span class="n">15</span> Nút thắt pháp lý</div>
+    <h1 class="headline">Gốc rễ: <span class="accent">không đứng tên<br>cổ phần được</span></h1>
+    <div class="body-col"><div class="fill">
+      <ul class="checklist">
+        <li><span class="tick">→</span> Đơn vị sự nghiệp công lập <b>không được đứng tên cổ phần</b> — muốn thương mại hoá phải lập công ty TNHH MTV do trường sở hữu 100% vốn</li>
+        <li><span class="tick">→</span> <b>Khoảng trống định giá tài sản trí tuệ</b> — xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa, và không tài liệu quốc tế nào trong bộ nguồn mô tả quy trình cụ thể</li>
+      </ul>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026 <span class="sep">·</span> Rà soát pháp lý nội bộ, 02-trien-khai/03. co-so-phap-ly.</div>
+  </section>
+
+  <section class="slide" data-title="Cơ hội">
+    <div class="kicker" style="color:var(--amber);"><span class="n">16</span> Cửa sổ đang mở — không mở mãi</div>
+    <h1 class="headline">Cơ hội có thể <span class="accent">vuột mất</span></h1>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <div class="card chance"><div class="card-title">Kinh phí đã duyệt cho 2026</div><div class="card-body">QĐ 359/QĐ-BCT đã cấp ngân sách cho nhiệm vụ Trung tâm ĐMST — không tiêu hết đúng lộ trình, cơ hội không lặp lại dễ dàng.</div></div>
+        <div class="card chance"><div class="card-title">NQ57 đang ở năm đầu triển khai</div><div class="card-body">Ưu tiên chính trị và ngân sách cho ĐMST thường tập trung cao nhất ở giai đoạn đầu chính sách mới.</div></div>
+        <div class="card chance"><div class="card-title">Mạng lưới quốc tế đang chủ động gõ cửa</div><div class="card-body">Swiss Entrepreneurship Programme đã ngỏ ý hợp tác với HaUI (21/8/2026) — không phải mình phải đi tìm.</div></div>
+        <div class="card chance"><div class="card-title">Mục tiêu quốc gia đi kèm ưu đãi giai đoạn đầu</div><div class="card-body">5–10 spin-off/năm là mục tiêu quốc gia — cơ chế hỗ trợ, quỹ mồi thường ưu tiên đơn vị hành động sớm.</div></div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Nguồn:</b> QĐ 359/QĐ-BCT, 27/2/2026 <span class="sep">·</span> Ghi nhận làm việc với Swiss EP, 21/8/2026 (nội bộ dự án HaUI Innovation Center) <span class="sep">·</span> mst.gov.vn, 26/6/2026.</div>
   </section>
 
   <section class="slide" data-title="Tổng hợp nguyên nhân">
-    <div class="kicker"><span class="n">14</span> Tổng hợp</div>
+    <div class="kicker"><span class="n">17</span> Tổng hợp</div>
     <h1 class="headline">4 nhóm <span class="accent2">nguyên nhân</span></h1>
-    <div class="content card-grid g2" style="margin-top:1.2rem;">
-      <div class="card"><div class="card-title">Thể chế / pháp lý</div><div class="card-body">Chiến lược 2026–2030 chưa ban hành · không đứng tên cổ phần · khoảng trống định giá SHTT</div></div>
-      <div class="card"><div class="card-title">Tổ chức / nhân lực</div><div class="card-body">Chưa có pháp nhân chuyên trách · Ban KHCN&amp;ĐMST chỉ 9 người</div></div>
-      <div class="card"><div class="card-title">Tài chính / động lực</div><div class="card-body">Doanh thu CGCN nhỏ · chưa có cơ chế chia sẻ lợi ích SHTT rõ ràng</div></div>
-      <div class="card"><div class="card-title">Thời điểm / lộ trình</div><div class="card-body">Khung pháp lý quốc gia và vị thế "Đại học" đều rất mới (2025) · Trung tâm mới Pha 1/3</div></div>
-    </div>
+    <div class="body-col"><div class="fill">
+      <div class="card-grid g2">
+        <div class="card"><div class="card-title">Thể chế / pháp lý</div><div class="card-body">Chiến lược 2026–2030 chưa ban hành · không đứng tên cổ phần · khoảng trống định giá SHTT</div></div>
+        <div class="card"><div class="card-title">Tổ chức / nhân lực</div><div class="card-body">Chưa có pháp nhân chuyên trách · Ban KHCN&amp;ĐMST chỉ 9 người</div></div>
+        <div class="card"><div class="card-title">Tài chính / động lực</div><div class="card-body">Doanh thu CGCN nhỏ · chưa có cơ chế chia sẻ lợi ích SHTT rõ ràng</div></div>
+        <div class="card"><div class="card-title">Thời điểm / lộ trình</div><div class="card-body">Khung pháp lý quốc gia và vị thế "Đại học" đều rất mới (2025) · Trung tâm mới Pha 1/3</div></div>
+      </div>
+    </div></div>
   </section>
 
-  <section class="slide" data-title="Đề xuất ngắn hạn">
-    <div class="kicker"><span class="n">15</span> Đề xuất ngắn hạn · 2026–2027</div>
-    <h1 class="headline">Làm được <span class="accent2">ngay</span></h1>
-    <ul class="checklist">
-      <li><span class="tick">✓</span> Gắn Chiến lược 2026–2030 với mục tiêu ĐMST cụ thể, đo lường được</li>
-      <li><span class="tick">✓</span> Thí điểm nội bộ cơ chế chia sẻ lợi ích SHTT — không cần chờ Pha 2/2027</li>
-      <li><span class="tick">✓</span> Chuẩn hoá thiết kế Trung tâm ĐMST ngay theo NĐ 268/2025 (Điều 29–46)</li>
-    </ul>
+  <section class="slide" data-title="Kiến nghị ngắn hạn">
+    <div class="kicker" style="color:var(--teal);"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị ngắn hạn · 2026–2027</div>
+    <h1 class="headline">4 việc làm được <span class="accent2">ngay</span></h1>
+    <div class="body-col"><div class="fill">
+      <ul class="checklist kn">
+        <li><span class="tick">1</span><span><b>CHỐT</b> chỉ tiêu ĐMST đo lường được ngay trong Chiến lược 2026–2030 — không chờ hoàn thiện toàn văn kiện mới có mục tiêu</span></li>
+        <li><span class="tick">2</span><span><b>THÍ ĐIỂM</b> cơ chế chia sẻ lợi ích SHTT ngay trong 2026 — không đợi Trung tâm vận hành ở Pha 2/2027</span></li>
+        <li><span class="tick">3</span><span><b>CHUẨN HOÁ</b> thiết kế Trung tâm ĐMST theo đúng NĐ 268/2025 (Điều 29–46) ngay từ Pha 1 — tránh phải làm lại</span></li>
+        <li><span class="tick">4</span><span><b>TẬN DỤNG</b> cửa sổ hợp tác quốc tế đang mở (Swiss EP, mạng lưới VNEI/HANISA) trước khi nó khép lại</span></li>
+      </ul>
+    </div></div>
   </section>
 
-  <section class="slide" data-title="Đề xuất trung hạn">
-    <div class="kicker"><span class="n">16</span> Đề xuất trung hạn</div>
-    <h1 class="headline">Đi nhanh hơn bằng cách <span class="accent2">học người đi trước</span></h1>
-    <ul class="checklist">
-      <li><span class="tick">✓</span> Học trực tiếp từ BK Holdings/BK TTO, PTIT IEC — cùng khung pháp lý Việt Nam</li>
-      <li><span class="tick">✓</span> Kết nối chuyên gia quốc tế qua VNEI/HANISA — Swiss EP dự kiến ghé HaUI 23/10/2026</li>
-      <li><span class="tick">✓</span> Đưa chỉ tiêu đo lường được vào Chiến lược 2026–2030 theo từng mốc năm</li>
-    </ul>
+  <section class="slide" data-title="Kiến nghị trung hạn">
+    <div class="kicker" style="color:var(--teal);"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">19</span> Kiến nghị trung hạn</div>
+    <h1 class="headline">Đi nhanh hơn bằng cách<br><span class="accent2">học người đi trước</span></h1>
+    <div class="body-col"><div class="fill">
+      <ul class="checklist kn">
+        <li><span class="tick">5</span><span><b>CỬ ĐOÀN</b> học trực tiếp từ BK Holdings/BK TTO, PTIT IEC — cùng khung pháp lý Việt Nam, không cần tự nghiên cứu lại từ đầu</span></li>
+        <li><span class="tick">6</span><span><b>ĐO LƯỜNG</b> từng mốc năm: số hợp đồng CGCN, doanh thu, số spin-off — đưa thẳng vào Chiến lược 2026–2030</span></li>
+      </ul>
+    </div></div>
   </section>
 
   <section class="slide" data-title="Công cụ Atlas">
-    <div class="kicker"><span class="n">17</span> Công cụ hỗ trợ</div>
+    <div class="kicker"><span class="n">20</span> Công cụ hỗ trợ · 1/2</div>
     <h1 class="headline">Innovation Center <span class="accent">Atlas</span></h1>
-    <div class="content card-grid g3">
-      <div class="card"><div class="stat">20.022</div><div class="stat-label">đơn vị ĐMST/CGCN đại học đã lập bản đồ toàn cầu</div></div>
-      <div class="card"><div class="stat">12</div><div class="stat-label">case Việt Nam phân tích sâu</div></div>
-      <div class="card"><div class="stat">4</div><div class="stat-label">mô hình quản trị để chọn nhanh theo quy mô</div></div>
-    </div>
-    <div class="sub" style="margin-top:1.6rem;">buitienson.github.io/innovation-center-atlas — công cụ cá nhân, dùng miễn phí</div>
+    <div class="body-col"><div class="fill" style="display:flex; flex-direction:row; gap:1.2rem; align-items:stretch;">
+      <a class="tool-card" href="https://buitienson.github.io/innovation-center-atlas/" target="_blank" rel="noopener" style="flex:1.1;">
+        <div class="tool-eyebrow">Phổ biến kiến thức · Hỗ trợ ĐMST</div>
+        <div class="tool-title">Innovation Center Atlas</div>
+        <div class="tool-url">buitienson.github.io/innovation-center-atlas</div>
+        <div class="tool-desc">Bản đồ + danh mục mô hình trung tâm ĐMST/CGCN đại học toàn cầu — tra theo 4 mô hình quản trị để chọn nhanh mô hình phù hợp quy mô, giai đoạn của từng trường.</div>
+        <div class="tool-cta">Mở công cụ ↗</div>
+      </a>
+      <div class="card-grid" style="flex:.9; grid-template-columns:1fr; align-content:center;">
+        <div class="card"><div class="stat">20.022</div><div class="stat-label">đơn vị ĐMST/CGCN đại học đã lập bản đồ toàn cầu</div></div>
+        <div class="card"><div class="stat">12</div><div class="stat-label">case Việt Nam phân tích sâu · 4 mô hình quản trị</div></div>
+      </div>
+    </div></div>
+    <div class="cite"><b>Đề xuất:</b> dùng công cụ này làm điểm tra cứu chung khi các đơn vị trong VNEI/HANISA thiết kế mô hình của riêng mình — tiết kiệm thời gian nghiên cứu lại từ đầu. Tác giả: Bùi Tiến Sơn, 2026.</div>
+  </section>
+
+  <section class="slide" data-title="Công cụ tra cứu tạp chí">
+    <div class="kicker"><span class="n">21</span> Công cụ hỗ trợ · 2/2</div>
+    <h1 class="headline">Web tra cứu<br><span class="accent2">tạp chí khoa học</span></h1>
+    <div class="body-col"><div class="fill" style="display:flex; flex-direction:row; gap:1.2rem; align-items:stretch;">
+      <a class="tool-card" href="https://tra-cuu-tap-chi.pages.dev/" target="_blank" rel="noopener" style="flex:1.1;">
+        <div class="tool-eyebrow">Phổ biến kiến thức · Hỗ trợ nghiên cứu</div>
+        <div class="tool-title">Tra cứu tạp chí</div>
+        <div class="tool-url">tra-cuu-tap-chi.pages.dev</div>
+        <div class="tool-desc">Hỗ trợ giảng viên, nhà nghiên cứu tra cứu nhanh thông tin, xếp hạng tạp chí khoa học trước khi chọn nơi công bố — giảm thời gian dò tìm thủ công.</div>
+        <div class="tool-cta">Mở công cụ ↗</div>
+      </a>
+      <div class="card" style="flex:.9; display:flex; flex-direction:column; justify-content:center;">
+        <div class="card-title">Vì sao đáng nhắc ở đây</div>
+        <div class="card-body">Cùng tinh thần với Trung tâm ĐMST: một công cụ nhỏ, tự làm, giải quyết đúng một điểm nghẽn thật trong quy trình nghiên cứu — không cần chờ dự án lớn mới bắt đầu.</div>
+      </div>
+    </div></div>
   </section>
 
   <section class="slide divider" data-title="Kết luận">
+    <div class="kicker">Kết luận</div>
     <h1 class="headline">HaUI không thiếu quyết tâm —<br>đang thiếu <span class="accent">thời gian thể chế hoá</span></h1>
-    <div class="sub" style="margin:1.2rem auto 0;">Học nhanh · Chuẩn hoá ngay · Đo lường được</div>
+    <div class="sub" style="margin:1rem auto 0;">Học nhanh · Chuẩn hoá ngay · Đo lường được</div>
     <div class="brandline">
       <span>Cảm ơn hội nghị</span><span class="dot"></span><span><b>Bùi Tiến Sơn</b> · Phòng Đổi mới sáng tạo</span>
     </div>
