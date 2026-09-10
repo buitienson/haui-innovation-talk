@@ -247,11 +247,6 @@
   #dots .d:hover{ background:var(--ink-faint); }
   #dots .d.active{ background:var(--amber); width:8px; height:8px; }
 
-  #hint{
-    position:fixed; left:7.5vw; bottom:1.6rem; z-index:10; font-size:.76rem; color:var(--ink-faint);
-    display:flex; gap:.5rem; align-items:center;
-  }
-  #hint kbd{ border:1px solid var(--panel-border); border-radius:5px; padding:.1em .45em; color:var(--ink-dim); font-size:.85em; }
   #fullscreen-btn{
     position:fixed; right:7.5vw; top:1.6rem; z-index:10; background:transparent; border:1px solid var(--panel-border);
     color:var(--ink-dim); border-radius:8px; padding:.5em .8em; font-size:.78rem; cursor:pointer; font-family:var(--font-body);
@@ -272,7 +267,7 @@
   }
   @media (max-width: 520px){
     .slide{ padding: 5.5vh 6vw 4vh; }
-    #hint{ left:6vw; } #counter{ right:6vw; } #fullscreen-btn{ right:6vw; top:1.1rem; padding:.4em .65em; font-size:.7rem; }
+    #counter{ right:6vw; } #fullscreen-btn{ right:6vw; top:1.1rem; padding:.4em .65em; font-size:.7rem; }
   }
 </style></head><body>
 
@@ -633,7 +628,6 @@
 <div id="progress-bar"><div id="progress-fill"></div></div>
 <div id="counter"><b id="cur">1</b> / <span id="total">20</span></div>
 <div id="dots"></div>
-<div id="hint"><kbd>&larr;</kbd><kbd>&rarr;</kbd> chuyển slide &nbsp;·&nbsp; <kbd>F</kbd> toàn màn hình</div>
 <button id="fullscreen-btn">⛶ Toàn màn hình</button>
 <div class="navzone left" id="zone-left"></div>
 <div class="navzone right" id="zone-right"></div>
