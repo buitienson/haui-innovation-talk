@@ -308,7 +308,7 @@
 
 <section class="slide divider" data-title="Câu hỏi trung tâm">
   <div class="kicker">Câu hỏi trung tâm</div>
-  <div class="thesis">HaUI đã có đầu vào nghiên cứu và định hướng ĐMST rõ ràng - vậy vì sao dòng chảy đó vẫn tắc trước khi thành <span class="accent">tài sản, hợp đồng, doanh nghiệp</span>?</div>
+  <div class="thesis">"HaUI đã có đầu vào nghiên cứu và định hướng ĐMST rõ ràng - vậy vì sao dòng chảy đó vẫn tắc trước khi thành <span class="accent">tài sản, hợp đồng, doanh nghiệp</span>?"</div>
   <div class="sub" style="margin:1.3rem auto 0; text-align:center;">99 đề tài → 19 kết quả SHTT → 4 hợp đồng CGCN → 0 spin-off</div>
 </section>
 
@@ -1159,6 +1159,17 @@
     return null;
   }
 
+  function findBlockAncestor(node){
+    var el = node && (node.nodeType === 3 ? node.parentElement : node);
+    if (!el) return null;
+    var isStop = function(e){ return e.classList && (e.classList.contains('slide') || e.classList.contains('fill') || e.classList.contains('body-col')); };
+    while (el.parentElement && !isStop(el.parentElement)){
+      el = el.parentElement;
+    }
+    if (isStop(el)) return null;
+    return el;
+  }
+
   function findTextTarget(node){
     var el = node && (node.nodeType === 3 ? node.parentElement : node);
     if (!el || (el.classList && el.classList.contains('slide'))) return null;
@@ -1331,7 +1342,7 @@
     var sel = window.getSelection();
     if (sel && !sel.isCollapsed && sel.toString().trim().length > 0) return;
     textPanel.hidden = true;
-    var box = findBoxAncestor(e.target);
+    var box = findBoxAncestor(e.target) || findBlockAncestor(e.target);
     if (box){
       boxTargetEl = box;
       positionPanel(boxPanel, box.getBoundingClientRect());
