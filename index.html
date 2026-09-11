@@ -305,7 +305,7 @@
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
-</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 16:37 · 372f374</div>
+</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 16:42 · 49ac581</div>
 
 
 <div id="deck">
@@ -442,7 +442,7 @@
         <div class="badge-row" style="margin-top:.6rem;"><span class="badge red">Đo bằng: 666,6tr doanh thu</span></div>
       </div>
     </div>
-    <div class="pain-note ok" style="margin-top:1.1rem;"><b>Vì sao dùng khung này:</b> mỗi điểm nghẽn nêu ở mục II (Tổ chức &amp; nhân lực, Pháp lý &amp; SHTT, Thị trường &amp; doanh nghiệp) tương ứng đúng với một chặng bị tắc trong chuỗi 4 bước trên - không phải nhận xét chung chung.</div>
+    <div class="pain-note ok" style="margin-top:1.1rem;">3 điểm nghẽn ở phần sau - <b>Tổ chức &amp; nhân lực, Pháp lý &amp; SHTT, Thị trường &amp; doanh nghiệp</b> - ứng đúng với 3 chặng đang tắc trong chuỗi trên.</div>
   </div></div>
 </section>
 
@@ -961,6 +961,7 @@
   <div class="sp-row" style="font-size:.72rem; color:var(--ink-dim);">Kéo 4 chấm ở góc để giãn to/nhỏ. Kéo giữa hộp để di chuyển.</div>
   <div class="sp-row">
     <button class="sp-step" id="box-pos-reset" style="width:auto; padding:0 .6em;" title="Về vị trí và cỡ gốc">Về gốc</button>
+    <button class="sp-step" id="box-delete" style="width:auto; padding:0 .6em; color:var(--red); border-color:rgba(239,93,99,.4);" title="Xoá cả hộp này">Xoá hộp</button>
   </div>
 </div>
 <div class="navzone left" id="zone-left"></div>
@@ -1352,12 +1353,24 @@
   }
 
   function positionPanel(panel, rect){
-    var top = rect.bottom + 8;
+    // measure the panel's real size (it collapses to 0 while [hidden]) so the
+    // fallback placement actually clears the selected box instead of assuming
+    // a fixed height that's wrong once the panel grows extra rows
+    var wasHidden = panel.hidden;
+    if (wasHidden) panel.hidden = false;
+    var pw = panel.offsetWidth || 280, ph = panel.offsetHeight || 160;
+    if (wasHidden) panel.hidden = true;
+
     var left = rect.left;
-    var maxLeft = window.innerWidth - 300;
+    var maxLeft = window.innerWidth - pw - 8;
     if (left > maxLeft) left = Math.max(8, maxLeft);
     if (left < 8) left = 8;
-    if (top > window.innerHeight - 170) top = Math.max(8, rect.top - 8 - 160);
+
+    var top = rect.bottom + 8;
+    if (top + ph > window.innerHeight - 8){
+      top = rect.top - 8 - ph;
+      if (top < 8) top = 8;
+    }
     panel.style.top = top + 'px';
     panel.style.left = left + 'px';
   }
@@ -1691,6 +1704,16 @@
     markEdited(boxTargetEl);
     positionPanel(boxPanel, boxTargetEl.getBoundingClientRect());
     positionHandles(boxTargetEl);
+    scheduleSave();
+  });
+  document.getElementById('box-delete').addEventListener('click', function(){
+    if (!boxTargetEl) return;
+    snapshotUndo();
+    var el = boxTargetEl;
+    var slide = el.closest('.slide');
+    hidePanels();
+    if (el.parentNode) el.parentNode.removeChild(el);
+    if (slide) slide.dataset.edited = '1';
     scheduleSave();
   });
 
