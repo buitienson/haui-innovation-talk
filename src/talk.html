@@ -282,6 +282,7 @@
   .box-handle[hidden]{ display:none; }
   .box-handle.nw, .box-handle.se{ cursor:nwse-resize; }
   .box-handle.ne, .box-handle.sw{ cursor:nesw-resize; }
+  .box-handle.move{ width:22px; height:22px; border-radius:6px; cursor:move; display:flex; align-items:center; justify-content:center; font-size:13px; color:#1a1200; line-height:1; }
   body.edit-mode .box-move-target{ cursor:move; }
   .snap-guide{ position:fixed; background:var(--red); z-index:29; pointer-events:none; }
   .snap-guide.v{ width:1px; }
@@ -1004,6 +1005,8 @@
   var editBtn = document.getElementById('edit-btn');
   var toolbar = document.getElementById('edit-toolbar');
   var saveTimer = null;
+  var undoStack = [];
+  var MAX_UNDO = 40;
 
   function isEditing(){ return document.body.classList.contains('edit-mode'); }
 
@@ -1015,8 +1018,36 @@
   }
   function scheduleSave(){
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(saveNow, 500);
+    saveTimer = setTimeout(function(){ saveTimer = null; saveNow(); }, 500);
   }
+  function snapshotUndo(){
+    var html = deck.innerHTML;
+    if (undoStack.length && undoStack[undoStack.length - 1] === html) return;
+    undoStack.push(html);
+    if (undoStack.length > MAX_UNDO) undoStack.shift();
+  }
+  function refreshSlideRefs(){
+    slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    total = slides.length;
+    document.getElementById('total').textContent = total;
+  }
+  function undo(){
+    if (!undoStack.length) return;
+    hidePanels();
+    deck.innerHTML = undoStack.pop();
+    refreshSlideRefs();
+    if (isEditing()) slides.forEach(function(s){ s.contentEditable = 'true'; s.spellcheck = false; });
+    if (idx >= total) idx = total - 1;
+    render();
+    saveNow();
+  }
+  document.addEventListener('keydown', function(e){
+    if (!isEditing()) return;
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z'){
+      e.preventDefault();
+      undo();
+    }
+  });
   function markEdited(node){
     var el = node && (node.nodeType === 3 ? node.parentElement : node);
     var s = el && el.closest && el.closest('.slide');
@@ -1033,6 +1064,7 @@
     deck.addEventListener('click', linkGuard, true);
   }
   function onDeckInput(e){
+    if (!saveTimer) snapshotUndo();
     markEdited(e.target);
     scheduleSave();
   }
@@ -1068,7 +1100,9 @@
     location.reload();
   });
 
-  document.getElementById('edit-export').addEventListener('click', function(){
+  var exportBtn = document.getElementById('edit-export');
+  var exportBtnLabel = exportBtn.textContent;
+  exportBtn.addEventListener('click', function(){
     var lines = [];
     slides.forEach(function(s, i){
       if (s.dataset.edited !== '1') return;
@@ -1076,34 +1110,23 @@
       lines.push('--- Slide ' + (i+1) + ' [' + (s.getAttribute('data-title')||'') + '] ---\n' + t);
     });
     var text = lines.length ? lines.join('\n\n') : 'Chưa sửa slide nào.';
-    var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:4vw;';
-    var box = document.createElement('div');
-    box.style.cssText = 'background:#0d1424;border:1px solid #243154;border-radius:12px;padding:1.2rem;max-width:800px;width:100%;max-height:80vh;display:flex;flex-direction:column;gap:.7rem;';
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.readOnly = true;
-    ta.style.cssText = 'flex:1;min-height:50vh;background:#090d16;color:#eef1fb;border:1px solid #243154;border-radius:8px;padding:.8rem;font-family:monospace;font-size:.85rem;';
-    var row = document.createElement('div');
-    row.style.cssText = 'display:flex;gap:.6rem;justify-content:flex-end;';
-    var copyBtn = document.createElement('button');
-    copyBtn.textContent = 'Copy tất cả';
-    var closeBtn = document.createElement('button');
-    closeBtn.textContent = 'Đóng';
-    [copyBtn, closeBtn].forEach(function(b){
-      b.style.cssText = 'font-family:inherit;font-weight:700;color:#eef1fb;background:rgba(255,255,255,.08);border:1px solid #243154;border-radius:6px;padding:.5em 1em;cursor:pointer;';
-    });
-    copyBtn.addEventListener('click', function(){
+    function done(ok){
+      exportBtn.textContent = ok ? 'Đã copy!' : 'Copy lỗi, thử lại';
+      setTimeout(function(){ exportBtn.textContent = exportBtnLabel; }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;';
+      document.body.appendChild(ta);
       ta.select();
-      try{ navigator.clipboard.writeText(text); copyBtn.textContent = 'Đã copy!'; }
-      catch(e){ document.execCommand('copy'); }
-    });
-    closeBtn.addEventListener('click', function(){ overlay.remove(); });
-    row.appendChild(copyBtn); row.appendChild(closeBtn);
-    box.appendChild(ta); box.appendChild(row);
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
-    ta.focus(); ta.select();
+      var ok = false;
+      try{ ok = document.execCommand('copy'); }catch(e){}
+      ta.remove();
+      done(ok);
+    }
   });
 
   // ================= style panel: text color/size, box background/border =================
@@ -1206,6 +1229,7 @@
   }
 
   function applyTextStyle(prop, value){
+    snapshotUndo();
     var sel = window.getSelection();
     var range = (sel && sel.rangeCount && !sel.isCollapsed) ? sel.getRangeAt(0) : savedRange;
     if (range && !range.collapsed){
@@ -1233,6 +1257,7 @@
 
   // ---- Canva-style corner handles: drag to resize, drag body to move ----
   var HANDLE_CORNERS = ['nw','ne','sw','se'];
+  var ALL_HANDLES = HANDLE_CORNERS.concat(['move']);
   var boxHandles = {};
   HANDLE_CORNERS.forEach(function(c){
     var h = document.createElement('div');
@@ -1241,25 +1266,35 @@
     document.body.appendChild(h);
     boxHandles[c] = h;
   });
+  var moveHandle = document.createElement('div');
+  moveHandle.className = 'box-handle move';
+  moveHandle.textContent = '✥';
+  moveHandle.title = 'Kéo để di chuyển hộp';
+  moveHandle.hidden = true;
+  document.body.appendChild(moveHandle);
+  boxHandles.move = moveHandle;
   function positionHandles(el){
     var r = el.getBoundingClientRect();
     boxHandles.nw.style.left = (r.left - 7) + 'px'; boxHandles.nw.style.top = (r.top - 7) + 'px';
     boxHandles.ne.style.left = (r.right - 7) + 'px'; boxHandles.ne.style.top = (r.top - 7) + 'px';
     boxHandles.sw.style.left = (r.left - 7) + 'px'; boxHandles.sw.style.top = (r.bottom - 7) + 'px';
     boxHandles.se.style.left = (r.right - 7) + 'px'; boxHandles.se.style.top = (r.bottom - 7) + 'px';
+    moveHandle.style.left = (r.left + r.width / 2 - 11) + 'px';
+    moveHandle.style.top = (r.top - 11 - 22) + 'px';
   }
   function showHandlesFor(el){
     positionHandles(el);
-    HANDLE_CORNERS.forEach(function(c){ boxHandles[c].hidden = false; });
+    ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = false; });
   }
   function hideHandles(){
-    HANDLE_CORNERS.forEach(function(c){ boxHandles[c].hidden = true; });
+    ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = true; });
   }
   var MIN_BOX = 24;
   HANDLE_CORNERS.forEach(function(corner){
     boxHandles[corner].addEventListener('mousedown', function(e){
       if (!boxTargetEl) return;
       e.preventDefault();
+      snapshotUndo();
       var el = boxTargetEl;
       var startRect = el.getBoundingClientRect();
       var startT = getBoxTranslate(el);
@@ -1338,40 +1373,32 @@
   }
   function hideGuides(){ guideV.hidden = true; guideH.hidden = true; }
 
-  // drag the body of an already-selected box to move it
-  deck.addEventListener('mousedown', function(e){
-    if (!isEditing() || !boxTargetEl) return;
-    if (e.target.closest && (e.target.closest('.style-panel') || e.target.closest('.box-handle'))) return;
-    var candidate = findBoxAncestor(e.target) || findBlockAncestor(e.target);
-    if (candidate !== boxTargetEl) return;
+  // dedicated move handle - the only way to drag a box; everything else in the
+  // box stays plain text interaction (select, caret, color/size via the panel)
+  moveHandle.addEventListener('mousedown', function(e){
+    if (!boxTargetEl) return;
+    e.preventDefault();
+    snapshotUndo();
     var el = boxTargetEl;
     var startT = getBoxTranslate(el);
     var startRect = el.getBoundingClientRect();
     var startX = e.clientX, startY = e.clientY;
-    var moved = false;
-    var targets;
+    var targets = getSnapTargets(el);
     function onMove(ev){
       var dx = ev.clientX - startX, dy = ev.clientY - startY;
-      if (!moved && Math.hypot(dx, dy) > 4){ moved = true; targets = getSnapTargets(el); }
-      if (moved){
-        ev.preventDefault();
-        var tentative = { left: startRect.left + dx, top: startRect.top + dy, width: startRect.width, height: startRect.height };
-        var snap = applySnapToRect(tentative, targets);
-        setBoxTranslate(el, startT.x + dx + snap.dx, startT.y + dy + snap.dy);
-        positionHandles(el);
-        showGuides(el.closest('.slide').getBoundingClientRect(), snap.snapX, snap.snapY);
-      }
+      var tentative = { left: startRect.left + dx, top: startRect.top + dy, width: startRect.width, height: startRect.height };
+      var snap = applySnapToRect(tentative, targets);
+      setBoxTranslate(el, startT.x + dx + snap.dx, startT.y + dy + snap.dy);
+      positionHandles(el);
+      showGuides(el.closest('.slide').getBoundingClientRect(), snap.snapX, snap.snapY);
     }
     function onUp(){
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onUp);
       hideGuides();
-      if (moved){
-        markEdited(el);
-        positionPanel(boxPanel, el.getBoundingClientRect());
-        scheduleSave();
-        window.__justDraggedBox = true;
-      }
+      markEdited(el);
+      positionPanel(boxPanel, el.getBoundingClientRect());
+      scheduleSave();
     }
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
@@ -1380,12 +1407,14 @@
   buildSwatches(textSwatchWrap, function(color){ applyTextStyle('color', color); });
   buildSwatches(boxBgWrap, function(color){
     if (!boxTargetEl) return;
+    snapshotUndo();
     boxTargetEl.style.background = color;
     markEdited(boxTargetEl);
     scheduleSave();
   });
   buildSwatches(boxBorderWrap, function(color){
     if (!boxTargetEl) return;
+    snapshotUndo();
     if (color){
       var cs = getComputedStyle(boxTargetEl);
       if (parseFloat(cs.borderTopWidth) === 0){ boxTargetEl.style.borderWidth = '1px'; boxTargetEl.style.borderStyle = 'solid'; }
@@ -1403,6 +1432,7 @@
   Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-size-step]')).forEach(function(b){
     b.addEventListener('click', function(){
       if (!textTargetEl) return;
+      snapshotUndo();
       var delta = parseFloat(b.getAttribute('data-size-step'));
       var cur = parseFloat(getComputedStyle(textTargetEl).fontSize);
       textTargetEl.style.fontSize = Math.max(8, cur + delta) + 'px';
@@ -1413,6 +1443,7 @@
   });
   document.getElementById('box-pos-reset').addEventListener('click', function(){
     if (!boxTargetEl) return;
+    snapshotUndo();
     boxTargetEl.style.transform = '';
     boxTargetEl.style.width = '';
     boxTargetEl.style.height = '';
