@@ -262,6 +262,20 @@
   #edit-toolbar{ position:fixed; left:0; right:0; top:0; z-index:20; background:#1a2440; border-bottom:1px solid var(--panel-border); display:flex; align-items:center; gap:.8rem; padding:.5rem 1rem; font-size:.8rem; color:var(--ink-dim); }
   #edit-toolbar button{ font-family:var(--font-body); font-size:.78rem; font-weight:700; color:var(--ink); background:rgba(255,255,255,.06); border:1px solid var(--panel-border); border-radius:6px; padding:.35em .7em; cursor:pointer; }
   #edit-toolbar button:hover{ background:rgba(255,255,255,.12); }
+
+  .style-panel[hidden]{ display:none; }
+  .style-panel{ position:fixed; z-index:25; background:#1a2440; border:1px solid var(--panel-border); border-radius:10px; padding:.6rem .7rem; box-shadow:0 8px 24px rgba(0,0,0,.4); display:flex; flex-direction:column; gap:.5rem; font-family:var(--font-body); max-width:280px; }
+  .style-panel .sp-row{ display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+  .style-panel .sp-label{ font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); width:100%; }
+  .style-panel .sp-swatch{ width:20px; height:20px; border-radius:50%; border:1.5px solid rgba(255,255,255,.25); cursor:pointer; padding:0; flex:none; }
+  .style-panel .sp-swatch:hover{ border-color:#fff; }
+  .style-panel .sp-swatch.sp-clear{ background:transparent; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-size:.7rem; line-height:1; }
+  .style-panel input[type=color]{ width:22px; height:22px; padding:0; border:1.5px solid rgba(255,255,255,.25); border-radius:50%; overflow:hidden; background:none; cursor:pointer; }
+  .style-panel .sp-step{ font-family:var(--font-body); font-size:.85rem; font-weight:700; color:var(--ink); background:rgba(255,255,255,.06); border:1px solid var(--panel-border); border-radius:6px; width:24px; height:24px; cursor:pointer; line-height:1; }
+  .style-panel .sp-step:hover{ background:rgba(255,255,255,.14); }
+  .style-panel .sp-val{ font-size:.75rem; color:var(--ink-dim); min-width:3.2em; text-align:center; }
+  .style-panel .sp-close{ align-self:flex-end; font-size:.68rem; font-weight:700; color:var(--ink-dim); background:none; border:none; cursor:pointer; padding:0; }
+  .style-panel .sp-close:hover{ color:var(--ink); }
   #edit-status{ flex:1; }
   body.edit-mode [contenteditable="true"]:hover{ outline:1px dashed rgba(242,169,59,.6); outline-offset:2px; cursor:text; }
   body.edit-mode [contenteditable="true"]:focus{ outline:2px solid var(--amber); outline-offset:2px; background:rgba(242,169,59,.06); }
@@ -285,11 +299,10 @@
 
 <section class="slide cover" data-title="Tiêu đề">
   <div class="kicker teal">Tham luận · Hội nghị Viên chức Ban KHCN&amp;ĐMST · Năm học 2025–2026</div>
-  <h1 class="headline" style="font-size:clamp(1.7rem,3.6vw,3rem); max-width:30ch; margin:.7rem 0 1.4rem; text-align:center; line-height:1.25;">Triển khai hoạt động Đổi mới sáng tạo<br>tại Đại học Công nghiệp Hà Nội<br><span class="accent">Thực trạng và giải pháp</span></h1>
+  <h1 class="headline" style="font-size:clamp(1.7rem,3.6vw,3rem); max-width:30ch; margin:.7rem 0 1.4rem; text-align:center; line-height:1.25;">Triển khai hoạt động Đổi mới sáng tạo<br>tại Đại học Công nghiệp Hà Nội<br><span class="accent">Thực trạng và Kiến nghị</span></h1>
   <div class="brandline">
     <span><b>Bùi Tiến Sơn</b></span><span class="dot"></span>
-    <span>Phòng Đổi mới sáng tạo</span><span class="dot"></span>
-    <span>Thứ Bảy, 12/9/2026 · Phòng 603, Nhà A1</span>
+    <span>Phòng Đổi mới sáng tạo</span>
   </div>
 </section>
 
@@ -301,7 +314,7 @@
 
 <section class="slide" data-title="Mục lục">
   <div class="kicker">Nội dung trình bày</div>
-  <h1 class="headline">5 phần <span class="accent2">chính</span></h1>
+  <h1 class="headline">Nội dung <span class="accent2">trình bày</span></h1>
   <div class="body-col"><div class="fill">
     <ul class="agenda">
       <li class="active"><span class="ag-num">I</span><span class="ag-text">Bối cảnh chính sách và mô hình tham chiếu<span class="ag-sub">Quốc tế, khung pháp lý quốc gia, hai mô hình trong nước đã đi trước</span></span></li>
@@ -870,10 +883,27 @@
 <button id="fullscreen-btn">⛶ Toàn màn hình</button>
 <button id="edit-btn" title="Chế độ sửa text tại chỗ (chỉ lưu trên máy này)">✎ Sửa</button>
 <div id="edit-toolbar" hidden>
-  <span id="edit-status">Đang ở chế độ sửa - bấm vào chữ để sửa. Tự lưu trên trình duyệt này.</span>
+  <span id="edit-status">Đang ở chế độ sửa - bấm vào chữ để sửa, chọn chữ hoặc bấm vào khung/hộp để đổi màu, cỡ chữ. Tự lưu trên trình duyệt này.</span>
   <button id="edit-export">Xuất nội dung đã sửa</button>
   <button id="edit-reset">Trả về bản gốc</button>
   <button id="edit-off">Xong, tắt sửa</button>
+</div>
+<div id="text-style-panel" class="style-panel" hidden>
+  <button class="sp-close" data-close>Đóng ×</button>
+  <div class="sp-row"><span class="sp-label">Màu chữ</span></div>
+  <div class="sp-row" id="text-color-swatches"></div>
+  <div class="sp-row"><span class="sp-label">Cỡ chữ</span>
+    <button class="sp-step" data-size-step="-2">-</button>
+    <span class="sp-val" id="text-size-val">-</span>
+    <button class="sp-step" data-size-step="2">+</button>
+  </div>
+</div>
+<div id="box-style-panel" class="style-panel" hidden>
+  <button class="sp-close" data-close>Đóng ×</button>
+  <div class="sp-row"><span class="sp-label">Nền hộp</span></div>
+  <div class="sp-row" id="box-bg-swatches"></div>
+  <div class="sp-row"><span class="sp-label">Viền hộp</span></div>
+  <div class="sp-row" id="box-border-swatches"></div>
 </div>
 <div class="navzone left" id="zone-left"></div>
 <div class="navzone right" id="zone-right"></div>
@@ -988,6 +1018,7 @@
     editBtn.classList.remove('on');
     deck.removeEventListener('input', scheduleSave);
     deck.removeEventListener('click', linkGuard, true);
+    hidePanels();
   }
   function linkGuard(e){
     var a = e.target.closest && e.target.closest('a');
@@ -1047,6 +1078,181 @@
     overlay.appendChild(box);
     document.body.appendChild(overlay);
     ta.focus(); ta.select();
+  });
+
+  // ================= style panel: text color/size, box background/border =================
+  var PALETTE = [
+    {n:'Mặc định', v:''},
+    {n:'Amber', v:'#f2a93b'},
+    {n:'Teal', v:'#3ecfc0'},
+    {n:'Đỏ', v:'#ef5d63'},
+    {n:'Xanh lá', v:'#3ecf8e'},
+    {n:'Xám nhạt', v:'#9aa6c7'}
+  ];
+  var textPanel = document.getElementById('text-style-panel');
+  var boxPanel = document.getElementById('box-style-panel');
+  var textSwatchWrap = document.getElementById('text-color-swatches');
+  var boxBgWrap = document.getElementById('box-bg-swatches');
+  var boxBorderWrap = document.getElementById('box-border-swatches');
+  var textSizeVal = document.getElementById('text-size-val');
+  var savedRange = null;
+  var textTargetEl = null;
+  var boxTargetEl = null;
+
+  function buildSwatches(wrap, onPick){
+    wrap.innerHTML = '';
+    PALETTE.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.title = c.n;
+      if (c.v === ''){ b.className = 'sp-swatch sp-clear'; b.textContent = '×'; }
+      else { b.className = 'sp-swatch'; b.style.background = c.v; }
+      b.addEventListener('mousedown', function(e){ e.preventDefault(); });
+      b.addEventListener('click', function(){ onPick(c.v); });
+      wrap.appendChild(b);
+    });
+    var custom = document.createElement('input');
+    custom.type = 'color';
+    custom.title = 'Màu tuỳ chọn';
+    custom.addEventListener('mousedown', function(e){ e.stopPropagation(); });
+    custom.addEventListener('input', function(){ onPick(custom.value); });
+    wrap.appendChild(custom);
+  }
+
+  function inEditableSlide(node){
+    var el = node && (node.nodeType === 3 ? node.parentElement : node);
+    while (el){ if (el.classList && el.classList.contains('slide')) return true; el = el.parentElement; }
+    return false;
+  }
+
+  function findBoxAncestor(node){
+    var el = node && (node.nodeType === 3 ? node.parentElement : node);
+    while (el && el.parentElement && !(el.classList && el.classList.contains('slide'))){
+      var cs = getComputedStyle(el);
+      var hasBorder = parseFloat(cs.borderTopWidth) > 0;
+      var bgc = cs.backgroundColor;
+      var hasBg = bgc && bgc !== 'rgba(0, 0, 0, 0)' && bgc !== 'transparent';
+      if (hasBorder || hasBg) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function findTextTarget(node){
+    var el = node && (node.nodeType === 3 ? node.parentElement : node);
+    if (!el || (el.classList && el.classList.contains('slide'))) return null;
+    return el;
+  }
+
+  function positionPanel(panel, rect){
+    var top = rect.bottom + 8;
+    var left = rect.left;
+    var maxLeft = window.innerWidth - 300;
+    if (left > maxLeft) left = Math.max(8, maxLeft);
+    if (left < 8) left = 8;
+    if (top > window.innerHeight - 170) top = Math.max(8, rect.top - 8 - 160);
+    panel.style.top = top + 'px';
+    panel.style.left = left + 'px';
+  }
+
+  function updateTextSizeDisplay(){
+    if (!textTargetEl){ textSizeVal.textContent = '-'; return; }
+    var px = parseFloat(getComputedStyle(textTargetEl).fontSize);
+    textSizeVal.textContent = Math.round(px) + 'px';
+  }
+
+  function hidePanels(){
+    textPanel.hidden = true; boxPanel.hidden = true;
+    textTargetEl = null; boxTargetEl = null; savedRange = null;
+  }
+
+  function applyTextStyle(prop, value){
+    var sel = window.getSelection();
+    var range = (sel && sel.rangeCount && !sel.isCollapsed) ? sel.getRangeAt(0) : savedRange;
+    if (range && !range.collapsed){
+      var span = document.createElement('span');
+      span.style[prop] = value;
+      try{ range.surroundContents(span); }
+      catch(e){ var frag = range.extractContents(); span.appendChild(frag); range.insertNode(span); }
+      if (sel) sel.removeAllRanges();
+      savedRange = null;
+    } else if (textTargetEl){
+      textTargetEl.style[prop] = value;
+    }
+    scheduleSave();
+  }
+
+  buildSwatches(textSwatchWrap, function(color){ applyTextStyle('color', color); });
+  buildSwatches(boxBgWrap, function(color){
+    if (!boxTargetEl) return;
+    boxTargetEl.style.background = color;
+    scheduleSave();
+  });
+  buildSwatches(boxBorderWrap, function(color){
+    if (!boxTargetEl) return;
+    if (color){
+      var cs = getComputedStyle(boxTargetEl);
+      if (parseFloat(cs.borderTopWidth) === 0){ boxTargetEl.style.borderWidth = '1px'; boxTargetEl.style.borderStyle = 'solid'; }
+      boxTargetEl.style.borderColor = color;
+    } else {
+      boxTargetEl.style.borderColor = '';
+    }
+    scheduleSave();
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('.style-panel [data-close]')).forEach(function(b){
+    b.addEventListener('click', hidePanels);
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-size-step]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      if (!textTargetEl) return;
+      var delta = parseFloat(b.getAttribute('data-size-step'));
+      var cur = parseFloat(getComputedStyle(textTargetEl).fontSize);
+      textTargetEl.style.fontSize = Math.max(8, cur + delta) + 'px';
+      updateTextSizeDisplay();
+      scheduleSave();
+    });
+  });
+
+  function onSelectionChange(){
+    if (!isEditing()) return;
+    var sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    var anchorNode = sel.anchorNode;
+    if (!anchorNode || !inEditableSlide(anchorNode)) return;
+    if (!sel.isCollapsed && sel.toString().trim().length > 0){
+      var range = sel.getRangeAt(0);
+      savedRange = range.cloneRange();
+      textTargetEl = findTextTarget(anchorNode);
+      var rect = range.getBoundingClientRect();
+      if (rect && (rect.width || rect.height)){
+        boxPanel.hidden = true;
+        positionPanel(textPanel, rect);
+        textPanel.hidden = false;
+        updateTextSizeDisplay();
+      }
+    }
+  }
+  document.addEventListener('selectionchange', function(){
+    clearTimeout(window.__spSelTimer);
+    window.__spSelTimer = setTimeout(onSelectionChange, 120);
+  });
+
+  deck.addEventListener('click', function(e){
+    if (!isEditing()) return;
+    if (e.target.closest && e.target.closest('.style-panel')) return;
+    var sel = window.getSelection();
+    if (sel && !sel.isCollapsed && sel.toString().trim().length > 0) return;
+    textPanel.hidden = true;
+    var box = findBoxAncestor(e.target);
+    if (box){
+      boxTargetEl = box;
+      positionPanel(boxPanel, box.getBoundingClientRect());
+      boxPanel.hidden = false;
+    } else {
+      boxPanel.hidden = true;
+      boxTargetEl = null;
+    }
   });
 
   try{
