@@ -303,7 +303,7 @@
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
-</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 15:04 · 1e4e0ac</div>
+</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 15:11 · 3727ebe</div>
 
 
 <div id="deck">
@@ -896,6 +896,7 @@
 <button id="edit-btn" title="Chế độ sửa text tại chỗ (chỉ lưu trên máy này)">✎ Sửa</button>
 <div id="edit-toolbar" hidden>
   <span id="edit-status">Đang ở chế độ sửa - bấm vào chữ để sửa, chọn chữ hoặc bấm vào khung/hộp để đổi màu, cỡ chữ. Tự lưu trên trình duyệt này.</span>
+  <button id="edit-publish" style="background:var(--teal); color:#04241f; border-color:transparent;" title="Cần dán GitHub token (chỉ dùng tạm trên trình duyệt, không lưu vào code)">Cập nhật lên online</button>
   <button id="edit-export">Xuất nội dung đã sửa</button>
   <button id="edit-reset">Trả về bản gốc</button>
   <button id="edit-off">Xong, tắt sửa</button>
@@ -1131,6 +1132,90 @@
       ta.remove();
       done(ok);
     }
+  });
+
+  // ================= publish to GitHub (token entered fresh each session, never saved to code) =================
+  var GH_REPO = 'buitienson/haui-innovation-talk';
+  var GH_BRANCH = 'main';
+  var GH_TOKEN_KEY = 'haui-talk-gh-token';
+
+  function getGhToken(forceAsk){
+    var t = null;
+    try{ t = sessionStorage.getItem(GH_TOKEN_KEY); }catch(e){}
+    if (t && !forceAsk) return t;
+    var entered = prompt('Dán GitHub token (fine-grained, quyền Contents: Read and write, chỉ repo haui-innovation-talk). Token chỉ dùng ngay bây giờ trên trình duyệt này, không lưu vào code:');
+    if (!entered) return null;
+    try{ sessionStorage.setItem(GH_TOKEN_KEY, entered); }catch(e){}
+    return entered;
+  }
+
+  function utf8ToB64(str){
+    return btoa(new Uint8Array(new TextEncoder().encode(str)).reduce(function(data, byte){ return data + String.fromCharCode(byte); }, ''));
+  }
+  function b64ToUtf8(b64){
+    var binary = atob(b64.replace(/\n/g, ''));
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+  function ghGetFile(path, token){
+    return fetch('https://api.github.com/repos/' + GH_REPO + '/contents/' + path + '?ref=' + GH_BRANCH, {
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }
+    }).then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' khi đọc ' + path);
+      return r.json();
+    }).then(function(data){ return { sha: data.sha, text: b64ToUtf8(data.content) }; });
+  }
+  function ghPutFile(path, sha, newText, message, token){
+    return fetch('https://api.github.com/repos/' + GH_REPO + '/contents/' + path, {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message, content: utf8ToB64(newText), sha: sha, branch: GH_BRANCH })
+    }).then(function(r){
+      if (!r.ok) return r.json().then(function(j){ var err = new Error('HTTP ' + r.status + ' khi ghi ' + path + ': ' + (j.message || '')); err.status = r.status; throw err; });
+      return r.json();
+    });
+  }
+  function spliceDeck(fullText, newDeckHtml){
+    var startTag = '<div id="deck">';
+    var endTag = '<div id="progress-bar">';
+    var startIdx = fullText.indexOf(startTag);
+    var endIdx = fullText.indexOf(endTag);
+    if (startIdx === -1 || endIdx === -1 || endIdx < startIdx) return null;
+    return fullText.slice(0, startIdx + startTag.length) + '\n\n' + newDeckHtml + '\n\n' + fullText.slice(endIdx);
+  }
+
+  var publishBtn = document.getElementById('edit-publish');
+  publishBtn.addEventListener('click', function(){
+    var token = getGhToken(false);
+    if (!token) return;
+    if (!confirm('Đăng nội dung hiện tại lên cho MỌI người xem (ghi thẳng lên GitHub)?')) return;
+    saveNow();
+    var origLabel = publishBtn.textContent;
+    publishBtn.textContent = 'Đang đăng...';
+    publishBtn.disabled = true;
+    var newDeckHtml = deck.innerHTML;
+    Promise.all([ghGetFile('index.html', token), ghGetFile('src/talk.html', token)]).then(function(files){
+      var idxF = files[0], srcF = files[1];
+      var newIndex = spliceDeck(idxF.text, newDeckHtml);
+      var newSrc = spliceDeck(srcF.text, newDeckHtml);
+      if (!newIndex || !newSrc) throw new Error('Không tìm thấy khối #deck - dừng lại để tránh ghi hỏng trang.');
+      return ghPutFile('index.html', idxF.sha, newIndex, 'Cập nhật qua chế độ sửa trực tiếp trên web', token)
+        .then(function(){ return ghPutFile('src/talk.html', srcF.sha, newSrc, 'Đồng bộ src/talk.html theo bản đã đăng qua web', token); });
+    }).then(function(){
+      publishBtn.textContent = origLabel;
+      publishBtn.disabled = false;
+      alert('Đã đăng xong. Trang GitHub Pages sẽ cập nhật sau khoảng 30-60 giây.');
+    }).catch(function(err){
+      publishBtn.textContent = origLabel;
+      publishBtn.disabled = false;
+      if (err.status === 401 || err.status === 403){
+        try{ sessionStorage.removeItem(GH_TOKEN_KEY); }catch(e){}
+        alert('Token sai hoặc hết quyền, đã xoá - bấm lại để nhập token mới.');
+      } else {
+        alert('Đăng thất bại: ' + err.message);
+      }
+    });
   });
 
   // ================= style panel: text color/size, box background/border =================
