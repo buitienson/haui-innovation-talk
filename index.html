@@ -169,6 +169,14 @@
   .jl{ display:block; font-size:.62rem; text-transform:uppercase; letter-spacing:.07em; color:var(--teal); font-weight:700; margin-bottom:.1rem; }
   .jv{ display:block; font-size:.79rem; color:var(--ink-dim); line-height:1.4; }
 
+  /* ===== bar chart (multi-year trend) ===== */
+  .bar-chart{ display:flex; align-items:flex-end; gap:.55rem; height:150px; margin-top:1.1rem; width:100%; }
+  .bar-chart .bc-item{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+  .bar-chart .bc-val{ font-size:.72rem; font-weight:800; color:var(--ink); margin-bottom:.3rem; font-family:var(--font-head); }
+  .bar-chart .bc-bar{ width:100%; border-radius:6px 6px 0 0; background:var(--teal); }
+  .bar-chart .bc-bar.dip{ background:var(--red); }
+  .bar-chart .bc-yr{ font-size:.62rem; color:var(--ink-faint); margin-top:.35rem; text-align:center; }
+
   /* ===== gate timeline ===== */
   .gtl{ display:flex; align-items:stretch; gap:0; width:100%; margin-top:1rem; }
   .gtl-item{ flex:1; position:relative; padding:1.3rem .5rem 0; border-top:2px solid var(--panel-border); }
@@ -391,11 +399,31 @@
       <div class="funnel-stage" style="--w:20%; --c:var(--red);"><div class="funnel-bar"><span class="fn-num">0</span><span class="fn-label">Spin-off</span></div></div>
     </div>
   </div></div>
-  <div class="cite small"><b>Không theo tỷ lệ tuyệt đối</b> — minh hoạ mức thu hẹp qua từng bước. <b>Nguồn:</b> Ban KHCN&amp;ĐMST HaUI, báo cáo dự thảo Hội nghị Viên chức năm học 2025–2026, tr.2–5.</div>
+  <div class="cite small"><b>Không theo tỷ lệ tuyệt đối</b> — minh hoạ mức thu hẹp qua từng bước. <b>Nguồn:</b> Đại học Công nghiệp Hà Nội. Báo cáo thực hiện Nghị quyết Hội nghị đại biểu viên chức, NLĐ; tổng kết năm học 2025–2026, 9/9/2026, tr.9–10.</div>
+</section>
+
+<section class="slide" data-title="Xu hướng đầu vào">
+  <div class="kicker"><span class="n">09</span> Đầu vào nghiên cứu — nhìn theo nhiều năm</div>
+  <h1 class="headline">Không phải biến động<br>nhất thời — mà là <span class="accent">chững lại sau 6 năm tăng</span></h1>
+  <div class="body-col"><div class="fill">
+    <div class="bar-chart">
+      <div class="bc-item"><span class="bc-val">220</span><div class="bc-bar" style="height:34%;"></div><span class="bc-yr">2018–19</span></div>
+      <div class="bc-item"><span class="bc-val">245</span><div class="bc-bar" style="height:38%;"></div><span class="bc-yr">2019–20</span></div>
+      <div class="bc-item"><span class="bc-val">376</span><div class="bc-bar" style="height:59%;"></div><span class="bc-yr">2020–21</span></div>
+      <div class="bc-item"><span class="bc-val">427</span><div class="bc-bar" style="height:67%;"></div><span class="bc-yr">2021–22</span></div>
+      <div class="bc-item"><span class="bc-val">443</span><div class="bc-bar" style="height:69%;"></div><span class="bc-yr">2022–23</span></div>
+      <div class="bc-item"><span class="bc-val">585</span><div class="bc-bar" style="height:91%;"></div><span class="bc-yr">2023–24</span></div>
+      <div class="bc-item"><span class="bc-val">640</span><div class="bc-bar" style="height:100%;"></div><span class="bc-yr">2024–25</span></div>
+      <div class="bc-item"><span class="bc-val">628</span><div class="bc-bar dip" style="height:98%;"></div><span class="bc-yr">2025–26</span></div>
+    </div>
+    <div class="sub" style="margin-top:1rem;">Đề tài NCKH sinh viên đăng ký, 8 năm liền — giảm nhẹ 2025–26 (-1,9%) sau 6 năm tăng liên tục. Nhưng số <b style="color:var(--ink)">sinh viên tham gia</b> giảm mạnh hơn: 2.700 → 2.329 (-13,7%).</div>
+    <div class="quote" style="margin-top:.8rem; font-size:1rem;">"Số đề tài và sinh viên tham gia nghiên cứu khoa học giảm; hoạt động dịch vụ, chuyển giao và thương mại hóa kết quả nghiên cứu chưa tương xứng tiềm năng; doanh nghiệp khoa học công nghệ, spin-off chưa hình thành."</div>
+  </div></div>
+  <div class="cite small"><b>Nguồn:</b> Thống kê báo cáo Hội nghị viên chức các năm, Đại học Công nghiệp Hà Nội (2018–2025) · Báo cáo thực hiện Nghị quyết HNĐBVC, tổng kết năm học 2025–2026, 9/9/2026 (mục tồn tại, hạn chế).</div>
 </section>
 
 <section class="slide" data-title="Khoảng cách">
-  <div class="kicker"><span class="n">09</span> Không còn là chuyện "chưa có văn kiện"</div>
+  <div class="kicker"><span class="n">10</span> Không còn là chuyện "chưa có văn kiện"</div>
   <h1 class="headline">Cam kết đã rõ —<br><span class="accent">khoảng cách cũng rõ</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -409,7 +437,7 @@
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 1">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">10</span> Điểm nghẽn 1 · Tổ chức &amp; nhân lực</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">11</span> Điểm nghẽn 1 · Tổ chức &amp; nhân lực</div>
   <h1 class="headline">ĐMST hiện chỉ có<br><span class="accent">2 viên chức trực tiếp triển khai</span></h1>
   <div class="body-col"><div class="fill">
     <div class="org-layer">
@@ -428,7 +456,7 @@
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 2">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">11</span> Điểm nghẽn 2 · Pháp lý &amp; SHTT</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">12</span> Điểm nghẽn 2 · Pháp lý &amp; SHTT</div>
   <h1 class="headline">Hai điểm tắc trên đường<br>từ <span class="accent">kết quả nghiên cứu tới doanh nghiệp</span></h1>
   <div class="body-col"><div class="fill">
     <div class="flow">
@@ -445,7 +473,7 @@
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 3">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">12</span> Điểm nghẽn 3 · Thị trường &amp; doanh nghiệp</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">13</span> Điểm nghẽn 3 · Thị trường &amp; doanh nghiệp</div>
   <h1 class="headline">Giá trị thương mại hoá<br>còn <span class="accent">thấp so với quy mô nghiên cứu</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -459,7 +487,7 @@
 </section>
 
 <section class="slide" data-title="Lộ trình">
-  <div class="kicker"><span class="n">13</span> Lộ trình Trung tâm ĐMST HaUI</div>
+  <div class="kicker"><span class="n">14</span> Lộ trình Trung tâm ĐMST HaUI</div>
   <h1 class="headline">Roadmap có <span class="accent">cổng quyết định</span></h1>
   <div class="body-col"><div class="fill">
     <div class="gtl">
@@ -472,7 +500,7 @@
 </section>
 
 <section class="slide" data-title="Hạ tầng ĐMST">
-  <div class="kicker"><span class="n">14</span> Hạ tầng ĐMST</div>
+  <div class="kicker"><span class="n">15</span> Hạ tầng ĐMST</div>
   <h1 class="headline">So với <span class="accent2">2 mô hình trong nước</span></h1>
   <div class="body-col"><div class="fill">
   <div class="table-wrap">
@@ -490,7 +518,7 @@
 </section>
 
 <section class="slide" data-title="Bài học áp dụng">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">15</span> Bài học có thể áp dụng</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">16</span> Bài học có thể áp dụng</div>
   <h1 class="headline">Tiếp nhận kinh nghiệm —<br><span class="accent2">không bê nguyên mô hình</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
@@ -503,7 +531,7 @@
 </section>
 
 <section class="slide" data-title="Tổng hợp nguyên nhân">
-  <div class="kicker"><span class="n">16</span> Tổng hợp</div>
+  <div class="kicker"><span class="n">17</span> Tổng hợp</div>
   <h1 class="headline">Nguyên nhân → <span class="accent2">hệ quả</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -515,7 +543,7 @@
 </section>
 
 <section class="slide" data-title="Kiến nghị 2026">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">17</span> Kiến nghị · 2026</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị · 2026</div>
   <h1 class="headline">Ba việc giao được <span class="accent2">ngay trong quý IV</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -549,7 +577,7 @@
 </section>
 
 <section class="slide" data-title="Kiến nghị 2027-2030">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị · 2027–2030</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">19</span> Kiến nghị · 2027–2030</div>
   <h1 class="headline">Chỉ tiêu theo <span class="accent2">từng mốc năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -570,7 +598,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ Atlas">
-  <div class="kicker"><span class="n">19</span> Công cụ hỗ trợ · 1/2</div>
+  <div class="kicker"><span class="n">20</span> Công cụ hỗ trợ · 1/2</div>
   <h1 class="headline">Innovation Center <span class="accent">Atlas</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
@@ -588,7 +616,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ tra cứu tạp chí">
-  <div class="kicker"><span class="n">20</span> Công cụ hỗ trợ · 2/2</div>
+  <div class="kicker"><span class="n">21</span> Công cụ hỗ trợ · 2/2</div>
   <h1 class="headline">Web tra cứu <span class="accent2">tạp chí khoa học</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
