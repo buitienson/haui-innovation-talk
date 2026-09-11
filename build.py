@@ -41,8 +41,10 @@ if m2:
 
 html = (
     '<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">'
-    '<meta name="viewport" content="width=device-width, initial-scale=1">'
+    '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
     f'<meta name="description" content="Tham luận: Thực trạng và vướng mắc triển khai đổi mới sáng tạo tại Đại học — trường hợp HaUI">'
+    '<meta name="apple-mobile-web-app-capable" content="yes">'
+    '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">'
     f"<title>{title}</title>{head_extra}</head><body>{version_tag}{body}</body></html>"
 )
 
