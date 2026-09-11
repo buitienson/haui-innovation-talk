@@ -937,6 +937,19 @@
     <span class="sp-val" id="text-size-val">-</span>
     <button class="sp-step" data-size-step="2">+</button>
   </div>
+  <div class="sp-row"><span class="sp-label">Kiểu chữ</span></div>
+  <div class="sp-row">
+    <button class="sp-step" style="font-weight:900;" data-weight="700" title="Đậm">B</button>
+    <button class="sp-step" style="font-style:italic;" data-italic="italic" title="Nghiêng">I</button>
+    <button class="sp-step" style="width:auto; padding:0 .6em;" data-normal="1" title="Về chữ thường">Thường</button>
+  </div>
+  <div class="sp-row"><span class="sp-label">Căn lề</span></div>
+  <div class="sp-row">
+    <button class="sp-step" data-align="left" title="Căn trái">⯇≡</button>
+    <button class="sp-step" data-align="center" title="Căn giữa">≡</button>
+    <button class="sp-step" data-align="right" title="Căn phải">≡⯈</button>
+    <button class="sp-step" data-align="justify" title="Căn đều">☰</button>
+  </div>
 </div>
 <div id="box-style-panel" class="style-panel" hidden>
   <button class="sp-close" data-close>Đóng ×</button>
@@ -1359,22 +1372,83 @@
     if (typeof hideGuides === 'function') hideGuides();
   }
 
-  function applyTextStyle(prop, value){
+  // wrap only the Text nodes touched by the range, each in its own inline span -
+  // safe even when the selection crosses element/line boundaries (unlike
+  // surroundContents on the whole range, which breaks when a block element
+  // sits only partially inside the selection)
+  function wrapRangeTextNodes(range, props){
+    var root = range.commonAncestorContainer;
+    if (root.nodeType === 3) root = root.parentElement;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(node){
+        return range.intersectsNode(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var nodes = [];
+    var n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    var last = null;
+    nodes.forEach(function(textNode){
+      var start = (textNode === range.startContainer) ? range.startOffset : 0;
+      var end = (textNode === range.endContainer) ? range.endOffset : textNode.length;
+      if (start >= end) return;
+      if (end < textNode.length) textNode.splitText(end);
+      if (start > 0) textNode = textNode.splitText(start);
+      var span = document.createElement('span');
+      Object.keys(props).forEach(function(k){ span.style[k] = props[k]; });
+      textNode.parentNode.insertBefore(span, textNode);
+      span.appendChild(textNode);
+      last = span;
+    });
+    return last;
+  }
+
+  function applyTextStyles(props){
     snapshotUndo();
     var sel = window.getSelection();
     var range = (sel && sel.rangeCount && !sel.isCollapsed) ? sel.getRangeAt(0) : savedRange;
     if (range && !range.collapsed){
-      var span = document.createElement('span');
-      span.style[prop] = value;
-      try{ range.surroundContents(span); }
-      catch(e){ var frag = range.extractContents(); span.appendChild(frag); range.insertNode(span); }
-      markEdited(span);
+      var wrapped = wrapRangeTextNodes(range, props);
+      markEdited(wrapped);
       if (sel) sel.removeAllRanges();
       savedRange = null;
     } else if (textTargetEl){
-      textTargetEl.style[prop] = value;
+      Object.keys(props).forEach(function(k){ textTargetEl.style[k] = props[k]; });
       markEdited(textTargetEl);
     }
+    scheduleSave();
+  }
+
+  function applyTextStyle(prop, value){
+    var props = {};
+    props[prop] = value;
+    applyTextStyles(props);
+  }
+
+  // alignment is block-level - find the nearest block-ish ancestor of the
+  // selection/click instead of wrapping text nodes in an inline span
+  function findAlignTarget(){
+    var node = savedRange ? savedRange.commonAncestorContainer : textTargetEl;
+    if (!node) return null;
+    var el = node.nodeType === 3 ? node.parentElement : node;
+    while (el && el.parentElement){
+      if (el.classList && el.classList.contains('slide')) return null;
+      var d = getComputedStyle(el).display;
+      if (d.indexOf('inline') === -1) return el;
+      el = el.parentElement;
+    }
+    return el;
+  }
+
+  function applyAlign(value){
+    var el = findAlignTarget();
+    if (!el) return;
+    snapshotUndo();
+    el.style.textAlign = value;
+    markEdited(el);
+    var sel = window.getSelection();
+    if (sel) sel.removeAllRanges();
+    savedRange = null;
     scheduleSave();
   }
 
@@ -1440,6 +1514,8 @@
       e.preventDefault();
       snapshotUndo();
       var el = boxTargetEl;
+      el.style.maxWidth = 'none';
+      el.style.maxHeight = 'none';
       var startRect = el.getBoundingClientRect();
       var startT = getBoxTranslate(el);
       var startX = e.clientX, startY = e.clientY;
@@ -1573,17 +1649,33 @@
   Array.prototype.slice.call(document.querySelectorAll('.style-panel [data-close]')).forEach(function(b){
     b.addEventListener('click', hidePanels);
   });
+  function preventBlur(b){ b.addEventListener('mousedown', function(e){ e.preventDefault(); }); }
   Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-size-step]')).forEach(function(b){
+    preventBlur(b);
     b.addEventListener('click', function(){
       if (!textTargetEl) return;
-      snapshotUndo();
       var delta = parseFloat(b.getAttribute('data-size-step'));
       var cur = parseFloat(getComputedStyle(textTargetEl).fontSize);
-      textTargetEl.style.fontSize = Math.max(8, cur + delta) + 'px';
-      markEdited(textTargetEl);
+      var next = Math.max(8, cur + delta) + 'px';
+      applyTextStyle('fontSize', next);
       updateTextSizeDisplay();
-      scheduleSave();
     });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-weight]')).forEach(function(b){
+    preventBlur(b);
+    b.addEventListener('click', function(){ applyTextStyle('fontWeight', b.getAttribute('data-weight')); });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-italic]')).forEach(function(b){
+    preventBlur(b);
+    b.addEventListener('click', function(){ applyTextStyle('fontStyle', b.getAttribute('data-italic')); });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-normal]')).forEach(function(b){
+    preventBlur(b);
+    b.addEventListener('click', function(){ applyTextStyles({ fontWeight: 'normal', fontStyle: 'normal' }); });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#text-style-panel [data-align]')).forEach(function(b){
+    preventBlur(b);
+    b.addEventListener('click', function(){ applyAlign(b.getAttribute('data-align')); });
   });
   document.getElementById('box-pos-reset').addEventListener('click', function(){
     if (!boxTargetEl) return;
@@ -1591,6 +1683,8 @@
     boxTargetEl.style.transform = '';
     boxTargetEl.style.width = '';
     boxTargetEl.style.height = '';
+    boxTargetEl.style.maxWidth = '';
+    boxTargetEl.style.maxHeight = '';
     markEdited(boxTargetEl);
     positionPanel(boxPanel, boxTargetEl.getBoundingClientRect());
     positionHandles(boxTargetEl);
