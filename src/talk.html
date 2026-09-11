@@ -1001,7 +1001,6 @@
   render();
 
   // ================= local-only edit mode =================
-  var EDIT_PASSWORD = 'haui2026';
   var deck = document.getElementById('deck');
   var editBtn = document.getElementById('edit-btn');
   var toolbar = document.getElementById('edit-toolbar');
@@ -1085,12 +1084,6 @@
 
   editBtn.addEventListener('click', function(){
     if (isEditing()){ exitEdit(); return; }
-    var unlocked = sessionStorage.getItem('haui-talk-unlocked') === '1';
-    if (!unlocked){
-      var pw = prompt('Mật khẩu chế độ sửa (chỉ để chặn người lạ, không phải bảo mật thật):');
-      if (pw !== EDIT_PASSWORD){ if (pw !== null) alert('Sai mật khẩu.'); return; }
-      try{ sessionStorage.setItem('haui-talk-unlocked','1'); }catch(e){}
-    }
     enterEdit();
   });
   document.getElementById('edit-off').addEventListener('click', exitEdit);
