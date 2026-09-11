@@ -238,6 +238,18 @@
   .gtl-item .gtl-what{ font-size:.76rem; color:var(--ink-dim); margin-top:.2rem; max-width:17ch; }
   .gtl-item .gtl-gate{ font-size:.66rem; color:var(--red); font-weight:700; margin-top:.3rem; }
 
+  /* ===== 3-phase roadmap with gates ===== */
+  .roadmap3{ display:grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap:.5rem; align-items:stretch; margin-top:.3rem; }
+  .rm-phase{ border:1px solid var(--panel-border); border-radius:12px; padding:.7rem .8rem; display:flex; flex-direction:column; gap:.45rem; background:rgba(255,255,255,.02); }
+  .rm-head{ display:flex; align-items:center; gap:.5rem; padding-bottom:.4rem; margin-bottom:.1rem; border-bottom:1px solid var(--panel-border); }
+  .rm-num{ flex:none; display:inline-flex; align-items:center; justify-content:center; width:1.7em; height:1.7em; border-radius:50%; border:2px solid var(--teal); color:var(--teal); font-family:var(--font-head); font-weight:800; font-size:.72rem; }
+  .rm-label{ font-family:var(--font-head); font-weight:800; color:var(--teal); font-size:.78rem; line-height:1.15; }
+  .rm-block-title{ font-weight:700; font-size:.72rem; color:var(--ink); }
+  .rm-block-body{ font-size:.68rem; color:var(--ink-dim); line-height:1.35; margin-top:.1rem; }
+  .rm-gate{ display:flex; align-items:center; justify-content:center; width:76px; }
+  .rm-gate-diamond{ width:72px; height:72px; background:rgba(242,169,59,.1); border:1.5px solid var(--amber); border-radius:10px; transform:rotate(45deg); display:flex; align-items:center; justify-content:center; }
+  .rm-gate-diamond span{ display:block; transform:rotate(-45deg); text-align:center; font-size:.56rem; font-weight:700; color:var(--amber); line-height:1.15; width:58px; }
+
   /* --- title & divider --- */
   .slide.cover, .slide.divider{ align-items:center; text-align:center; justify-content:center; }
   .slide.cover .headline, .slide.divider .headline{ max-width:none; }
@@ -337,6 +349,10 @@
     .matrix2{ grid-template-columns:1fr; }
     .org-box.mid{ flex-direction:column; }
     .gtl{ flex-direction:column; gap:1rem; }
+    .roadmap3{ grid-template-columns: 1fr; }
+    .rm-gate{ width:100%; }
+    .rm-gate-diamond{ transform:none; border-radius:8px; height:auto; padding:.4rem; }
+    .rm-gate-diamond span{ transform:none; width:auto; }
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
@@ -451,17 +467,17 @@
 
 <section class="slide" data-title="Sáng chế và công bố">
   <div class="kicker"><span class="n">II.2</span> Sáng chế và công bố khoa học - nhìn theo nhiều năm</div>
-  <h1 class="headline">Quá trình phấn đấu -<br><span class="accent">5 năm liên tiếp đi lên</span></h1>
+  <h1 class="headline">Công bố khoa học tăng mạnh -<br><span class="accent">sáng chế/GPHI giữ ổn định</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2" style="gap:1.6rem; align-items:start;">
       <div>
-        <div class="sub" style="margin-bottom:.4rem; font-weight:700; color:var(--ink);">Sáng chế / GPHI*</div>
+        <div class="sub" style="margin-bottom:.4rem; font-weight:700; color:var(--ink);">Sáng chế / GPHI được cấp bằng</div>
         <div class="bar-chart" style="height:110px;">
-          <div class="bc-item"><span class="bc-val">1</span><div class="bc-bar" style="height:10%;"></div><span class="bc-yr">2020-21</span></div>
-          <div class="bc-item"><span class="bc-val">3</span><div class="bc-bar" style="height:22%;"></div><span class="bc-yr">2021-22</span></div>
-          <div class="bc-item"><span class="bc-val">2</span><div class="bc-bar" style="height:15%;"></div><span class="bc-yr">2022-23</span></div>
-          <div class="bc-item"><span class="bc-val">2</span><div class="bc-bar" style="height:15%;"></div><span class="bc-yr">2023-24</span></div>
-          <div class="bc-item"><span class="bc-val">14*</span><div class="bc-bar" style="height:100%;"></div><span class="bc-yr">2024-25</span></div>
+          <div class="bc-item"><span class="bc-val">1</span><div class="bc-bar" style="height:33%;"></div><span class="bc-yr">2020-21</span></div>
+          <div class="bc-item"><span class="bc-val">3</span><div class="bc-bar" style="height:100%;"></div><span class="bc-yr">2021-22</span></div>
+          <div class="bc-item"><span class="bc-val">2</span><div class="bc-bar" style="height:67%;"></div><span class="bc-yr">2022-23</span></div>
+          <div class="bc-item"><span class="bc-val">2</span><div class="bc-bar" style="height:67%;"></div><span class="bc-yr">2023-24</span></div>
+          <div class="bc-item"><span class="bc-val">2</span><div class="bc-bar" style="height:67%;"></div><span class="bc-yr">2024-25</span></div>
         </div>
       </div>
       <div>
@@ -475,8 +491,7 @@
         </div>
       </div>
     </div>
-    <div class="sub" style="margin-top:1.1rem;">Hai chỉ số cùng đi lên: công bố WoS/Scopus tăng từ 195 lên <b style="color:var(--ink)">479 bài</b> (+146%), tổng công bố khoa học tăng từ 834 lên <b style="color:var(--ink)">1.634</b> trong 5 năm - không phải một chỉ số đơn lẻ.<sup class="fnref">1</sup></div>
-    <div class="sub" style="margin-top:.4rem; font-size:.78rem; color:var(--ink-faint);">* Số liệu 2024-2025 gồm cả sáng chế/GPHI đã được cấp bằng và đơn đã chấp nhận hợp lệ (nguồn gốc không tách riêng hai loại).</div>
+    <div class="sub" style="margin-top:1.1rem;">Công bố WoS/Scopus tăng từ 195 lên <b style="color:var(--ink)">479 bài</b> (+146%), tổng công bố khoa học tăng từ 834 lên <b style="color:var(--ink)">1.634</b> trong 5 năm. Sáng chế/GPHI được cấp bằng dao động 1-3 kết quả/năm - ổn định, chưa có bước nhảy.<sup class="fnref">1</sup></div>
   </div></div>
   <div class="cite small"><sup>1</sup> Thống kê báo cáo Hội nghị viên chức các năm, Đại học Công nghiệp Hà Nội (năm học 2020-2021 đến 2024-2025).</div>
 </section>
@@ -739,14 +754,32 @@
 
 <section class="slide" data-title="Kiến nghị 1">
   <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">III.1</span> Kiến nghị 1 · Lộ trình hệ sinh thái ĐMST</div>
-  <h1 class="headline">Roadmap có <span class="accent">cổng quyết định</span></h1>
+  <h1 class="headline">Từ thí điểm cơ chế đến<br><span class="accent">vận hành hệ sinh thái ĐMST</span></h1>
   <div class="body-col"><div class="fill">
-    <div class="sub" style="margin-top:-.3rem; margin-bottom:.8rem;">Xây hệ sinh thái ĐMST gồm nhiều thành tố - vườn ươm, trung tâm chuyển giao công nghệ, mạng lưới hỗ trợ khởi nghiệp - không phải một đầu mối duy nhất.<sup class="fnref">1,2</sup></div>
-    <div class="gtl">
-      <div class="gtl-item now"><div class="gtl-dot"></div><div class="gtl-when">2026 · Pha 1 · Hôm nay</div><div class="gtl-what">Khảo sát 9 đơn vị, mô hình hệ sinh thái đề xuất - trên giấy</div><div class="gtl-gate">Cổng: phê duyệt mô hình cuối 2026</div></div>
-      <div class="gtl-item"><div class="gtl-dot"></div><div class="gtl-when">2027 · Pha 2</div><div class="gtl-what">Vận hành hoá các thành tố hệ sinh thái - 2,3–3 tỷ đồng</div><div class="gtl-gate">Cổng: bố trí kinh phí đầu năm</div></div>
-      <div class="gtl-item"><div class="gtl-dot"></div><div class="gtl-when">2028 · Pha 3</div><div class="gtl-what">Nhân rộng</div><div class="gtl-gate">Cổng: đánh giá kết quả Pha 2</div></div>
+    <div class="sub" style="margin-top:-.3rem; margin-bottom:.7rem;">Bắt đầu bằng kiểm chứng cơ chế trên dự án thực tế; chỉ mở rộng khi đầu mối và quy trình đã vận hành được.<sup class="fnref">1,2</sup></div>
+    <div class="roadmap3">
+      <div class="rm-phase">
+        <div class="rm-head"><span class="rm-num">01</span><span class="rm-label">2026<br>Thiết kế &amp; thí điểm</span></div>
+        <div><div class="rm-block-title">⚙ Việc làm</div><div class="rm-block-body">Chọn 3-5 dự án; thử quy trình sàng lọc, hoàn thiện và kết nối doanh nghiệp</div></div>
+        <div><div class="rm-block-title">📊 Kết quả</div><div class="rm-block-body">Mô hình tổ chức, quy trình thử nghiệm và danh mục dự án</div></div>
+        <div><div class="rm-block-title">📋 Điều kiện chuyển pha</div><div class="rm-block-body">Có dự án đi qua chuỗi và có đối tác tham gia</div></div>
+      </div>
+      <div class="rm-gate"><div class="rm-gate-diamond"><span>Cổng 1<br>Cơ chế có vận hành được?</span></div></div>
+      <div class="rm-phase">
+        <div class="rm-head"><span class="rm-num">02</span><span class="rm-label">2027<br>Thể chế hoá &amp; vận hành</span></div>
+        <div><div class="rm-block-title">⚙ Việc làm</div><div class="rm-block-body">Ban hành quy chế; giao đầu mối; bố trí nhân lực và kinh phí</div></div>
+        <div><div class="rm-block-title">📊 Kết quả</div><div class="rm-block-body">Đầu mối chuyên trách và danh mục dự án hằng năm</div></div>
+        <div><div class="rm-block-title">📋 Điều kiện chuyển pha</div><div class="rm-block-body">Có dự án thử nghiệm, chuyển giao hoặc ươm tạo</div></div>
+      </div>
+      <div class="rm-gate"><div class="rm-gate-diamond"><span>Cổng 2<br>Đầu mối có tạo được kết quả?</span></div></div>
+      <div class="rm-phase">
+        <div class="rm-head"><span class="rm-num">03</span><span class="rm-label">2028-2030<br>Mở rộng hệ sinh thái</span></div>
+        <div><div class="rm-block-title">⚙ Việc làm</div><div class="rm-block-body">Mở rộng mạng lưới; bổ sung TTO, ươm tạo và kết nối đầu tư theo nhu cầu</div></div>
+        <div><div class="rm-block-title">📊 Kết quả</div><div class="rm-block-body">Dòng dự án ổn định, nhiều chủ thể tham gia, đầu ra được đo lường</div></div>
+        <div><div class="rm-block-title">📋 Điều kiện duy trì</div><div class="rm-block-body">Đánh giá định kỳ; mở rộng chức năng có hiệu quả</div></div>
+      </div>
     </div>
+    <div class="pain-note" style="margin-top:.8rem;"><b>Nguyên tắc:</b> không mở rộng bộ máy trước khi kiểm chứng được cơ chế và nguồn dự án.</div>
   </div></div>
   <div class="cite small"><sup>1</sup> Bộ Công Thương, QĐ 359/QĐ-BCT, 27/2/2026 <span class="sep">·</span> <sup>2</sup> HĐ số 10/HĐ-TCC, 18/3/2026.</div>
 </section>
