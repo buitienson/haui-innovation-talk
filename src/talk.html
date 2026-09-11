@@ -1002,6 +1002,12 @@
   var hash = parseInt((location.hash || '').replace('#',''), 10);
   if (hash && hash >= 1 && hash <= total) idx = hash - 1;
   render();
+  // editing the URL's #N by hand (or a bookmark) doesn't reload the page -
+  // react to that too, not just the hash read once at boot
+  window.addEventListener('hashchange', function(){
+    var h = parseInt((location.hash || '').replace('#',''), 10);
+    if (h && h >= 1 && h <= total) go(h - 1);
+  });
 
   // ================= local-only edit mode =================
   var deck = document.getElementById('deck');
