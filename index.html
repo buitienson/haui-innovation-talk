@@ -281,6 +281,8 @@
   .box-handle[hidden]{ display:none; }
   .box-handle.nw, .box-handle.se{ cursor:nwse-resize; }
   .box-handle.ne, .box-handle.sw{ cursor:nesw-resize; }
+  .box-handle.n, .box-handle.s{ cursor:ns-resize; }
+  .box-handle.e, .box-handle.w{ cursor:ew-resize; }
   .box-handle.move{ width:22px; height:22px; border-radius:6px; cursor:move; display:flex; align-items:center; justify-content:center; font-size:13px; color:#1a1200; line-height:1; }
   body.edit-mode .box-move-target{ cursor:move; }
   .snap-guide{ position:fixed; background:var(--red); z-index:29; pointer-events:none; }
@@ -303,7 +305,7 @@
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
-</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 15:24 · 9b10317</div>
+</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 15:42 · 3a09797</div>
 
 
 <div id="deck">
@@ -1340,10 +1342,17 @@
   }
 
   // ---- Canva-style corner handles: drag to resize, drag body to move ----
-  var HANDLE_CORNERS = ['nw','ne','sw','se'];
-  var ALL_HANDLES = HANDLE_CORNERS.concat(['move']);
+  // each resize handle says which edge(s) it moves: x:'left'/'right'/null, y:'top'/'bottom'/null
+  var HANDLE_CFG = {
+    nw: { x: 'left', y: 'top' }, ne: { x: 'right', y: 'top' },
+    sw: { x: 'left', y: 'bottom' }, se: { x: 'right', y: 'bottom' },
+    n:  { x: null, y: 'top' }, s: { x: null, y: 'bottom' },
+    w:  { x: 'left', y: null }, e: { x: 'right', y: null }
+  };
+  var HANDLE_NAMES = Object.keys(HANDLE_CFG);
+  var ALL_HANDLES = HANDLE_NAMES.concat(['move']);
   var boxHandles = {};
-  HANDLE_CORNERS.forEach(function(c){
+  HANDLE_NAMES.forEach(function(c){
     var h = document.createElement('div');
     h.className = 'box-handle ' + c;
     h.hidden = true;
@@ -1359,10 +1368,15 @@
   boxHandles.move = moveHandle;
   function positionHandles(el){
     var r = el.getBoundingClientRect();
+    var midX = r.left + r.width / 2, midY = r.top + r.height / 2;
     boxHandles.nw.style.left = (r.left - 7) + 'px'; boxHandles.nw.style.top = (r.top - 7) + 'px';
     boxHandles.ne.style.left = (r.right - 7) + 'px'; boxHandles.ne.style.top = (r.top - 7) + 'px';
     boxHandles.sw.style.left = (r.left - 7) + 'px'; boxHandles.sw.style.top = (r.bottom - 7) + 'px';
     boxHandles.se.style.left = (r.right - 7) + 'px'; boxHandles.se.style.top = (r.bottom - 7) + 'px';
+    boxHandles.n.style.left = (midX - 7) + 'px'; boxHandles.n.style.top = (r.top - 7) + 'px';
+    boxHandles.s.style.left = (midX - 7) + 'px'; boxHandles.s.style.top = (r.bottom - 7) + 'px';
+    boxHandles.w.style.left = (r.left - 7) + 'px'; boxHandles.w.style.top = (midY - 7) + 'px';
+    boxHandles.e.style.left = (r.right - 7) + 'px'; boxHandles.e.style.top = (midY - 7) + 'px';
     moveHandle.style.left = (r.left + r.width / 2 - 11) + 'px';
     moveHandle.style.top = (r.top - 11 - 22) + 'px';
   }
@@ -1374,8 +1388,9 @@
     ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = true; });
   }
   var MIN_BOX = 24;
-  HANDLE_CORNERS.forEach(function(corner){
-    boxHandles[corner].addEventListener('mousedown', function(e){
+  HANDLE_NAMES.forEach(function(name){
+    var cfg = HANDLE_CFG[name];
+    boxHandles[name].addEventListener('mousedown', function(e){
       if (!boxTargetEl) return;
       e.preventDefault();
       snapshotUndo();
@@ -1386,10 +1401,10 @@
       function onMove(ev){
         var dx = ev.clientX - startX, dy = ev.clientY - startY;
         var w = startRect.width, h = startRect.height, tx = startT.x, ty = startT.y;
-        if (corner === 'se'){ w += dx; h += dy; }
-        else if (corner === 'sw'){ w -= dx; h += dy; tx += dx; }
-        else if (corner === 'ne'){ w += dx; h -= dy; ty += dy; }
-        else if (corner === 'nw'){ w -= dx; h -= dy; tx += dx; ty += dy; }
+        if (cfg.x === 'right') w += dx;
+        else if (cfg.x === 'left'){ w -= dx; tx += dx; }
+        if (cfg.y === 'bottom') h += dy;
+        else if (cfg.y === 'top'){ h -= dy; ty += dy; }
         w = Math.max(MIN_BOX, w); h = Math.max(MIN_BOX, h);
         el.style.width = w + 'px';
         el.style.height = h + 'px';
