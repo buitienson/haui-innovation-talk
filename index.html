@@ -100,6 +100,8 @@
 
   .pain-note{ font-family:var(--font-head); font-weight:700; font-size:.98rem; line-height:1.5; color:var(--ink); border-left:3px solid var(--red); background:rgba(239,93,99,.07); padding:.7rem 1rem; border-radius:0 10px 10px 0; margin-top:.9rem; max-width:62ch; }
   .pain-note b{ color:var(--red); }
+  .pain-note.ok{ border-left-color:var(--teal); background:rgba(62,207,192,.07); }
+  .pain-note.ok b{ color:var(--teal); }
   .quote{ font-family:var(--font-head); font-weight:700; font-size:clamp(1.15rem,1.9vw,1.6rem); color:var(--ink); border-left:3px solid var(--amber); padding-left:1rem; margin:.5rem 0; max-width:40ch; }
   .status-tag{ display:inline-block; font-weight:800; font-size:.78rem; padding:.35em .75em; border-radius:8px; background:rgba(239,93,99,.15); color:var(--red); text-transform:uppercase; margin-top:.5rem; }
 
@@ -141,6 +143,9 @@
   .tool-card .tool-title{ font-family:var(--font-head); font-weight:800; font-size:1.2rem; color:var(--ink); }
   .tool-card .tool-url{ color:var(--teal); font-size:.8rem; font-weight:700; word-break:break-all; }
   .tool-card .tool-desc{ color:var(--ink-dim); font-size:.86rem; line-height:1.5; }
+  .tool-card .tool-cta{ margin-top:.5rem; align-self:flex-start; display:inline-flex; align-items:center; gap:.5rem; font-family:var(--font-head); font-weight:800; font-size:.85rem; padding:.6rem 1.1rem; border-radius:999px; }
+  .tool-card .tool-cta.amber{ background:var(--amber); color:#241505; }
+  .tool-card .tool-cta.teal{ background:var(--teal); color:#04241f; }
 
   /* ===== funnel ===== */
   .funnel{ display:flex; flex-direction:column; align-items:center; gap:.35rem; width:100%; margin-top:.6rem; }
@@ -170,7 +175,7 @@
   /* ===== 2x2 matrix ===== */
   .matrix2{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:clamp(.9rem,1.4vw,1.6rem); width:100%; margin-top:.8rem; }
   .mx-cell{ border:1px solid var(--panel-border); border-radius:14px; padding:clamp(1rem,1.5vw,1.6rem); display:flex; gap:clamp(.9rem,1.3vw,1.4rem); align-items:flex-start; }
-  .mx-cell .mx-photo{ flex:none; width:clamp(72px,8vw,140px); height:clamp(72px,8vw,140px); border-radius:10px; overflow:hidden; border:1px solid var(--panel-border); }
+  .mx-cell .mx-photo{ flex:none; width:clamp(160px,15vw,290px); height:clamp(160px,15vw,290px); border-radius:10px; overflow:hidden; border:1px solid var(--panel-border); }
   .mx-cell .mx-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .mx-cell .mx-body{ min-width:0; }
   .mx-cell .mx-title{ font-family:var(--font-head); font-weight:800; font-size:clamp(.95rem,1.3vw,1.35rem); color:var(--ink); margin-bottom:.25rem; }
@@ -280,7 +285,7 @@
 
 <section class="slide cover" data-title="Tiêu đề">
   <div class="kicker teal">Tham luận · Hội nghị Viên chức Ban KHCN&amp;ĐMST · Năm học 2025–2026</div>
-  <h1 class="headline" style="font-size:clamp(1.7rem,3.6vw,3rem); max-width:30ch; margin:.7rem 0 1.4rem; text-align:center; line-height:1.25;">Triển khai hoạt động Đổi mới sáng tạo<br>tại Đại học Công nghiệp Hà Nội<br><span class="accent">Thực trạng và kiến nghị</span></h1>
+  <h1 class="headline" style="font-size:clamp(1.7rem,3.6vw,3rem); max-width:30ch; margin:.7rem 0 1.4rem; text-align:center; line-height:1.25;">Triển khai hoạt động Đổi mới sáng tạo<br>tại Đại học Công nghiệp Hà Nội<br><span class="accent">Thực trạng và giải pháp</span></h1>
   <div class="brandline">
     <span><b>Bùi Tiến Sơn</b></span><span class="dot"></span>
     <span>Phòng Đổi mới sáng tạo</span><span class="dot"></span>
@@ -290,7 +295,7 @@
 
 <section class="slide divider" data-title="Câu hỏi trung tâm">
   <div class="kicker">Câu hỏi trung tâm</div>
-  <div class="thesis">HaUI đã có đầu vào nghiên cứu và định hướng ĐMST - nhưng chưa có <span class="accent">cơ chế chuyển kết quả nghiên cứu thành tài sản, hợp đồng, doanh nghiệp</span>.</div>
+  <div class="thesis">HaUI đã có đầu vào nghiên cứu và định hướng ĐMST rõ ràng - vậy vì sao dòng chảy đó vẫn tắc trước khi thành <span class="accent">tài sản, hợp đồng, doanh nghiệp</span>?</div>
   <div class="sub" style="margin:1.3rem auto 0; text-align:center;">99 đề tài → 19 kết quả SHTT → 4 hợp đồng CGCN → 0 spin-off</div>
 </section>
 
@@ -397,12 +402,13 @@
   <h1 class="headline">Ba năng lực thường thấy ở<br>mô hình <span class="accent2">đã vận hành lâu năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
-      <div class="card"><div class="card-title">Đầu mối chuyên trách</div><div class="card-body">Một đơn vị/pháp nhân đứng ra làm - không kiêm nhiệm rải rác nhiều nơi.</div></div>
-      <div class="card"><div class="card-title">Cơ chế chia lợi ích</div><div class="card-body">Harvard OTD chia cố định 35% tiền bản quyền ròng cho tác giả.</div></div>
-      <div class="card"><div class="card-title">Vốn ươm tạo riêng</div><div class="card-body">Harvard Blavatnik Accelerator đã cấp hơn $33tr cho 178 dự án.</div></div>
+      <div class="card"><div class="card-title">Đầu mối chuyên trách</div><div class="card-body">Một đơn vị/pháp nhân đứng ra làm, không kiêm nhiệm rải rác nhiều nơi. MIT TLO trực thuộc Phó Hiệu trưởng phụ trách Nghiên cứu; Stanford OTL trực thuộc Vice Provost and Dean of Research - có ngân sách, nhân sự và KPI riêng, tách khỏi việc hành chính chung.</div></div>
+      <div class="card"><div class="card-title">Cơ chế chia lợi ích</div><div class="card-body">Harvard OTD chia cố định 35% tiền bản quyền ròng cho tác giả; Stanford OTL chia đều 1/3-1/3-1/3 giữa tác giả, khoa và trường. Tỷ lệ công bố công khai, áp dụng thống nhất cho mọi phát minh - không đàm phán riêng từng trường hợp.</div></div>
+      <div class="card"><div class="card-title">Vốn ươm tạo riêng</div><div class="card-body">Harvard Blavatnik Accelerator đã cấp hơn 33 triệu USD cho 178 dự án (2007-2024); MIT vận hành quỹ E14 Fund độc lập với ngân sách nghiên cứu. Vốn mồi tách riêng cho đúng giai đoạn tiền thương mại hoá - không cạnh tranh với kinh phí đề tài.</div></div>
     </div>
+    <div class="sub" style="margin-top:.9rem;">Cả ba năng lực đều là lựa chọn tổ chức, không phải đặc quyền của đại học giàu - vấn đề là có quyết định làm hay không, không phải có đủ tiền hay không.</div>
   </div></div>
-  <div class="cite small"><b>Nguồn:</b> Innovation Center Atlas - Harvard Office of Technology Development, dữ liệu công bố FY2024–2025.</div>
+  <div class="cite small"><b>Nguồn:</b> Innovation Center Atlas · Harvard Office of Technology Development, dữ liệu công bố FY2024–2025 · doresearch.stanford.edu · orgchart.mit.edu · Harvard Blavatnik Accelerator, blavatnikaccelerator.harvard.edu.</div>
 </section>
 
 <section class="slide" data-title="Việt Nam đã đi trước">
@@ -410,22 +416,30 @@
   <h1 class="headline">Cùng hành lang pháp lý  - <br><span class="accent2">đã tìm được lối đi</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
-      <figure class="photo-card" style="margin:0;">
-        <img src="assets/bk-holdings.jpg" alt="BK Holdings">
-        <div class="cap"><b>BK Holdings / BK TTO</b> - ĐH Bách khoa Hà Nội, từ 2008 · Hàng chục spin-off: BKAV, VietSearch, VnTrack…</div>
-      </figure>
-      <figure class="photo-card" style="margin:0;">
-        <img src="assets/ptit-iec.jpg" alt="PTIT IEC">
-        <div class="cap"><b>PTIT IEC</b> - Học viện CNBCVT · 2 dự án spin-off, đang ươm tạo 10 dự án công nghệ</div>
-      </figure>
+      <div>
+        <figure class="photo-card" style="margin:0; aspect-ratio:16/8;">
+          <img src="assets/bk-holdings.jpg" alt="BK Holdings">
+          <div class="cap"><b>BK Holdings</b> (2008) + <b>BK-TTO</b> (2020) - ĐH Bách khoa Hà Nội</div>
+        </figure>
+        <div class="badge-row" style="margin-top:.6rem;"><span class="badge amber">Holdings tách pháp nhân</span><span class="badge teal">+ TTO nội bộ</span></div>
+        <div class="mx-note" style="margin-top:.5rem;">BK Holdings (2008) - pháp nhân đầu tư đầu tiên trong đại học Việt Nam. BK-TTO (2020) áp dụng mô hình TTO của Cornell University, cùng Quỹ BK Fund. Kết quả: hàng chục spin-off, gồm BKAV, VietSearch, VnTrack.</div>
+      </div>
+      <div>
+        <figure class="photo-card" style="margin:0; aspect-ratio:16/8;">
+          <img src="assets/ptit-iec.jpg" alt="PTIT IEC">
+          <div class="cap"><b>PTIT IEC</b> - Học viện CNBCVT</div>
+        </figure>
+        <div class="badge-row" style="margin-top:.6rem;"><span class="badge teal">TTO/ươm tạo nội bộ</span><span class="badge amber">+ liên kết doanh nghiệp lớn</span></div>
+        <div class="mx-note" style="margin-top:.5rem;">Đầu mối chuyên trách trong trường - cùng dạng MIT TLO/Stanford OTL nhưng nhỏ hơn: 2 dự án đã spin-off, đang ươm tạo 10 dự án. 1/2026, hợp tác Huawei mở Trung tâm ĐMST chung (AI, Cloud, 5G).</div>
+      </div>
     </div>
-    <div class="sub" style="margin-top:.9rem;">Hai mô hình cho thấy có thể triển khai được trong cùng khung pháp lý hiện hành - không phải rào cản bất khả thi.</div>
+    <div class="pain-note ok"><b>Kết luận:</b> cả hai đều có đầu mối chuyên trách rõ ràng trước, rồi mới mở rộng quan hệ doanh nghiệp - đúng thứ tự HaUI đang thiếu.</div>
   </div></div>
-  <div class="cite small"><b>Ảnh:</b> Hường Hoàng (2023, 24/1). BK Holdings tiên phong đổi mới sáng tạo trong trường đại học. TheLeader. theleader.vn <span class="sep">·</span> iec.ptit.edu.vn, 2026.</div>
+  <div class="cite small"><b>Nguồn:</b> TheLeader, 24/1/2023 <span class="sep">·</span> iec.ptit.edu.vn, 2026 <span class="sep">·</span> Huawei Việt Nam, 13/1/2026.</div>
 </section>
 
 <section class="slide" data-title="Bằng chứng báo chí">
-  <div class="kicker"><span class="n">I.6</span> Không riêng HaUI</div>
+  <div class="kicker"><span class="n">I.6</span> Không riêng <span style="text-transform:none">HaUI</span></div>
   <h1 class="headline">Cả báo chí lẫn Quốc hội<br>đã <span class="accent">ghi nhận rào cản này</span></h1>
   <div class="body-col"><div class="fill" style="gap:.6rem; display:flex; flex-direction:column; justify-content:center;">
     <div class="card ok">
@@ -440,17 +454,18 @@
       <p>"Việc thương mại hoá các nghiên cứu khoa học còn rất khó khăn bởi chính sách chưa đồng bộ, tạo nên rào cản."</p>
       <div class="src">Trần Lưu (2024, 25/4). Sài Gòn Giải Phóng. sggp.org.vn</div>
     </div>
+    <div class="pain-note ok"><b>Kết luận:</b> đây không phải yếu kém quản trị riêng của một trường, mà là điểm nghẽn mang tính hệ thống của cả nước - đã được chính cơ quan lập pháp cao nhất xác nhận và ra nghị quyết thí điểm để gỡ.</div>
   </div></div>
   <div class="cite small"><b>Trích dẫn:</b> Luật số 93/2025/QH15, thông qua 27/6/2025 · Nghị quyết 193/2025/QH15, 19/2/2025, Quốc hội khoá XV.</div>
 </section>
 
 <section class="slide divider" data-title="Chuyển ý">
-  <div class="kicker">Vậy còn HaUI?</div>
+  <div class="kicker">Vậy còn <span style="text-transform:none">HaUI</span>?</div>
   <h1 class="headline">HaUI đang <span class="accent">ở đâu</span> trong bức tranh này?</h1>
 </section>
 
 <section class="slide" data-title="HaUI tái định vị">
-  <div class="kicker"><span class="n">II.1</span> HaUI tái định vị</div>
+  <div class="kicker"><span class="n">II.1</span> <span style="text-transform:none">HaUI</span> tái định vị</div>
   <div class="card-grid" style="grid-template-columns:1fr 1.2fr; align-items:stretch;">
     <div style="display:flex; flex-direction:column; justify-content:center;">
       <h1 class="headline" style="margin-top:0;">Từ "Trường Đại học"<br>→ <span class="accent2">"Đại học"</span></h1>
@@ -572,7 +587,7 @@
 </section>
 
 <section class="slide" data-title="Lộ trình">
-  <div class="kicker"><span class="n">II.8</span> Lộ trình Trung tâm ĐMST HaUI</div>
+  <div class="kicker"><span class="n">II.8</span> Lộ trình Trung tâm ĐMST <span style="text-transform:none">HaUI</span></div>
   <h1 class="headline">Roadmap có <span class="accent">cổng quyết định</span></h1>
   <div class="body-col"><div class="fill">
     <div class="gtl">
@@ -749,6 +764,7 @@
         <li><b>Thuật ngữ</b> - giải nghĩa khái niệm ĐMST đại học</li>
       </ul>
       <div class="tool-url">buitienson.github.io/innovation-center-atlas</div>
+      <span class="tool-cta amber">Mở công cụ trực tiếp →</span>
     </a>
   </div>
   <div class="cite small"><b>Tác giả:</b> Bùi Tiến Sơn, 2026. Đề xuất dùng làm điểm tra cứu chung cho các đơn vị trong VNEI/HANISA.</div>
@@ -756,7 +772,7 @@
 
 <section class="slide" data-title="Công cụ tra cứu tạp chí">
   <div class="kicker"><span class="n">V.2</span> Công cụ hỗ trợ · 2/2</div>
-  <h1 class="headline">Web tra cứu <span class="accent2">tạp chí khoa học</span></h1>
+  <h1 class="headline">Web tra cứu <span class="accent2">thông tin khoa học</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
       <div class="chrome"><span class="dot3"></span><span class="dot3"></span><span class="dot3"></span><span class="urlbar">tra-cuu-tap-chi.pages.dev</span></div>
@@ -777,6 +793,7 @@
         <li><b>Tìm kiếm hội nghị, hội thảo</b> - hạn nộp, hạng CORE, tổ chức ở đâu</li>
       </ul>
       <div class="tool-url">tra-cuu-tap-chi.pages.dev</div>
+      <span class="tool-cta teal">Mở công cụ trực tiếp →</span>
     </a>
   </div>
   <div class="cite small"><b>Nguồn dữ liệu:</b> Scopus Source List (7/2026), Scimago SJR 2025, Web of Science Master Journal List, Retraction Watch, Crossref, CORE2023. Cùng tinh thần với Trung tâm ĐMST: một công cụ nhỏ, tự làm, giải quyết đúng một điểm nghẽn thật.</div>
