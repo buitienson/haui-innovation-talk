@@ -250,6 +250,17 @@
   #dots .d.active{ background:var(--amber); width:8px; height:8px; }
   #fullscreen-btn{ position:fixed; right:7vw; top:1.5rem; z-index:10; background:transparent; border:1px solid var(--panel-border); color:var(--ink-dim); border-radius:8px; padding:.45em .75em; font-size:.75rem; cursor:pointer; font-family:var(--font-body); opacity:.35; transition:.2s; }
   #fullscreen-btn:hover{ opacity:1; color:var(--ink); }
+  #edit-btn{ position:fixed; right:calc(7vw + 9.5em); top:1.5rem; z-index:10; background:transparent; border:1px solid var(--panel-border); color:var(--ink-dim); border-radius:8px; padding:.45em .75em; font-size:.75rem; cursor:pointer; font-family:var(--font-body); opacity:.35; transition:.2s; }
+  #edit-btn:hover{ opacity:1; color:var(--ink); }
+  #edit-btn.on{ opacity:1; color:var(--amber-ink); background:var(--amber); border-color:var(--amber); }
+  #edit-toolbar[hidden]{ display:none; }
+  #edit-toolbar{ position:fixed; left:0; right:0; top:0; z-index:20; background:#1a2440; border-bottom:1px solid var(--panel-border); display:flex; align-items:center; gap:.8rem; padding:.5rem 1rem; font-size:.8rem; color:var(--ink-dim); }
+  #edit-toolbar button{ font-family:var(--font-body); font-size:.78rem; font-weight:700; color:var(--ink); background:rgba(255,255,255,.06); border:1px solid var(--panel-border); border-radius:6px; padding:.35em .7em; cursor:pointer; }
+  #edit-toolbar button:hover{ background:rgba(255,255,255,.12); }
+  #edit-status{ flex:1; }
+  body.edit-mode [contenteditable="true"]:hover{ outline:1px dashed rgba(242,169,59,.6); outline-offset:2px; cursor:text; }
+  body.edit-mode [contenteditable="true"]:focus{ outline:2px solid var(--amber); outline-offset:2px; background:rgba(242,169,59,.06); }
+  body.edit-mode .navzone{ pointer-events:none; }
 
   .navzone{ position:absolute; top:0; bottom:0; width:50%; z-index:5; cursor:pointer; }
   .navzone.left{ left:0; } .navzone.right{ right:0; }
@@ -315,7 +326,7 @@
         <div class="card-body">Lần đầu có tiêu chí pháp lý cụ thể để công nhận trung tâm ĐMST/hỗ trợ khởi nghiệp trong trường đại học (Điều 29–46).</div>
       </div>
     </div>
-    <div class="badge-row" style="margin-top:.8rem;"><span class="badge teal">QĐ 844/QĐ-TTg</span><span class="badge teal">NIC - NĐ 94/2020/NĐ-CP</span><span class="badge amber">Mục tiêu quốc gia: 5–10 spin-off/năm</span></div>
+    <div class="badge-row" style="margin-top:.8rem;"><span class="badge teal">QĐ 844/QĐ-TTg</span><span class="badge teal">NIC - NĐ 94/2020/NĐ-CP</span><span class="badge amber">Mục tiêu quốc gia: 5–10 spin-off/năm</span><span class="badge amber">NQ57: nâng tỷ lệ thương mại hoá sáng chế lên 8–10%</span></div>
     <div class="sub" style="margin-top:.6rem;">Thuận lợi: Tổng Bí thư trực tiếp làm Trưởng Ban Chỉ đạo Trung ương về phát triển KHCN, ĐMST và CĐS - chỉ đạo xuyên suốt từ cấp cao nhất.</div>
     <div class="sub" style="margin-top:.8rem;">→ Hành lang pháp lý mới áp dụng chung cho mọi đại học - nhưng một số đơn vị đã tích luỹ kinh nghiệm từ nhiều năm trước, như các mô hình sẽ nhắc dưới đây.</div>
   </div></div>
@@ -538,12 +549,12 @@
       <div class="flow-step">Doanh nghiệp</div>
     </div>
     <div class="card-grid g2" style="margin-top:1rem;">
-      <div class="card ok"><div class="card-title">Đã gỡ ở cấp quốc gia</div><div class="card-body">Luật 93/2025/QH15 (hiệu lực 1/10/2025): giao quyền sở hữu tự động kết quả nghiên cứu từ ngân sách nhà nước; tác giả hưởng tối thiểu 30% lợi nhuận/giá trị khi thương mại hoá.</div></div>
-      <div class="card warn"><div class="card-title">Còn thiếu ở cấp HaUI</div><div class="card-body">Luật không quy định quy trình định giá SHTT cụ thể; HaUI chưa ban hành quy chế nội bộ để vận hành quyền đã được giao. Khoảng trống định giá xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa.</div></div>
+      <div class="card ok"><div class="card-title">Đã gỡ ở cấp quốc gia</div><div class="card-body">Luật 93/2025/QH15, Điều 25: giao quyền tự động, không phải bồi hoàn, theo dõi riêng ngoài tài sản/vốn nhà nước. Điều 27: tổ chức chủ trì tự quyết hình thức, giá, phân chia lợi nhuận - tác giả hưởng tối thiểu 30%.</div></div>
+      <div class="card warn"><div class="card-title">Còn thiếu ở cấp HaUI</div><div class="card-body">Theo chính Cục Sở hữu trí tuệ: khó khăn định giá "không nằm ở thiếu quy định pháp luật, mà do thị trường chưa phát triển và hạn chế năng lực triển khai". HaUI chưa có quy trình/quy chế nội bộ để vận hành quyền đã được giao.</div></div>
     </div>
     <div class="pain-note"><b>Cái giá:</b> 14 đơn đăng ký SHTT của HaUI đang chờ chấp nhận hợp lệ - đủ điều kiện để bắt đầu thương mại hoá theo luật mới, nhưng chưa có quy trình định giá nội bộ để đi tiếp bước tiếp theo. Quyền đã được luật trao, nhưng chưa có đường để dùng.</div>
   </div></div>
-  <div class="cite small"><b>Nguồn:</b> Luật số 93/2025/QH15 · Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026 · Báo cáo thực hiện Nghị quyết HNĐBVC, tổng kết năm học 2025-2026.</div>
+  <div class="cite small"><b>Trích dẫn:</b> Luật số 93/2025/QH15, Điều 25, 27 · Cục Sở hữu trí tuệ - Bộ KH&amp;CN, Hướng dẫn định giá tài sản trí tuệ hình thành từ NSNN · Khảo sát thực địa HUIT/TBI/IUH, 8/2026 · Đối chiếu Đề án sandbox spin-off ĐHBK Hà Nội, 8/2026.</div>
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 3">
@@ -694,7 +705,7 @@
       <div class="job-grid">
         <div><span class="jl">Chủ trì</span><span class="jv">Ban KHCN&amp;ĐMST, trình HĐT</span></div>
         <div><span class="jl">Hoàn thành</span><span class="jv">2027, cùng Pha 2 vận hành Trung tâm</span></div>
-        <div><span class="jl">Sản phẩm</span><span class="jv">Đề án cơ chế sandbox nội bộ, đúng tinh thần NQ57</span></div>
+        <div><span class="jl">Sản phẩm</span><span class="jv">Đề án sandbox nội bộ - tham khảo trực tiếp cơ chế "Safe Harbour" và "Standard Deal" mà ĐHBK Hà Nội đã thiết kế (Đề án 8/2026), đúng thẩm quyền Điều 21 Luật 93/2025/QH15</span></div>
         <div><span class="jl">KPI</span><span class="jv">Đề án được thông qua</span></div>
       </div>
     </div>
@@ -792,11 +803,28 @@
 <div id="counter"><b id="cur">1</b> / <span id="total">20</span></div>
 <div id="dots"></div>
 <button id="fullscreen-btn">⛶ Toàn màn hình</button>
+<button id="edit-btn" title="Chế độ sửa text tại chỗ (chỉ lưu trên máy này)">✎ Sửa</button>
+<div id="edit-toolbar" hidden>
+  <span id="edit-status">Đang ở chế độ sửa - bấm vào chữ để sửa. Tự lưu trên trình duyệt này.</span>
+  <button id="edit-export">Xuất nội dung đã sửa</button>
+  <button id="edit-reset">Trả về bản gốc</button>
+  <button id="edit-off">Xong, tắt sửa</button>
+</div>
 <div class="navzone left" id="zone-left"></div>
 <div class="navzone right" id="zone-right"></div>
 
 <script>
 (function(){
+  // --- restore any locally-saved edits before building slide index ---
+  var LS_HTML = 'haui-talk-edit-html';
+  var LS_ON = 'haui-talk-edit-on';
+  try{
+    if (localStorage.getItem(LS_ON) === '1'){
+      var saved = localStorage.getItem(LS_HTML);
+      if (saved) document.getElementById('deck').innerHTML = saved;
+    }
+  }catch(e){}
+
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var total = slides.length;
   document.getElementById('total').textContent = total;
@@ -829,6 +857,7 @@
   function prev(){ go(idx-1); }
 
   document.addEventListener('keydown', function(e){
+    if (document.activeElement && document.activeElement.isContentEditable) return;
     if (['ArrowRight','ArrowDown','PageDown',' '].indexOf(e.key) > -1){ next(); e.preventDefault(); }
     else if (['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key) > -1){ prev(); e.preventDefault(); }
     else if (e.key === 'Home'){ go(0); }
@@ -857,6 +886,109 @@
   var hash = parseInt((location.hash || '').replace('#',''), 10);
   if (hash && hash >= 1 && hash <= total) idx = hash - 1;
   render();
+
+  // ================= local-only edit mode =================
+  var EDIT_PASSWORD = 'haui2026';
+  var deck = document.getElementById('deck');
+  var editBtn = document.getElementById('edit-btn');
+  var toolbar = document.getElementById('edit-toolbar');
+  var saveTimer = null;
+
+  function isEditing(){ return document.body.classList.contains('edit-mode'); }
+
+  function saveNow(){
+    try{
+      localStorage.setItem(LS_HTML, deck.innerHTML);
+      localStorage.setItem(LS_ON, '1');
+    }catch(e){}
+  }
+  function scheduleSave(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 500);
+  }
+
+  function enterEdit(){
+    document.body.classList.add('edit-mode');
+    slides.forEach(function(s){ s.contentEditable = 'true'; s.spellcheck = false; });
+    toolbar.hidden = false;
+    editBtn.classList.add('on');
+    deck.addEventListener('input', scheduleSave);
+    // stop links from navigating away while editing text inside them
+    deck.addEventListener('click', linkGuard, true);
+  }
+  function exitEdit(){
+    document.body.classList.remove('edit-mode');
+    slides.forEach(function(s){ s.contentEditable = 'false'; });
+    toolbar.hidden = true;
+    editBtn.classList.remove('on');
+    deck.removeEventListener('input', scheduleSave);
+    deck.removeEventListener('click', linkGuard, true);
+  }
+  function linkGuard(e){
+    var a = e.target.closest && e.target.closest('a');
+    if (a) e.preventDefault();
+  }
+
+  editBtn.addEventListener('click', function(){
+    if (isEditing()){ exitEdit(); return; }
+    var unlocked = sessionStorage.getItem('haui-talk-unlocked') === '1';
+    if (!unlocked){
+      var pw = prompt('Mật khẩu chế độ sửa (chỉ để chặn người lạ, không phải bảo mật thật):');
+      if (pw !== EDIT_PASSWORD){ if (pw !== null) alert('Sai mật khẩu.'); return; }
+      try{ sessionStorage.setItem('haui-talk-unlocked','1'); }catch(e){}
+    }
+    enterEdit();
+  });
+  document.getElementById('edit-off').addEventListener('click', exitEdit);
+
+  document.getElementById('edit-reset').addEventListener('click', function(){
+    if (!confirm('Xoá mọi sửa đổi đã lưu trên máy này và tải lại bản gốc?')) return;
+    try{ localStorage.removeItem(LS_HTML); localStorage.removeItem(LS_ON); }catch(e){}
+    location.reload();
+  });
+
+  document.getElementById('edit-export').addEventListener('click', function(){
+    var lines = [];
+    slides.forEach(function(s, i){
+      var t = (s.textContent || '').replace(/\s+/g,' ').trim();
+      lines.push('--- Slide ' + (i+1) + ' [' + (s.getAttribute('data-title')||'') + '] ---\n' + t);
+    });
+    var text = lines.join('\n\n');
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:4vw;';
+    var box = document.createElement('div');
+    box.style.cssText = 'background:#0d1424;border:1px solid #243154;border-radius:12px;padding:1.2rem;max-width:800px;width:100%;max-height:80vh;display:flex;flex-direction:column;gap:.7rem;';
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.readOnly = true;
+    ta.style.cssText = 'flex:1;min-height:50vh;background:#090d16;color:#eef1fb;border:1px solid #243154;border-radius:8px;padding:.8rem;font-family:monospace;font-size:.85rem;';
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:.6rem;justify-content:flex-end;';
+    var copyBtn = document.createElement('button');
+    copyBtn.textContent = 'Copy tất cả';
+    var closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Đóng';
+    [copyBtn, closeBtn].forEach(function(b){
+      b.style.cssText = 'font-family:inherit;font-weight:700;color:#eef1fb;background:rgba(255,255,255,.08);border:1px solid #243154;border-radius:6px;padding:.5em 1em;cursor:pointer;';
+    });
+    copyBtn.addEventListener('click', function(){
+      ta.select();
+      try{ navigator.clipboard.writeText(text); copyBtn.textContent = 'Đã copy!'; }
+      catch(e){ document.execCommand('copy'); }
+    });
+    closeBtn.addEventListener('click', function(){ overlay.remove(); });
+    row.appendChild(copyBtn); row.appendChild(closeBtn);
+    box.appendChild(ta); box.appendChild(row);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    ta.focus(); ta.select();
+  });
+
+  try{
+    if (localStorage.getItem(LS_ON) === '1'){
+      // content was restored above; leave in normal (non-editable) view mode
+    }
+  }catch(e){}
 })();
 </script>
 </body></html>
