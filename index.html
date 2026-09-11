@@ -303,7 +303,7 @@
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
-</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 14:56 · 453f06f</div>
+</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 15:04 · 1e4e0ac</div>
 
 
 <div id="deck">
@@ -1106,8 +1106,12 @@
     var lines = [];
     slides.forEach(function(s, i){
       if (s.dataset.edited !== '1') return;
-      var t = (s.textContent || '').replace(/\s+/g,' ').trim();
-      lines.push('--- Slide ' + (i+1) + ' [' + (s.getAttribute('data-title')||'') + '] ---\n' + t);
+      var clone = s.cloneNode(true);
+      clone.removeAttribute('data-edited');
+      clone.removeAttribute('contenteditable');
+      clone.removeAttribute('spellcheck');
+      clone.classList.remove('active', 'prev');
+      lines.push('--- Slide ' + (i+1) + ' [' + (s.getAttribute('data-title')||'') + '] ---\n' + clone.outerHTML);
     });
     var text = lines.length ? lines.join('\n\n') : 'Chưa sửa slide nào.';
     function done(ok){
