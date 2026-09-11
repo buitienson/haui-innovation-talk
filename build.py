@@ -22,7 +22,7 @@ except Exception:
 built_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 version_tag = (
     '<div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;'
-    'font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">'
+    'font:11px -apple-system,Arial,sans-serif;pointer-events:none;">'
     f'Bản dựng {built_at} · {commit}</div>'
 )
 
