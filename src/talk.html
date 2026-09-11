@@ -1003,6 +1003,9 @@
     document.getElementById('cur').textContent = idx + 1;
     document.getElementById('progress-fill').style.width = ((idx+1)/total*100) + '%';
     if (history.replaceState) history.replaceState(null, '', '#' + (idx+1));
+    // guard: render() is also called once at boot, before the edit-mode
+    // panel/handle variables further down the script have been assigned
+    if (typeof textPanel !== 'undefined' && textPanel) hidePanels();
   }
 
   function go(n){ idx = Math.max(0, Math.min(total-1, n)); render(); }
@@ -1504,7 +1507,7 @@
     ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = false; });
   }
   function hideHandles(){
-    ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = true; });
+    ALL_HANDLES.forEach(function(c){ if (boxHandles[c]) boxHandles[c].hidden = true; });
   }
   var MIN_BOX = 24;
   HANDLE_NAMES.forEach(function(name){

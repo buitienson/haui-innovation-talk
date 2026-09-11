@@ -305,7 +305,7 @@
     #dots{ display:none; }
   }
   @media (max-width: 520px){ .slide{ padding: 5.5vh 6vw 4vh; } }
-</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 16:25 · c889606</div>
+</style></head><body><div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;font:11px -apple-system,Arial,sans-serif;color:#5b6688;opacity:.45;pointer-events:none;">Bản dựng 2026-09-11 16:35 · 02abcd8</div>
 
 
 <div id="deck">
@@ -1003,6 +1003,9 @@
     document.getElementById('cur').textContent = idx + 1;
     document.getElementById('progress-fill').style.width = ((idx+1)/total*100) + '%';
     if (history.replaceState) history.replaceState(null, '', '#' + (idx+1));
+    // guard: render() is also called once at boot, before the edit-mode
+    // panel/handle variables further down the script have been assigned
+    if (typeof textPanel !== 'undefined' && textPanel) hidePanels();
   }
 
   function go(n){ idx = Math.max(0, Math.min(total-1, n)); render(); }
@@ -1504,7 +1507,7 @@
     ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = false; });
   }
   function hideHandles(){
-    ALL_HANDLES.forEach(function(c){ boxHandles[c].hidden = true; });
+    ALL_HANDLES.forEach(function(c){ if (boxHandles[c]) boxHandles[c].hidden = true; });
   }
   var MIN_BOX = 24;
   HANDLE_NAMES.forEach(function(name){
