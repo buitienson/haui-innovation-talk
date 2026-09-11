@@ -52,7 +52,7 @@
   }
   .kicker .n{
     display:inline-flex; align-items:center; justify-content:center;
-    width:1.8em; height:1.8em; border-radius:999px;
+    min-width:1.8em; height:1.8em; padding:0 .5em; border-radius:999px;
     border:1px solid rgba(242,169,59,.5); font-size:.8em; flex:none;
   }
   .kicker.red{ color:var(--red); } .kicker.red .n{ border-color:rgba(239,93,99,.5); }
@@ -98,6 +98,8 @@
   table.cmp td.hl{ color:var(--red); font-weight:600; } table.cmp td.ok{ color:var(--green); font-weight:600; }
   table.cmp td.rowlabel{ font-weight:700; color:var(--ink); }
 
+  .pain-note{ font-family:var(--font-head); font-weight:700; font-size:.98rem; line-height:1.5; color:var(--ink); border-left:3px solid var(--red); background:rgba(239,93,99,.07); padding:.7rem 1rem; border-radius:0 10px 10px 0; margin-top:.9rem; max-width:62ch; }
+  .pain-note b{ color:var(--red); }
   .quote{ font-family:var(--font-head); font-weight:700; font-size:clamp(1.15rem,1.9vw,1.6rem); color:var(--ink); border-left:3px solid var(--amber); padding-left:1rem; margin:.5rem 0; max-width:40ch; }
   .status-tag{ display:inline-block; font-weight:800; font-size:.78rem; padding:.35em .75em; border-radius:8px; background:rgba(239,93,99,.15); color:var(--red); text-transform:uppercase; margin-top:.5rem; }
 
@@ -266,13 +268,12 @@
 <div id="deck">
 
 <section class="slide cover" data-title="Tiêu đề">
-  <div class="kicker">Hội nghị Viên chức Ban Khoa học, Công nghệ và Đổi mới sáng tạo · Năm học 2025–2026</div>
-  <div class="kicker teal" style="margin-top:-.6rem;">Tham luận</div>
-  <h1 class="headline long">"Triển khai hoạt động Đổi mới sáng tạo tại HaUI: Thực trạng và kiến nghị"</h1>
-  <div class="fields">
-    <div><span class="field-label">Người trình bày</span><span class="field-value">Bùi Tiến Sơn</span></div>
-    <div><span class="field-label">Đơn vị</span><span class="field-value">Phòng Đổi mới sáng tạo</span></div>
-    <div><span class="field-label">Thời gian</span><span class="field-value">Thứ Bảy, 12/9/2026 · Phòng 603, Nhà A1</span></div>
+  <div class="kicker teal">Tham luận · Hội nghị Viên chức Ban KHCN&amp;ĐMST · Năm học 2025–2026</div>
+  <h1 class="headline" style="font-size:clamp(2.3rem,5vw,4.2rem); max-width:20ch; margin:.7rem 0 1.4rem; text-align:center;">Triển khai Đổi mới sáng tạo tại HaUI<br><span class="accent">Thực trạng và kiến nghị</span></h1>
+  <div class="brandline">
+    <span><b>Bùi Tiến Sơn</b></span><span class="dot"></span>
+    <span>Phòng Đổi mới sáng tạo</span><span class="dot"></span>
+    <span>Thứ Bảy, 12/9/2026 · Phòng 603, Nhà A1</span>
   </div>
 </section>
 
@@ -297,7 +298,7 @@
 </section>
 
 <section class="slide" data-title="Bối cảnh chính sách">
-  <div class="kicker"><span class="n">01</span> Bối cảnh chính sách</div>
+  <div class="kicker"><span class="n">I.1</span> Bối cảnh chính sách</div>
   <h1 class="headline">Khung thể chế đang<br>thay đổi <span class="accent">nhanh trên cả nước</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -322,7 +323,7 @@
 </section>
 
 <section class="slide" data-title="Chuỗi chuyển hoá">
-  <div class="kicker"><span class="n">02</span> Khung phân tích</div>
+  <div class="kicker"><span class="n">I.2</span> Khung phân tích</div>
   <h1 class="headline">Chuỗi chuyển hoá <span class="accent2">ĐMST đại học</span></h1>
   <div class="body-col"><div class="fill">
     <div class="flow" style="font-size:1.05rem; margin-top:1.2rem;">
@@ -339,7 +340,7 @@
 </section>
 
 <section class="slide" data-title="Mô hình quốc tế">
-  <div class="kicker"><span class="n">03</span> Mô hình quốc tế</div>
+  <div class="kicker"><span class="n">I.3</span> Mô hình quốc tế</div>
   <h1 class="headline">4 mô hình quản trị<br><span class="accent">tuổi đời hàng thập kỷ</span></h1>
   <div class="body-col"><div class="fill">
     <div class="matrix2">
@@ -381,7 +382,7 @@
 </section>
 
 <section class="slide" data-title="Điểm chung quốc tế">
-  <div class="kicker"><span class="n">04</span> Quan sát chung</div>
+  <div class="kicker"><span class="n">I.4</span> Quan sát chung</div>
   <h1 class="headline">Ba năng lực thường thấy ở<br>mô hình <span class="accent2">đã vận hành lâu năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -394,7 +395,7 @@
 </section>
 
 <section class="slide" data-title="Việt Nam đã đi trước">
-  <div class="kicker"><span class="n">05</span> Việt Nam đã đi trước</div>
+  <div class="kicker"><span class="n">I.5</span> Việt Nam đã đi trước</div>
   <h1 class="headline">Cùng hành lang pháp lý  - <br><span class="accent2">đã tìm được lối đi</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
@@ -413,7 +414,7 @@
 </section>
 
 <section class="slide" data-title="Bằng chứng báo chí">
-  <div class="kicker"><span class="n">06</span> Không riêng HaUI</div>
+  <div class="kicker"><span class="n">I.6</span> Không riêng HaUI</div>
   <h1 class="headline">Cả báo chí lẫn Quốc hội<br>đã <span class="accent">ghi nhận rào cản này</span></h1>
   <div class="body-col"><div class="fill" style="gap:.6rem; display:flex; flex-direction:column; justify-content:center;">
     <div class="card ok">
@@ -438,7 +439,7 @@
 </section>
 
 <section class="slide" data-title="HaUI tái định vị">
-  <div class="kicker"><span class="n">07</span> HaUI tái định vị</div>
+  <div class="kicker"><span class="n">II.1</span> HaUI tái định vị</div>
   <div class="card-grid" style="grid-template-columns:1fr 1.2fr; align-items:stretch;">
     <div style="display:flex; flex-direction:column; justify-content:center;">
       <h1 class="headline" style="margin-top:0;">Từ "Trường Đại học"<br>→ <span class="accent2">"Đại học"</span></h1>
@@ -454,7 +455,7 @@
 </section>
 
 <section class="slide" data-title="Funnel">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">08</span> Từ đầu vào tới thương mại hoá</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">II.2</span> Từ đầu vào tới thương mại hoá</div>
   <h1 class="headline">Đầu vào lớn - <span class="accent">đầu ra gần như không có</span></h1>
   <div class="body-col"><div class="fill">
     <div class="funnel">
@@ -472,7 +473,7 @@
 </section>
 
 <section class="slide" data-title="Xu hướng đầu vào">
-  <div class="kicker"><span class="n">09</span> Đầu vào nghiên cứu - nhìn theo nhiều năm</div>
+  <div class="kicker"><span class="n">II.3</span> Đầu vào nghiên cứu - nhìn theo nhiều năm</div>
   <h1 class="headline">Không phải biến động<br>nhất thời - mà là <span class="accent">chững lại sau 6 năm tăng</span></h1>
   <div class="body-col"><div class="fill">
     <div class="bar-chart">
@@ -492,7 +493,7 @@
 </section>
 
 <section class="slide" data-title="Khoảng cách">
-  <div class="kicker"><span class="n">10</span> Không còn là chuyện "chưa có văn kiện"</div>
+  <div class="kicker"><span class="n">II.4</span> Không còn là chuyện "chưa có văn kiện"</div>
   <h1 class="headline">Cam kết đã rõ  - <br><span class="accent">khoảng cách cũng rõ</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -506,7 +507,7 @@
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 1">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">11</span> Điểm nghẽn 1 · Tổ chức &amp; nhân lực</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">II.5</span> Điểm nghẽn 1 · Tổ chức &amp; nhân lực</div>
   <h1 class="headline">ĐMST hiện chỉ có<br><span class="accent">2 viên chức trực tiếp triển khai</span></h1>
   <div class="body-col"><div class="fill">
     <div class="org-layer">
@@ -520,12 +521,13 @@
       <div class="org-arrow">↓</div>
       <div class="org-box top">Phải bao phủ: tham mưu chính sách · SHTT · CGCN · kết nối doanh nghiệp · ươm tạo · chuẩn bị mô hình Trung tâm ĐMST</div>
     </div>
+    <div class="pain-note"><b>Cái giá:</b> Một nhiệm vụ cấp Đại học - thiết kế mô hình Trung tâm ĐMST - đang đặt lên vai 2 người kiêm nhiệm cùng lúc nhiều mảng việc khác. Đây là lý do trực tiếp khiến Pha 1 (mô hình đề xuất) đã kéo dài nhiều tháng mà chưa hoàn thiện.</div>
   </div></div>
   <div class="cite small"><b>Nguồn:</b> Cơ cấu Ban KHCN&amp;ĐMST HaUI, khcn.haui.edu.vn · Phân công nội bộ Ban, 2026.</div>
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 2">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">12</span> Điểm nghẽn 2 · Pháp lý &amp; SHTT</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">II.6</span> Điểm nghẽn 2 · Pháp lý &amp; SHTT</div>
   <h1 class="headline">Luật đã mở đường -<br><span class="accent">HaUI chưa cụ thể hoá</span></h1>
   <div class="body-col"><div class="fill">
     <div class="flow">
@@ -539,12 +541,13 @@
       <div class="card ok"><div class="card-title">Đã gỡ ở cấp quốc gia</div><div class="card-body">Luật 93/2025/QH15 (hiệu lực 1/10/2025): giao quyền sở hữu tự động kết quả nghiên cứu từ ngân sách nhà nước; tác giả hưởng tối thiểu 30% lợi nhuận/giá trị khi thương mại hoá.</div></div>
       <div class="card warn"><div class="card-title">Còn thiếu ở cấp HaUI</div><div class="card-body">Luật không quy định quy trình định giá SHTT cụ thể; HaUI chưa ban hành quy chế nội bộ để vận hành quyền đã được giao. Khoảng trống định giá xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa.</div></div>
     </div>
+    <div class="pain-note"><b>Cái giá:</b> 14 đơn đăng ký SHTT của HaUI đang chờ chấp nhận hợp lệ - đủ điều kiện để bắt đầu thương mại hoá theo luật mới, nhưng chưa có quy trình định giá nội bộ để đi tiếp bước tiếp theo. Quyền đã được luật trao, nhưng chưa có đường để dùng.</div>
   </div></div>
-  <div class="cite small"><b>Nguồn:</b> Luật số 93/2025/QH15 · Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026.</div>
+  <div class="cite small"><b>Nguồn:</b> Luật số 93/2025/QH15 · Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026 · Báo cáo thực hiện Nghị quyết HNĐBVC, tổng kết năm học 2025-2026.</div>
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 3">
-  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">13</span> Điểm nghẽn 3 · Thị trường &amp; doanh nghiệp</div>
+  <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">II.7</span> Điểm nghẽn 3 · Thị trường &amp; doanh nghiệp</div>
   <h1 class="headline">Giá trị thương mại hoá<br>còn <span class="accent">thấp so với quy mô nghiên cứu</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
@@ -558,7 +561,7 @@
 </section>
 
 <section class="slide" data-title="Lộ trình">
-  <div class="kicker"><span class="n">14</span> Lộ trình Trung tâm ĐMST HaUI</div>
+  <div class="kicker"><span class="n">II.8</span> Lộ trình Trung tâm ĐMST HaUI</div>
   <h1 class="headline">Roadmap có <span class="accent">cổng quyết định</span></h1>
   <div class="body-col"><div class="fill">
     <div class="gtl">
@@ -571,7 +574,7 @@
 </section>
 
 <section class="slide" data-title="Hạ tầng ĐMST">
-  <div class="kicker"><span class="n">15</span> Hạ tầng ĐMST</div>
+  <div class="kicker"><span class="n">II.9</span> Hạ tầng ĐMST</div>
   <h1 class="headline">So với <span class="accent2">2 mô hình trong nước</span></h1>
   <div class="body-col"><div class="fill">
   <div class="table-wrap">
@@ -589,7 +592,7 @@
 </section>
 
 <section class="slide" data-title="Bài học áp dụng">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">16</span> Bài học có thể áp dụng</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">III.1</span> Bài học có thể áp dụng</div>
   <h1 class="headline">Tiếp nhận kinh nghiệm  - <br><span class="accent2">không bê nguyên mô hình</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
@@ -602,7 +605,7 @@
 </section>
 
 <section class="slide" data-title="Thuận lợi và khó khăn">
-  <div class="kicker"><span class="n">17</span> Tổng hợp</div>
+  <div class="kicker"><span class="n">III.2</span> Tổng hợp</div>
   <h1 class="headline">Thuận lợi <span class="accent2">và</span> khó khăn</h1>
   <div class="body-col"><div class="fill">
     <div class="proscons">
@@ -630,7 +633,7 @@
 </section>
 
 <section class="slide" data-title="Chọn hướng chiến lược">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị mở đầu</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">IV.1</span> Kiến nghị mở đầu</div>
   <h1 class="headline">Trước hết, cần <span class="accent2">chọn hướng</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
@@ -649,7 +652,7 @@
 </section>
 
 <section class="slide" data-title="Kiến nghị 2026">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">19</span> Kiến nghị · 2026</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">IV.2</span> Kiến nghị · 2026</div>
   <h1 class="headline">Ba việc giao được <span class="accent2">ngay trong quý IV</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -683,7 +686,7 @@
 </section>
 
 <section class="slide" data-title="Kiến nghị 2027-2030">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">20</span> Kiến nghị · 2027–2030</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">IV.3</span> Kiến nghị · 2027–2030</div>
   <h1 class="headline">Chỉ tiêu theo <span class="accent2">từng mốc năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -704,7 +707,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ Atlas">
-  <div class="kicker"><span class="n">21</span> Công cụ hỗ trợ · 1/2</div>
+  <div class="kicker"><span class="n">V.1</span> Công cụ hỗ trợ · 1/2</div>
   <h1 class="headline">Innovation Center <span class="accent">Atlas</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
@@ -732,7 +735,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ tra cứu tạp chí">
-  <div class="kicker"><span class="n">22</span> Công cụ hỗ trợ · 2/2</div>
+  <div class="kicker"><span class="n">V.2</span> Công cụ hỗ trợ · 2/2</div>
   <h1 class="headline">Web tra cứu <span class="accent2">tạp chí khoa học</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
