@@ -905,6 +905,16 @@
   <div class="sp-row" id="box-bg-swatches"></div>
   <div class="sp-row"><span class="sp-label">Viền hộp</span></div>
   <div class="sp-row" id="box-border-swatches"></div>
+  <div class="sp-row"><span class="sp-label">Cỡ hộp</span>
+    <button class="sp-step" data-box-size-step="-1">-</button>
+    <span class="sp-val" id="box-size-val">100%</span>
+    <button class="sp-step" data-box-size-step="1">+</button>
+  </div>
+  <div class="sp-row"><span class="sp-label">Vị trí</span></div>
+  <div class="sp-row">
+    <button class="sp-step" id="box-drag-handle" style="width:auto; padding:0 .7em; cursor:grab;" title="Bấm giữ rồi kéo để di chuyển hộp">⤢ Kéo để di chuyển</button>
+    <button class="sp-step" id="box-pos-reset" style="width:auto; padding:0 .6em;" title="Về vị trí gốc">Về gốc</button>
+  </div>
 </div>
 <div class="navzone left" id="zone-left"></div>
 <div class="navzone right" id="zone-right"></div>
@@ -1002,22 +1012,31 @@
     clearTimeout(saveTimer);
     saveTimer = setTimeout(saveNow, 500);
   }
+  function markEdited(node){
+    var el = node && (node.nodeType === 3 ? node.parentElement : node);
+    var s = el && el.closest && el.closest('.slide');
+    if (s) s.dataset.edited = '1';
+  }
 
   function enterEdit(){
     document.body.classList.add('edit-mode');
     slides.forEach(function(s){ s.contentEditable = 'true'; s.spellcheck = false; });
     toolbar.hidden = false;
     editBtn.classList.add('on');
-    deck.addEventListener('input', scheduleSave);
+    deck.addEventListener('input', onDeckInput);
     // stop links from navigating away while editing text inside them
     deck.addEventListener('click', linkGuard, true);
+  }
+  function onDeckInput(e){
+    markEdited(e.target);
+    scheduleSave();
   }
   function exitEdit(){
     document.body.classList.remove('edit-mode');
     slides.forEach(function(s){ s.contentEditable = 'false'; });
     toolbar.hidden = true;
     editBtn.classList.remove('on');
-    deck.removeEventListener('input', scheduleSave);
+    deck.removeEventListener('input', onDeckInput);
     deck.removeEventListener('click', linkGuard, true);
     hidePanels();
   }
@@ -1047,10 +1066,11 @@
   document.getElementById('edit-export').addEventListener('click', function(){
     var lines = [];
     slides.forEach(function(s, i){
+      if (s.dataset.edited !== '1') return;
       var t = (s.textContent || '').replace(/\s+/g,' ').trim();
       lines.push('--- Slide ' + (i+1) + ' [' + (s.getAttribute('data-title')||'') + '] ---\n' + t);
     });
-    var text = lines.join('\n\n');
+    var text = lines.length ? lines.join('\n\n') : 'Chưa sửa slide nào.';
     var overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:4vw;';
     var box = document.createElement('div');
@@ -1175,18 +1195,38 @@
       span.style[prop] = value;
       try{ range.surroundContents(span); }
       catch(e){ var frag = range.extractContents(); span.appendChild(frag); range.insertNode(span); }
+      markEdited(span);
       if (sel) sel.removeAllRanges();
       savedRange = null;
     } else if (textTargetEl){
       textTargetEl.style[prop] = value;
+      markEdited(textTargetEl);
     }
     scheduleSave();
+  }
+
+  var boxSizeVal = document.getElementById('box-size-val');
+  function getBoxScale(el){
+    var m = /scale\(([\d.]+)\)/.exec(el.style.transform || '');
+    return m ? parseFloat(m[1]) : 1;
+  }
+  function getBoxTranslate(el){
+    var m = /translate\(([-\d.]+)px,\s*([-\d.]+)px\)/.exec(el.style.transform || '');
+    return m ? { x: parseFloat(m[1]), y: parseFloat(m[2]) } : { x: 0, y: 0 };
+  }
+  function setBoxTransform(el, x, y, scale){
+    el.style.transform = 'translate(' + x + 'px, ' + y + 'px) scale(' + scale + ')';
+  }
+  function updateBoxSizeDisplay(){
+    if (!boxTargetEl){ boxSizeVal.textContent = '100%'; return; }
+    boxSizeVal.textContent = Math.round(getBoxScale(boxTargetEl) * 100) + '%';
   }
 
   buildSwatches(textSwatchWrap, function(color){ applyTextStyle('color', color); });
   buildSwatches(boxBgWrap, function(color){
     if (!boxTargetEl) return;
     boxTargetEl.style.background = color;
+    markEdited(boxTargetEl);
     scheduleSave();
   });
   buildSwatches(boxBorderWrap, function(color){
@@ -1198,6 +1238,7 @@
     } else {
       boxTargetEl.style.borderColor = '';
     }
+    markEdited(boxTargetEl);
     scheduleSave();
   });
 
@@ -1210,9 +1251,54 @@
       var delta = parseFloat(b.getAttribute('data-size-step'));
       var cur = parseFloat(getComputedStyle(textTargetEl).fontSize);
       textTargetEl.style.fontSize = Math.max(8, cur + delta) + 'px';
+      markEdited(textTargetEl);
       updateTextSizeDisplay();
       scheduleSave();
     });
+  });
+  Array.prototype.slice.call(document.querySelectorAll('#box-style-panel [data-box-size-step]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      if (!boxTargetEl) return;
+      var delta = parseFloat(b.getAttribute('data-box-size-step')) * .1;
+      var next = Math.max(.5, Math.min(2.5, getBoxScale(boxTargetEl) + delta));
+      var t = getBoxTranslate(boxTargetEl);
+      setBoxTransform(boxTargetEl, t.x, t.y, next.toFixed(2));
+      markEdited(boxTargetEl);
+      updateBoxSizeDisplay();
+      scheduleSave();
+    });
+  });
+
+  var dragHandle = document.getElementById('box-drag-handle');
+  var dragState = null;
+  dragHandle.addEventListener('mousedown', function(e){
+    if (!boxTargetEl) return;
+    e.preventDefault();
+    var start = getBoxTranslate(boxTargetEl);
+    dragState = { startX: e.clientX, startY: e.clientY, origX: start.x, origY: start.y, el: boxTargetEl, scale: getBoxScale(boxTargetEl) };
+    dragHandle.style.cursor = 'grabbing';
+  });
+  document.addEventListener('mousemove', function(e){
+    if (!dragState) return;
+    var dx = e.clientX - dragState.startX;
+    var dy = e.clientY - dragState.startY;
+    setBoxTransform(dragState.el, dragState.origX + dx, dragState.origY + dy, dragState.scale);
+  });
+  document.addEventListener('mouseup', function(){
+    if (!dragState) return;
+    dragHandle.style.cursor = 'grab';
+    markEdited(dragState.el);
+    positionPanel(boxPanel, dragState.el.getBoundingClientRect());
+    scheduleSave();
+    dragState = null;
+  });
+
+  document.getElementById('box-pos-reset').addEventListener('click', function(){
+    if (!boxTargetEl) return;
+    setBoxTransform(boxTargetEl, 0, 0, getBoxScale(boxTargetEl));
+    markEdited(boxTargetEl);
+    positionPanel(boxPanel, boxTargetEl.getBoundingClientRect());
+    scheduleSave();
   });
 
   function onSelectionChange(){
@@ -1250,6 +1336,7 @@
       boxTargetEl = box;
       positionPanel(boxPanel, box.getBoundingClientRect());
       boxPanel.hidden = false;
+      updateBoxSizeDisplay();
     } else {
       boxPanel.hidden = true;
       boxTargetEl = null;
