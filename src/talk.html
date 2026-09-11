@@ -890,7 +890,7 @@
   <div class="sub" style="margin-top:1.3rem;">Sẵn sàng trao đổi thêm</div>
 </section>
 
-
+</div>
 
 <div id="progress-bar"><div id="progress-fill"></div></div>
 <div id="counter"><b id="cur">1</b> / <span id="total">20</span></div>
@@ -1184,7 +1184,7 @@
     var startIdx = fullText.indexOf(startTag);
     var endIdx = fullText.indexOf(endTag);
     if (startIdx === -1 || endIdx === -1 || endIdx < startIdx) return null;
-    return fullText.slice(0, startIdx + startTag.length) + '\n\n' + newDeckHtml + '\n\n' + fullText.slice(endIdx);
+    return fullText.slice(0, startIdx + startTag.length) + '\n\n' + newDeckHtml + '\n\n</div>\n\n' + fullText.slice(endIdx);
   }
   // strip browser-extension junk (Grammarly, spelling/writing assistants inject
   // custom elements like <grammarly-extension> straight into contenteditable regions)
