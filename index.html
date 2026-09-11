@@ -276,6 +276,16 @@
   .style-panel .sp-val{ font-size:.75rem; color:var(--ink-dim); min-width:3.2em; text-align:center; }
   .style-panel .sp-close{ align-self:flex-end; font-size:.68rem; font-weight:700; color:var(--ink-dim); background:none; border:none; cursor:pointer; padding:0; }
   .style-panel .sp-close:hover{ color:var(--ink); }
+
+  .box-handle{ position:fixed; width:14px; height:14px; border-radius:50%; background:var(--amber); border:2px solid #1a1200; z-index:30; box-shadow:0 0 0 1px rgba(255,255,255,.6); }
+  .box-handle[hidden]{ display:none; }
+  .box-handle.nw, .box-handle.se{ cursor:nwse-resize; }
+  .box-handle.ne, .box-handle.sw{ cursor:nesw-resize; }
+  body.edit-mode .box-move-target{ cursor:move; }
+  .snap-guide{ position:fixed; background:var(--red); z-index:29; pointer-events:none; }
+  .snap-guide.v{ width:1px; }
+  .snap-guide.h{ height:1px; }
+  .snap-guide[hidden]{ display:none; }
   #edit-status{ flex:1; }
   body.edit-mode [contenteditable="true"]:hover{ outline:1px dashed rgba(242,169,59,.6); outline-offset:2px; cursor:text; }
   body.edit-mode [contenteditable="true"]:focus{ outline:2px solid var(--amber); outline-offset:2px; background:rgba(242,169,59,.06); }
@@ -905,15 +915,10 @@
   <div class="sp-row" id="box-bg-swatches"></div>
   <div class="sp-row"><span class="sp-label">Viền hộp</span></div>
   <div class="sp-row" id="box-border-swatches"></div>
-  <div class="sp-row"><span class="sp-label">Cỡ hộp</span>
-    <button class="sp-step" data-box-size-step="-1">-</button>
-    <span class="sp-val" id="box-size-val">100%</span>
-    <button class="sp-step" data-box-size-step="1">+</button>
-  </div>
-  <div class="sp-row"><span class="sp-label">Vị trí</span></div>
+  <div class="sp-row"><span class="sp-label">Cỡ &amp; vị trí</span></div>
+  <div class="sp-row" style="font-size:.72rem; color:var(--ink-dim);">Kéo 4 chấm ở góc để giãn to/nhỏ. Kéo giữa hộp để di chuyển.</div>
   <div class="sp-row">
-    <button class="sp-step" id="box-drag-handle" style="width:auto; padding:0 .7em; cursor:grab;" title="Bấm giữ rồi kéo để di chuyển hộp">⤢ Kéo để di chuyển</button>
-    <button class="sp-step" id="box-pos-reset" style="width:auto; padding:0 .6em;" title="Về vị trí gốc">Về gốc</button>
+    <button class="sp-step" id="box-pos-reset" style="width:auto; padding:0 .6em;" title="Về vị trí và cỡ gốc">Về gốc</button>
   </div>
 </div>
 <div class="navzone left" id="zone-left"></div>
@@ -1196,6 +1201,8 @@
   function hidePanels(){
     textPanel.hidden = true; boxPanel.hidden = true;
     textTargetEl = null; boxTargetEl = null; savedRange = null;
+    hideHandles();
+    if (typeof hideGuides === 'function') hideGuides();
   }
 
   function applyTextStyle(prop, value){
@@ -1216,22 +1223,159 @@
     scheduleSave();
   }
 
-  var boxSizeVal = document.getElementById('box-size-val');
-  function getBoxScale(el){
-    var m = /scale\(([\d.]+)\)/.exec(el.style.transform || '');
-    return m ? parseFloat(m[1]) : 1;
-  }
   function getBoxTranslate(el){
     var m = /translate\(([-\d.]+)px,\s*([-\d.]+)px\)/.exec(el.style.transform || '');
     return m ? { x: parseFloat(m[1]), y: parseFloat(m[2]) } : { x: 0, y: 0 };
   }
-  function setBoxTransform(el, x, y, scale){
-    el.style.transform = 'translate(' + x + 'px, ' + y + 'px) scale(' + scale + ')';
+  function setBoxTranslate(el, x, y){
+    el.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
   }
-  function updateBoxSizeDisplay(){
-    if (!boxTargetEl){ boxSizeVal.textContent = '100%'; return; }
-    boxSizeVal.textContent = Math.round(getBoxScale(boxTargetEl) * 100) + '%';
+
+  // ---- Canva-style corner handles: drag to resize, drag body to move ----
+  var HANDLE_CORNERS = ['nw','ne','sw','se'];
+  var boxHandles = {};
+  HANDLE_CORNERS.forEach(function(c){
+    var h = document.createElement('div');
+    h.className = 'box-handle ' + c;
+    h.hidden = true;
+    document.body.appendChild(h);
+    boxHandles[c] = h;
+  });
+  function positionHandles(el){
+    var r = el.getBoundingClientRect();
+    boxHandles.nw.style.left = (r.left - 7) + 'px'; boxHandles.nw.style.top = (r.top - 7) + 'px';
+    boxHandles.ne.style.left = (r.right - 7) + 'px'; boxHandles.ne.style.top = (r.top - 7) + 'px';
+    boxHandles.sw.style.left = (r.left - 7) + 'px'; boxHandles.sw.style.top = (r.bottom - 7) + 'px';
+    boxHandles.se.style.left = (r.right - 7) + 'px'; boxHandles.se.style.top = (r.bottom - 7) + 'px';
   }
+  function showHandlesFor(el){
+    positionHandles(el);
+    HANDLE_CORNERS.forEach(function(c){ boxHandles[c].hidden = false; });
+  }
+  function hideHandles(){
+    HANDLE_CORNERS.forEach(function(c){ boxHandles[c].hidden = true; });
+  }
+  var MIN_BOX = 24;
+  HANDLE_CORNERS.forEach(function(corner){
+    boxHandles[corner].addEventListener('mousedown', function(e){
+      if (!boxTargetEl) return;
+      e.preventDefault();
+      var el = boxTargetEl;
+      var startRect = el.getBoundingClientRect();
+      var startT = getBoxTranslate(el);
+      var startX = e.clientX, startY = e.clientY;
+      function onMove(ev){
+        var dx = ev.clientX - startX, dy = ev.clientY - startY;
+        var w = startRect.width, h = startRect.height, tx = startT.x, ty = startT.y;
+        if (corner === 'se'){ w += dx; h += dy; }
+        else if (corner === 'sw'){ w -= dx; h += dy; tx += dx; }
+        else if (corner === 'ne'){ w += dx; h -= dy; ty += dy; }
+        else if (corner === 'nw'){ w -= dx; h -= dy; tx += dx; ty += dy; }
+        w = Math.max(MIN_BOX, w); h = Math.max(MIN_BOX, h);
+        el.style.width = w + 'px';
+        el.style.height = h + 'px';
+        setBoxTranslate(el, tx, ty);
+        positionHandles(el);
+      }
+      function onUp(){
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        markEdited(el);
+        positionPanel(boxPanel, el.getBoundingClientRect());
+        scheduleSave();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+
+  // ---- smart guides: snap to slide center/edges and other boxes on the same slide ----
+  var SNAP = 6;
+  var guideV = document.createElement('div'); guideV.className = 'snap-guide v'; guideV.hidden = true; document.body.appendChild(guideV);
+  var guideH = document.createElement('div'); guideH.className = 'snap-guide h'; guideH.hidden = true; document.body.appendChild(guideH);
+  var BLOCK_SELECTOR = '.card, .job-card, .mx-cell, .quote-card, .photo-card, .tool-card, .funnel-bar, .stat-mini, h1.headline, .thesis, .sub, .kicker';
+  function getSnapTargets(excludeEl){
+    var slide = excludeEl.closest('.slide');
+    var sr = slide.getBoundingClientRect();
+    var targets = { x: [sr.left, sr.left + sr.width / 2, sr.right], y: [sr.top, sr.top + sr.height / 2, sr.bottom] };
+    Array.prototype.slice.call(slide.querySelectorAll(BLOCK_SELECTOR)).forEach(function(el){
+      if (el === excludeEl || excludeEl.contains(el) || el.contains(excludeEl)) return;
+      var r = el.getBoundingClientRect();
+      if (r.width < 4 || r.height < 4) return;
+      targets.x.push(r.left, r.left + r.width / 2, r.right);
+      targets.y.push(r.top, r.top + r.height / 2, r.bottom);
+    });
+    return targets;
+  }
+  function nearestSnap(value, arr){
+    var best = null, bestDiff = SNAP + 1;
+    arr.forEach(function(t){ var d = Math.abs(value - t); if (d < bestDiff){ bestDiff = d; best = t; } });
+    return best;
+  }
+  function applySnapToRect(rect, targets){
+    var out = { dx: 0, dy: 0, snapX: null, snapY: null };
+    [rect.left, rect.left + rect.width / 2, rect.right].forEach(function(v){
+      if (out.snapX !== null) return;
+      var s = nearestSnap(v, targets.x);
+      if (s !== null){ out.dx = s - v; out.snapX = s; }
+    });
+    [rect.top, rect.top + rect.height / 2, rect.bottom].forEach(function(v){
+      if (out.snapY !== null) return;
+      var s = nearestSnap(v, targets.y);
+      if (s !== null){ out.dy = s - v; out.snapY = s; }
+    });
+    return out;
+  }
+  function showGuides(slideRect, snapX, snapY){
+    if (snapX !== null){
+      guideV.style.left = snapX + 'px'; guideV.style.top = slideRect.top + 'px'; guideV.style.height = slideRect.height + 'px';
+      guideV.hidden = false;
+    } else guideV.hidden = true;
+    if (snapY !== null){
+      guideH.style.top = snapY + 'px'; guideH.style.left = slideRect.left + 'px'; guideH.style.width = slideRect.width + 'px';
+      guideH.hidden = false;
+    } else guideH.hidden = true;
+  }
+  function hideGuides(){ guideV.hidden = true; guideH.hidden = true; }
+
+  // drag the body of an already-selected box to move it
+  deck.addEventListener('mousedown', function(e){
+    if (!isEditing() || !boxTargetEl) return;
+    if (e.target.closest && (e.target.closest('.style-panel') || e.target.closest('.box-handle'))) return;
+    var candidate = findBoxAncestor(e.target) || findBlockAncestor(e.target);
+    if (candidate !== boxTargetEl) return;
+    var el = boxTargetEl;
+    var startT = getBoxTranslate(el);
+    var startRect = el.getBoundingClientRect();
+    var startX = e.clientX, startY = e.clientY;
+    var moved = false;
+    var targets;
+    function onMove(ev){
+      var dx = ev.clientX - startX, dy = ev.clientY - startY;
+      if (!moved && Math.hypot(dx, dy) > 4){ moved = true; targets = getSnapTargets(el); }
+      if (moved){
+        ev.preventDefault();
+        var tentative = { left: startRect.left + dx, top: startRect.top + dy, width: startRect.width, height: startRect.height };
+        var snap = applySnapToRect(tentative, targets);
+        setBoxTranslate(el, startT.x + dx + snap.dx, startT.y + dy + snap.dy);
+        positionHandles(el);
+        showGuides(el.closest('.slide').getBoundingClientRect(), snap.snapX, snap.snapY);
+      }
+    }
+    function onUp(){
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      hideGuides();
+      if (moved){
+        markEdited(el);
+        positionPanel(boxPanel, el.getBoundingClientRect());
+        scheduleSave();
+        window.__justDraggedBox = true;
+      }
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
 
   buildSwatches(textSwatchWrap, function(color){ applyTextStyle('color', color); });
   buildSwatches(boxBgWrap, function(color){
@@ -1267,48 +1411,14 @@
       scheduleSave();
     });
   });
-  Array.prototype.slice.call(document.querySelectorAll('#box-style-panel [data-box-size-step]')).forEach(function(b){
-    b.addEventListener('click', function(){
-      if (!boxTargetEl) return;
-      var delta = parseFloat(b.getAttribute('data-box-size-step')) * .1;
-      var next = Math.max(.5, Math.min(2.5, getBoxScale(boxTargetEl) + delta));
-      var t = getBoxTranslate(boxTargetEl);
-      setBoxTransform(boxTargetEl, t.x, t.y, next.toFixed(2));
-      markEdited(boxTargetEl);
-      updateBoxSizeDisplay();
-      scheduleSave();
-    });
-  });
-
-  var dragHandle = document.getElementById('box-drag-handle');
-  var dragState = null;
-  dragHandle.addEventListener('mousedown', function(e){
-    if (!boxTargetEl) return;
-    e.preventDefault();
-    var start = getBoxTranslate(boxTargetEl);
-    dragState = { startX: e.clientX, startY: e.clientY, origX: start.x, origY: start.y, el: boxTargetEl, scale: getBoxScale(boxTargetEl) };
-    dragHandle.style.cursor = 'grabbing';
-  });
-  document.addEventListener('mousemove', function(e){
-    if (!dragState) return;
-    var dx = e.clientX - dragState.startX;
-    var dy = e.clientY - dragState.startY;
-    setBoxTransform(dragState.el, dragState.origX + dx, dragState.origY + dy, dragState.scale);
-  });
-  document.addEventListener('mouseup', function(){
-    if (!dragState) return;
-    dragHandle.style.cursor = 'grab';
-    markEdited(dragState.el);
-    positionPanel(boxPanel, dragState.el.getBoundingClientRect());
-    scheduleSave();
-    dragState = null;
-  });
-
   document.getElementById('box-pos-reset').addEventListener('click', function(){
     if (!boxTargetEl) return;
-    setBoxTransform(boxTargetEl, 0, 0, getBoxScale(boxTargetEl));
+    boxTargetEl.style.transform = '';
+    boxTargetEl.style.width = '';
+    boxTargetEl.style.height = '';
     markEdited(boxTargetEl);
     positionPanel(boxPanel, boxTargetEl.getBoundingClientRect());
+    positionHandles(boxTargetEl);
     scheduleSave();
   });
 
@@ -1338,7 +1448,8 @@
 
   deck.addEventListener('click', function(e){
     if (!isEditing()) return;
-    if (e.target.closest && e.target.closest('.style-panel')) return;
+    if (window.__justDraggedBox){ window.__justDraggedBox = false; return; }
+    if (e.target.closest && (e.target.closest('.style-panel') || e.target.closest('.box-handle'))) return;
     var sel = window.getSelection();
     if (sel && !sel.isCollapsed && sel.toString().trim().length > 0) return;
     textPanel.hidden = true;
@@ -1347,10 +1458,11 @@
       boxTargetEl = box;
       positionPanel(boxPanel, box.getBoundingClientRect());
       boxPanel.hidden = false;
-      updateBoxSizeDisplay();
+      showHandlesFor(box);
     } else {
       boxPanel.hidden = true;
       boxTargetEl = null;
+      hideHandles();
     }
   });
 
