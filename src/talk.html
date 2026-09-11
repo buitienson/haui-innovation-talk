@@ -1,4 +1,4 @@
-<title>ĐMST tại Đại học — HaUI</title>
+<title>ĐMST tại Đại học - HaUI</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -102,7 +102,7 @@
   .quote{ font-family:var(--font-head); font-weight:700; font-size:clamp(1.15rem,1.9vw,1.6rem); color:var(--ink); border-left:3px solid var(--amber); padding-left:1rem; margin:.5rem 0; max-width:40ch; }
   .status-tag{ display:inline-block; font-weight:800; font-size:.78rem; padding:.35em .75em; border-radius:8px; background:rgba(239,93,99,.15); color:var(--red); text-transform:uppercase; margin-top:.5rem; }
 
-  /* citation — legible in a real room */
+  /* citation - legible in a real room */
   .cite{ margin-top:auto; padding-top:.8rem; font-size:.86rem; color:var(--ink-dim); border-top:1px solid var(--panel-border); width:100%; line-height:1.5; }
   .cite b{ color:var(--ink); font-weight:700; }
   .cite .sep{ margin:0 .5em; opacity:.5; }
@@ -124,6 +124,15 @@
   .quote-card{ border-left:3px solid var(--teal); padding:.8rem 1.1rem; background:rgba(62,207,192,.06); border-radius:0 10px 10px 0; }
   .quote-card p{ font-family:var(--font-head); font-style:italic; font-weight:600; font-size:.98rem; margin:0 0 .35rem; color:var(--ink); line-height:1.4; }
   .quote-card .src{ font-size:.76rem; color:var(--ink-faint); }
+
+  .stat-mini-row{ display:flex; gap:.6rem; margin:.5rem 0 .7rem; }
+  .stat-mini{ flex:1; border:1px solid var(--panel-border); border-radius:10px; padding:.5rem .6rem; text-align:center; }
+  .stat-mini .sm-num{ font-family:var(--font-head); font-weight:900; color:var(--amber); font-size:1.15rem; line-height:1.1; }
+  .stat-mini .sm-label{ font-size:.62rem; color:var(--ink-faint); margin-top:.1rem; }
+
+  .feature-list{ list-style:none; margin:0 0 .7rem; padding:0; display:flex; flex-direction:column; gap:.4rem; }
+  .feature-list li{ font-size:.8rem; color:var(--ink-dim); line-height:1.4; }
+  .feature-list li b{ color:var(--ink); font-weight:700; }
 
   /* tool card link */
   .tool-card{ display:flex; flex-direction:column; gap:.4rem; text-decoration:none; border:1px solid var(--panel-border); border-radius:16px; padding:1.2rem 1.3rem; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); }
@@ -159,9 +168,13 @@
 
   /* ===== 2x2 matrix ===== */
   .matrix2{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:.7rem; width:100%; margin-top:.6rem; }
-  .mx-cell{ border:1px solid var(--panel-border); border-radius:12px; padding:.9rem 1.1rem; display:flex; flex-direction:column; gap:.3rem; }
-  .mx-cell .mx-title{ font-family:var(--font-head); font-weight:800; font-size:.88rem; color:var(--ink); }
-  .mx-cell .mx-ex{ font-size:.78rem; color:var(--ink-dim); }
+  .mx-cell{ border:1px solid var(--panel-border); border-radius:12px; padding:.8rem .95rem; display:flex; gap:.7rem; align-items:flex-start; }
+  .mx-cell .mx-photo{ flex:none; width:64px; height:64px; border-radius:8px; overflow:hidden; border:1px solid var(--panel-border); }
+  .mx-cell .mx-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .mx-cell .mx-body{ min-width:0; }
+  .mx-cell .mx-title{ font-family:var(--font-head); font-weight:800; font-size:.85rem; color:var(--ink); margin-bottom:.15rem; }
+  .mx-cell .mx-ex{ font-size:.72rem; color:var(--teal); font-weight:700; margin-bottom:.25rem; }
+  .mx-cell .mx-note{ font-size:.72rem; color:var(--ink-dim); line-height:1.4; }
 
   /* ===== job card (kiến nghị giao việc) ===== */
   .job-card{ border:1px solid var(--panel-border); border-radius:12px; padding:.85rem 1.1rem; background:rgba(255,255,255,.03); margin-bottom:.55rem; }
@@ -177,6 +190,26 @@
   .bar-chart .bc-bar{ width:100%; border-radius:6px 6px 0 0; background:var(--teal); }
   .bar-chart .bc-bar.dip{ background:var(--red); }
   .bar-chart .bc-yr{ font-size:.62rem; color:var(--ink-faint); margin-top:.35rem; text-align:center; }
+
+  /* ===== thuan loi / kho khan two-column ===== */
+  .proscons{ display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; width:100%; margin-top:.6rem; }
+  .pc-col-head{ font-family:var(--font-head); font-weight:800; font-size:.95rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.6rem; padding-bottom:.4rem; border-bottom:2px solid; }
+  .pc-col-head.good{ color:var(--green); border-color:rgba(62,207,142,.4); }
+  .pc-col-head.bad{ color:var(--red); border-color:rgba(239,93,99,.4); }
+  .pc-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.55rem; }
+  .pc-list li{ display:flex; gap:.55rem; align-items:flex-start; font-size:.82rem; line-height:1.45; color:var(--ink-dim); }
+  .pc-list li b{ color:var(--ink); }
+  .pc-list .pc-ico{ flex:none; font-weight:900; margin-top:.05em; }
+  .pc-list.good .pc-ico{ color:var(--green); }
+  .pc-list.bad .pc-ico{ color:var(--red); }
+
+  /* ===== agenda ===== */
+  .agenda{ list-style:none; margin:.4rem 0 0; padding:0; display:flex; flex-direction:column; gap:.9rem; width:100%; max-width:56ch; }
+  .agenda li{ display:flex; gap:1rem; align-items:baseline; }
+  .agenda .ag-num{ font-family:var(--font-head); font-weight:900; font-size:1.3rem; color:var(--panel-border); flex:none; width:1.6ch; }
+  .agenda li.active .ag-num{ color:var(--amber); }
+  .agenda .ag-text{ font-family:var(--font-head); font-weight:700; font-size:1.1rem; color:var(--ink); }
+  .agenda .ag-sub{ display:block; font-family:var(--font-body); font-weight:400; font-size:.8rem; color:var(--ink-faint); margin-top:.15rem; }
 
   /* ===== gate timeline ===== */
   .gtl{ display:flex; align-items:stretch; gap:0; width:100%; margin-top:1rem; }
@@ -245,26 +278,45 @@
 
 <section class="slide divider" data-title="Câu hỏi trung tâm">
   <div class="kicker">Câu hỏi trung tâm</div>
-  <div class="thesis">HaUI đã có đầu vào nghiên cứu và định hướng ĐMST — nhưng chưa có <span class="accent">cơ chế chuyển kết quả nghiên cứu thành tài sản, hợp đồng, doanh nghiệp</span>.</div>
+  <div class="thesis">HaUI đã có đầu vào nghiên cứu và định hướng ĐMST - nhưng chưa có <span class="accent">cơ chế chuyển kết quả nghiên cứu thành tài sản, hợp đồng, doanh nghiệp</span>.</div>
   <div class="sub" style="margin:1.3rem auto 0; text-align:center;">99 đề tài → 19 kết quả SHTT → 4 hợp đồng CGCN → 0 spin-off</div>
+</section>
+
+<section class="slide" data-title="Mục lục">
+  <div class="kicker">Nội dung trình bày</div>
+  <h1 class="headline">5 phần <span class="accent2">chính</span></h1>
+  <div class="body-col"><div class="fill">
+    <ul class="agenda">
+      <li class="active"><span class="ag-num">I</span><span class="ag-text">Bối cảnh chính sách và mô hình tham chiếu<span class="ag-sub">Quốc tế, khung pháp lý quốc gia, hai mô hình trong nước đã đi trước</span></span></li>
+      <li class="active"><span class="ag-num">II</span><span class="ag-text">Thực trạng và vướng mắc tại HaUI<span class="ag-sub">Funnel chuyển hoá, khoảng cách chỉ tiêu, 3 điểm nghẽn</span></span></li>
+      <li class="active"><span class="ag-num">III</span><span class="ag-text">Thuận lợi và khó khăn</span></li>
+      <li class="active"><span class="ag-num">IV</span><span class="ag-text">Kiến nghị<span class="ag-sub">Chọn hướng chiến lược, việc giao cụ thể 2026 và 2027-2030</span></span></li>
+      <li class="active"><span class="ag-num">V</span><span class="ag-text">Công cụ hỗ trợ<span class="ag-sub">Innovation Center Atlas, Web tra cứu tạp chí</span></span></li>
+    </ul>
+  </div></div>
 </section>
 
 <section class="slide" data-title="Bối cảnh chính sách">
   <div class="kicker"><span class="n">01</span> Bối cảnh chính sách</div>
   <h1 class="headline">Khung thể chế đang<br>thay đổi <span class="accent">nhanh trên cả nước</span></h1>
   <div class="body-col"><div class="fill">
-    <div class="card-grid g2">
+    <div class="card-grid g3">
       <div class="card">
         <div class="card-title">NQ57-NQ/TW · 24/12/2024</div>
         <div class="card-body">Đột phá phát triển KH-CN-ĐMST-CĐS quốc gia, yêu cầu xây dựng "thể chế vượt trội, chấp nhận rủi ro trong khuôn khổ kiểm soát".</div>
       </div>
+      <div class="card ok">
+        <div class="card-title">Luật KHCN&amp;ĐMST · số 93/2025/QH15</div>
+        <div class="card-body">Quốc hội thông qua 27/6/2025, hiệu lực 1/10/2025: giao quyền sở hữu tự động kết quả nghiên cứu từ ngân sách nhà nước cho tổ chức chủ trì; tác giả hưởng tối thiểu 30% lợi nhuận/giá trị khi thương mại hoá.</div>
+      </div>
       <div class="card">
         <div class="card-title">NĐ 268/2025/NĐ-CP</div>
-        <div class="card-body">Lần đầu có tiêu chí pháp lý cụ thể để công nhận trung tâm ĐMST/hỗ trợ khởi nghiệp trong trường đại học (Điều 29–46) — hành lang pháp lý mới từ đây.</div>
+        <div class="card-body">Lần đầu có tiêu chí pháp lý cụ thể để công nhận trung tâm ĐMST/hỗ trợ khởi nghiệp trong trường đại học (Điều 29–46).</div>
       </div>
     </div>
-    <div class="badge-row" style="margin-top:.9rem;"><span class="badge teal">QĐ 844/QĐ-TTg</span><span class="badge teal">NIC — NĐ 94/2020/NĐ-CP</span><span class="badge amber">Mục tiêu quốc gia: 5–10 spin-off/năm</span></div>
-    <div class="sub" style="margin-top:.8rem;">→ Hành lang pháp lý mới áp dụng chung cho mọi đại học — nhưng một số đơn vị đã tích luỹ kinh nghiệm từ nhiều năm trước, như các mô hình sẽ nhắc dưới đây.</div>
+    <div class="badge-row" style="margin-top:.8rem;"><span class="badge teal">QĐ 844/QĐ-TTg</span><span class="badge teal">NIC - NĐ 94/2020/NĐ-CP</span><span class="badge amber">Mục tiêu quốc gia: 5–10 spin-off/năm</span></div>
+    <div class="sub" style="margin-top:.6rem;">Thuận lợi: Tổng Bí thư trực tiếp làm Trưởng Ban Chỉ đạo Trung ương về phát triển KHCN, ĐMST và CĐS - chỉ đạo xuyên suốt từ cấp cao nhất.</div>
+    <div class="sub" style="margin-top:.8rem;">→ Hành lang pháp lý mới áp dụng chung cho mọi đại học - nhưng một số đơn vị đã tích luỹ kinh nghiệm từ nhiều năm trước, như các mô hình sẽ nhắc dưới đây.</div>
   </div></div>
   <div class="cite small"><b>Trích dẫn:</b> Ban Chấp hành Trung ương Đảng, NQ57-NQ/TW, 24/12/2024 · Chính phủ, NĐ 268/2025/NĐ-CP, Điều 29–46, congbao.chinhphu.vn · Thủ tướng Chính phủ, QĐ 844/QĐ-TTg · NĐ 94/2020/NĐ-CP · mst.gov.vn, 26/6/2026.</div>
 </section>
@@ -288,32 +340,44 @@
 
 <section class="slide" data-title="Mô hình quốc tế">
   <div class="kicker"><span class="n">03</span> Mô hình quốc tế</div>
-  <h1 class="headline">4 mô hình quản trị — <span class="accent">tuổi đời hàng thập kỷ</span></h1>
+  <h1 class="headline">4 mô hình quản trị<br><span class="accent">tuổi đời hàng thập kỷ</span></h1>
   <div class="body-col"><div class="fill">
     <div class="matrix2">
       <div class="mx-cell">
-        <div class="mx-title">TTO nội bộ trong trường</div>
-        <div class="mx-ex">MIT TLO (1986) · Stanford OTL (1970) · Harvard OTD (2005)</div>
+        <figure class="mx-photo" style="margin:0;"><img src="assets/mit.jpg" alt="MIT"></figure>
+        <div class="mx-body">
+          <div class="mx-title">TTO nội bộ trong trường</div>
+          <div class="mx-ex">MIT TLO (1986) · Stanford OTL (1970)</div>
+          <div class="mx-note">Là văn phòng cấp trường, trực thuộc Phó Hiệu trưởng phụ trách Nghiên cứu (Stanford OTL thuộc Vice Provost and Dean of Research). Ưu điểm: sát đội ngũ nghiên cứu; nhược điểm: nguồn thu dồn vào số ít bằng sáng chế lớn (Stanford: 13/968 công nghệ chiếm 64% doanh thu bản quyền).</div>
+        </div>
       </div>
       <div class="mx-cell">
-        <div class="mx-title">Holdings tách pháp nhân</div>
-        <div class="mx-ex">Oxford Innovation (1987) · Cambridge Enterprise (1995)</div>
+        <figure class="mx-photo" style="margin:0;"><img src="assets/oxford.jpg" alt="Oxford"></figure>
+        <div class="mx-body">
+          <div class="mx-title">Holdings tách pháp nhân</div>
+          <div class="mx-ex">Oxford Innovation (1987) · Tsinghua Holdings (2003)</div>
+          <div class="mx-note">Tách hẳn thành pháp nhân đầu tư độc lập ngoài bộ máy hành chính - Oxford nhượng khoảng nửa cổ phần cho quỹ Oxford Science Enterprises (huy động 250 triệu bảng, 2022). Ưu điểm: gọi vốn lớn; nhược điểm: rủi ro thương hiệu (từng đổi tên khỏi "Isis Innovation" năm 2016).</div>
+        </div>
       </div>
       <div class="mx-cell">
-        <div class="mx-title">Mạng lưới / nền tảng mở</div>
-        <div class="mx-ex">NUS Enterprise / BLOCK71</div>
+        <figure class="mx-photo" style="margin:0;"><img src="assets/nus.jpg" alt="NUS"></figure>
+        <div class="mx-body">
+          <div class="mx-title">Mạng lưới / nền tảng mở</div>
+          <div class="mx-ex">NUS Enterprise / BLOCK71</div>
+          <div class="mx-note">Không sở hữu tập trung - NUS Enterprise kết nối nhiều không gian khởi nghiệp qua các thành phố Đông Nam Á. Ưu điểm: mở rộng nhanh, chi phí thấp; nhược điểm: khó đo hiệu quả tập trung, dữ liệu định lượng công khai còn hạn chế.</div>
+        </div>
       </div>
       <div class="mx-cell">
-        <div class="mx-title">Mô hình lai</div>
-        <div class="mx-ex">Lund University — LU Innovation + LU Holding AB (1999)</div>
+        <figure class="mx-photo" style="margin:0;"><img src="assets/lund.jpg" alt="Lund"></figure>
+        <div class="mx-body">
+          <div class="mx-title">Mô hình lai</div>
+          <div class="mx-ex">Lund University - LU Holding AB (1999)</div>
+          <div class="mx-note">Tách quỹ đầu tư (LU Holding AB) khỏi đơn vị hỗ trợ nghiên cứu (LU Innovation) nhưng vận hành song song trong cùng hệ thống. Ưu điểm: cân bằng giữa gần nghiên cứu và chuyên môn đầu tư; nhược điểm: cần phối hợp chặt giữa hai đơn vị.</div>
+        </div>
       </div>
-    </div>
-    <div class="card-grid g2" style="margin-top:.9rem;">
-      <figure class="photo-card" style="margin:0;"><img src="assets/mit.jpg" alt="MIT"><div class="cap">MIT — đại diện mô hình TTO nội bộ</div></figure>
-      <figure class="photo-card" style="margin:0;"><img src="assets/oxford.jpg" alt="Oxford"><div class="cap">Oxford — đại diện mô hình Holdings</div></figure>
     </div>
   </div></div>
-  <div class="cite small"><b>Ảnh:</b> Wikimedia Commons, CC BY-SA — Great Dome, MIT (Mys 721tx) · Radcliffe Camera, Oxford (Zhushenje). <b>Nguồn:</b> Innovation Center Atlas.</div>
+  <div class="cite small"><b>Ảnh:</b> Wikimedia Commons, CC BY-SA - Great Dome MIT (Mys 721tx) · Radcliffe Camera Oxford (Zhushenje) · Mochtar Riady Building, NUS · Lund University Main Building. <b>Nguồn:</b> Innovation Center Atlas · doresearch.stanford.edu · orgchart.mit.edu.</div>
 </section>
 
 <section class="slide" data-title="Điểm chung quốc tế">
@@ -321,37 +385,41 @@
   <h1 class="headline">Ba năng lực thường thấy ở<br>mô hình <span class="accent2">đã vận hành lâu năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
-      <div class="card"><div class="card-title">Đầu mối chuyên trách</div><div class="card-body">Một đơn vị/pháp nhân đứng ra làm — không kiêm nhiệm rải rác nhiều nơi.</div></div>
+      <div class="card"><div class="card-title">Đầu mối chuyên trách</div><div class="card-body">Một đơn vị/pháp nhân đứng ra làm - không kiêm nhiệm rải rác nhiều nơi.</div></div>
       <div class="card"><div class="card-title">Cơ chế chia lợi ích</div><div class="card-body">Harvard OTD chia cố định 35% tiền bản quyền ròng cho tác giả.</div></div>
       <div class="card"><div class="card-title">Vốn ươm tạo riêng</div><div class="card-body">Harvard Blavatnik Accelerator đã cấp hơn $33tr cho 178 dự án.</div></div>
     </div>
   </div></div>
-  <div class="cite small"><b>Nguồn:</b> Innovation Center Atlas — Harvard Office of Technology Development, dữ liệu công bố FY2024–2025.</div>
+  <div class="cite small"><b>Nguồn:</b> Innovation Center Atlas - Harvard Office of Technology Development, dữ liệu công bố FY2024–2025.</div>
 </section>
 
 <section class="slide" data-title="Việt Nam đã đi trước">
   <div class="kicker"><span class="n">05</span> Việt Nam đã đi trước</div>
-  <h1 class="headline">Cùng hành lang pháp lý —<br><span class="accent2">đã tìm được lối đi</span></h1>
+  <h1 class="headline">Cùng hành lang pháp lý  - <br><span class="accent2">đã tìm được lối đi</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
       <figure class="photo-card" style="margin:0;">
         <img src="assets/bk-holdings.jpg" alt="BK Holdings">
-        <div class="cap"><b>BK Holdings / BK TTO</b> — ĐH Bách khoa Hà Nội, từ 2008 · Hàng chục spin-off: BKAV, VietSearch, VnTrack…</div>
+        <div class="cap"><b>BK Holdings / BK TTO</b> - ĐH Bách khoa Hà Nội, từ 2008 · Hàng chục spin-off: BKAV, VietSearch, VnTrack…</div>
       </figure>
       <figure class="photo-card" style="margin:0;">
         <img src="assets/ptit-iec.jpg" alt="PTIT IEC">
-        <div class="cap"><b>PTIT IEC</b> — Học viện CNBCVT · 2 dự án spin-off, đang ươm tạo 10 dự án công nghệ</div>
+        <div class="cap"><b>PTIT IEC</b> - Học viện CNBCVT · 2 dự án spin-off, đang ươm tạo 10 dự án công nghệ</div>
       </figure>
     </div>
-    <div class="sub" style="margin-top:.9rem;">Hai mô hình cho thấy có thể triển khai được trong cùng khung pháp lý hiện hành — không phải rào cản bất khả thi.</div>
+    <div class="sub" style="margin-top:.9rem;">Hai mô hình cho thấy có thể triển khai được trong cùng khung pháp lý hiện hành - không phải rào cản bất khả thi.</div>
   </div></div>
   <div class="cite small"><b>Ảnh:</b> Hường Hoàng (2023, 24/1). BK Holdings tiên phong đổi mới sáng tạo trong trường đại học. TheLeader. theleader.vn <span class="sep">·</span> iec.ptit.edu.vn, 2026.</div>
 </section>
 
 <section class="slide" data-title="Bằng chứng báo chí">
   <div class="kicker"><span class="n">06</span> Không riêng HaUI</div>
-  <h1 class="headline">Báo chí đã ghi nhận<br><span class="accent">rào cản này</span></h1>
-  <div class="body-col"><div class="fill" style="gap:.8rem; display:flex; flex-direction:column; justify-content:center;">
+  <h1 class="headline">Cả báo chí lẫn Quốc hội<br>đã <span class="accent">ghi nhận rào cản này</span></h1>
+  <div class="body-col"><div class="fill" style="gap:.6rem; display:flex; flex-direction:column; justify-content:center;">
+    <div class="card ok">
+      <div class="card-title">Xác nhận chính thức cấp quốc gia</div>
+      <div class="card-body">Tờ trình Luật KHCN&amp;ĐMST 2025 (Quốc hội khoá XV, kỳ họp thứ 9) nêu rõ: 10 năm qua, thương mại hoá kết quả nghiên cứu chậm do vướng mắc về sở hữu trí tuệ, định giá và chia sẻ lợi ích - Luật 2013 chưa giải quyết được. Nghị quyết 193/2025/QH15 (19/2/2025) lập cơ chế thí điểm riêng để gỡ vướng tài chính, tổ chức, nhân lực cho tổ chức KHCN công lập.</div>
+    </div>
     <div class="quote-card">
       <p>"Nhiều trường đại học chưa đầu tư đủ vào các văn phòng chuyển giao công nghệ (TTOs)…"</p>
       <div class="src">Hiếu Nguyễn (2026, 16/7). Giáo dục &amp; Thời đại. giaoducthoidai.vn</div>
@@ -361,6 +429,7 @@
       <div class="src">Trần Lưu (2024, 25/4). Sài Gòn Giải Phóng. sggp.org.vn</div>
     </div>
   </div></div>
+  <div class="cite small"><b>Trích dẫn:</b> Luật số 93/2025/QH15, thông qua 27/6/2025 · Nghị quyết 193/2025/QH15, 19/2/2025, Quốc hội khoá XV.</div>
 </section>
 
 <section class="slide divider" data-title="Chuyển ý">
@@ -378,7 +447,7 @@
     </div>
     <figure class="photo-card" style="margin:0;">
       <img src="assets/haui.jpg" alt="HaUI">
-      <div class="cap">Đại học Công nghiệp Hà Nội — Toà nhà A1</div>
+      <div class="cap">Đại học Công nghiệp Hà Nội - Toà nhà A1</div>
     </figure>
   </div>
   <div class="cite small"><b>Trích dẫn:</b> QĐ 2536/QĐ-TTg, 20/11/2025 · NQ 97/NQ-HĐT, 15/12/2025 (HĐT phê duyệt Chiến lược 2026–2030, tầm nhìn 2035) · Phát biểu Hiệu trưởng, haui.edu.vn, 13/2/2026. <b>Ảnh:</b> Wikimedia Commons, Huynh ICT, CC BY-SA 4.0.</div>
@@ -386,7 +455,7 @@
 
 <section class="slide" data-title="Funnel">
   <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">08</span> Từ đầu vào tới thương mại hoá</div>
-  <h1 class="headline">Đầu vào lớn — <span class="accent">đầu ra gần như không có</span></h1>
+  <h1 class="headline">Đầu vào lớn - <span class="accent">đầu ra gần như không có</span></h1>
   <div class="body-col"><div class="fill">
     <div class="funnel">
       <div class="funnel-stage" style="--w:96%; --c:var(--teal);"><div class="funnel-bar"><span class="fn-num">99</span><span class="fn-label">Đề tài NCKH</span></div></div>
@@ -399,12 +468,12 @@
       <div class="funnel-stage" style="--w:20%; --c:var(--red);"><div class="funnel-bar"><span class="fn-num">0</span><span class="fn-label">Spin-off</span></div></div>
     </div>
   </div></div>
-  <div class="cite small"><b>Không theo tỷ lệ tuyệt đối</b> — minh hoạ mức thu hẹp qua từng bước. <b>Nguồn:</b> Đại học Công nghiệp Hà Nội. Báo cáo thực hiện Nghị quyết Hội nghị đại biểu viên chức, NLĐ; tổng kết năm học 2025–2026, 9/9/2026, tr.9–10.</div>
+  <div class="cite small"><b>Không theo tỷ lệ tuyệt đối</b> - minh hoạ mức thu hẹp qua từng bước. <b>Nguồn:</b> Đại học Công nghiệp Hà Nội. Báo cáo thực hiện Nghị quyết Hội nghị đại biểu viên chức, NLĐ; tổng kết năm học 2025–2026, 9/9/2026, tr.9–10.</div>
 </section>
 
 <section class="slide" data-title="Xu hướng đầu vào">
-  <div class="kicker"><span class="n">09</span> Đầu vào nghiên cứu — nhìn theo nhiều năm</div>
-  <h1 class="headline">Không phải biến động<br>nhất thời — mà là <span class="accent">chững lại sau 6 năm tăng</span></h1>
+  <div class="kicker"><span class="n">09</span> Đầu vào nghiên cứu - nhìn theo nhiều năm</div>
+  <h1 class="headline">Không phải biến động<br>nhất thời - mà là <span class="accent">chững lại sau 6 năm tăng</span></h1>
   <div class="body-col"><div class="fill">
     <div class="bar-chart">
       <div class="bc-item"><span class="bc-val">220</span><div class="bc-bar" style="height:34%;"></div><span class="bc-yr">2018–19</span></div>
@@ -416,7 +485,7 @@
       <div class="bc-item"><span class="bc-val">640</span><div class="bc-bar" style="height:100%;"></div><span class="bc-yr">2024–25</span></div>
       <div class="bc-item"><span class="bc-val">628</span><div class="bc-bar dip" style="height:98%;"></div><span class="bc-yr">2025–26</span></div>
     </div>
-    <div class="sub" style="margin-top:1rem;">Đề tài NCKH sinh viên đăng ký, 8 năm liền — giảm nhẹ 2025–26 (-1,9%) sau 6 năm tăng liên tục. Nhưng số <b style="color:var(--ink)">sinh viên tham gia</b> giảm mạnh hơn: 2.700 → 2.329 (-13,7%).</div>
+    <div class="sub" style="margin-top:1rem;">Đề tài NCKH sinh viên đăng ký, 8 năm liền - giảm nhẹ 2025–26 (-1,9%) sau 6 năm tăng liên tục. Nhưng số <b style="color:var(--ink)">sinh viên tham gia</b> giảm mạnh hơn: 2.700 → 2.329 (-13,7%).</div>
     <div class="quote" style="margin-top:.8rem; font-size:1rem;">"Số đề tài và sinh viên tham gia nghiên cứu khoa học giảm; hoạt động dịch vụ, chuyển giao và thương mại hóa kết quả nghiên cứu chưa tương xứng tiềm năng; doanh nghiệp khoa học công nghệ, spin-off chưa hình thành."</div>
   </div></div>
   <div class="cite small"><b>Nguồn:</b> Thống kê báo cáo Hội nghị viên chức các năm, Đại học Công nghiệp Hà Nội (2018–2025) · Báo cáo thực hiện Nghị quyết HNĐBVC, tổng kết năm học 2025–2026, 9/9/2026 (mục tồn tại, hạn chế).</div>
@@ -424,14 +493,14 @@
 
 <section class="slide" data-title="Khoảng cách">
   <div class="kicker"><span class="n">10</span> Không còn là chuyện "chưa có văn kiện"</div>
-  <h1 class="headline">Cam kết đã rõ —<br><span class="accent">khoảng cách cũng rõ</span></h1>
+  <h1 class="headline">Cam kết đã rõ  - <br><span class="accent">khoảng cách cũng rõ</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
       <div class="card warn"><div class="card-title">I2 · Xếp hạng SIR về NC&amp;ĐMST</div><div class="stat" style="margin-top:.3rem; font-size:1.6rem;">27 → Top 20</div><div class="stat-label">còn cách 7 bậc</div></div>
       <div class="card warn"><div class="card-title">I4 · Spin-off thành lập mới</div><div class="stat" style="margin-top:.3rem; font-size:1.6rem;">0 / 5</div><div class="stat-label">chưa có spin-off nào trong kỳ</div></div>
       <div class="card warn"><div class="card-title">L3 · VC/NLĐ tham gia ĐMST</div><div class="stat" style="margin-top:.3rem; font-size:1.3rem;">Chưa xác định</div><div class="stat-label">đã có chỉ tiêu 50% nhưng chưa đo được</div></div>
     </div>
-    <div class="sub" style="margin-top:1rem;">Cả 3 chỉ tiêu đều do chính Ban KHCN&amp;ĐMST theo dõi — có mục tiêu, có hạn cuối kỳ, thiếu cơ chế để thu hẹp khoảng cách.</div>
+    <div class="sub" style="margin-top:1rem;">Cả 3 chỉ tiêu đều do chính Ban KHCN&amp;ĐMST theo dõi - có mục tiêu, có hạn cuối kỳ, thiếu cơ chế để thu hẹp khoảng cách.</div>
   </div></div>
   <div class="cite small"><b>Trích dẫn:</b> NQ 97/NQ-HĐT, 15/12/2025 · Kế hoạch thực hiện chỉ số cấp 1, KH-ĐHCN, 06/2026, Phụ lục I · Bảng theo dõi I2/I4/L3, Ban KHCN&amp;ĐMST, cập nhật 8/2026.</div>
 </section>
@@ -441,11 +510,11 @@
   <h1 class="headline">ĐMST hiện chỉ có<br><span class="accent">2 viên chức trực tiếp triển khai</span></h1>
   <div class="body-col"><div class="fill">
     <div class="org-layer">
-      <div class="org-box top">Ban KHCN&amp;ĐMST — 9 viên chức toàn Ban</div>
+      <div class="org-box top">Ban KHCN&amp;ĐMST - 9 viên chức toàn Ban</div>
       <div class="org-arrow">↓</div>
       <div class="org-box mid">
-        <div class="org-mini hl"><div class="om-num">2</div><div class="om-label">viên chức Phòng ĐMST — trực tiếp triển khai</div></div>
-        <div class="org-mini"><div class="om-num">2</div><div class="om-label">lãnh đạo Ban — chỉ đạo, phối hợp, không toàn thời gian cho ĐMST</div></div>
+        <div class="org-mini hl"><div class="om-num">2</div><div class="om-label">viên chức Phòng ĐMST - trực tiếp triển khai</div></div>
+        <div class="org-mini"><div class="om-num">2</div><div class="om-label">lãnh đạo Ban - chỉ đạo, phối hợp, không toàn thời gian cho ĐMST</div></div>
         <div class="org-mini"><div class="om-num">5</div><div class="om-label">viên chức đảm nhiệm mảng khác của Ban</div></div>
       </div>
       <div class="org-arrow">↓</div>
@@ -457,19 +526,21 @@
 
 <section class="slide" data-title="Điểm nghẽn 2">
   <div class="kicker red"><span class="n" style="border-color:rgba(239,93,99,.5); color:var(--red);">12</span> Điểm nghẽn 2 · Pháp lý &amp; SHTT</div>
-  <h1 class="headline">Hai điểm tắc trên đường<br>từ <span class="accent">kết quả nghiên cứu tới doanh nghiệp</span></h1>
+  <h1 class="headline">Luật đã mở đường -<br><span class="accent">HaUI chưa cụ thể hoá</span></h1>
   <div class="body-col"><div class="fill">
     <div class="flow">
       <div class="flow-step">Kết quả nghiên cứu</div><span class="flow-arrow">→</span>
       <div class="flow-step bottleneck">🔒 Định giá SHTT</div><span class="flow-arrow">→</span>
-      <div class="flow-step bottleneck">🔒 Quyết định sở hữu / pháp nhân</div><span class="flow-arrow">→</span>
+      <div class="flow-step">Quyết định sở hữu</div><span class="flow-arrow">→</span>
       <div class="flow-step">Chuyển giao / góp vốn</div><span class="flow-arrow">→</span>
       <div class="flow-step">Doanh nghiệp</div>
     </div>
-    <div class="sub" style="margin-top:1rem;">Đơn vị sự nghiệp công lập không đứng tên cổ phần trực tiếp — cần lập công ty TNHH MTV do trường sở hữu để thương mại hoá. Khoảng trống định giá SHTT xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa.</div>
-    <div class="sub" style="margin-top:.5rem; font-size:.85rem; color:var(--ink-faint);">* Cần rà soát pháp lý chuyên sâu riêng để xác định đầy đủ căn cứ và ngoại lệ áp dụng cho từng trường hợp cụ thể.</div>
+    <div class="card-grid g2" style="margin-top:1rem;">
+      <div class="card ok"><div class="card-title">Đã gỡ ở cấp quốc gia</div><div class="card-body">Luật 93/2025/QH15 (hiệu lực 1/10/2025): giao quyền sở hữu tự động kết quả nghiên cứu từ ngân sách nhà nước; tác giả hưởng tối thiểu 30% lợi nhuận/giá trị khi thương mại hoá.</div></div>
+      <div class="card warn"><div class="card-title">Còn thiếu ở cấp HaUI</div><div class="card-body">Luật không quy định quy trình định giá SHTT cụ thể; HaUI chưa ban hành quy chế nội bộ để vận hành quyền đã được giao. Khoảng trống định giá xác nhận ở cả HUIT, TBI, IUH khi khảo sát thực địa.</div></div>
+    </div>
   </div></div>
-  <div class="cite small"><b>Nguồn:</b> Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026 · Rà soát pháp lý nội bộ.</div>
+  <div class="cite small"><b>Nguồn:</b> Luật số 93/2025/QH15 · Khảo sát thực địa HUIT/TBI/IUH, dự án HaUI Innovation Center, 8/2026.</div>
 </section>
 
 <section class="slide" data-title="Điểm nghẽn 3">
@@ -477,11 +548,11 @@
   <h1 class="headline">Giá trị thương mại hoá<br>còn <span class="accent">thấp so với quy mô nghiên cứu</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g3">
-      <div class="card"><div class="stat">99</div><div class="stat-label">đề tài NCKH — 73 cơ sở · 22 Bộ/Tỉnh · 4 Nhà nước</div></div>
+      <div class="card"><div class="stat">99</div><div class="stat-label">đề tài NCKH - 73 cơ sở · 22 Bộ/Tỉnh · 4 Nhà nước</div></div>
       <div class="card warn"><div class="stat">4</div><div class="stat-label">hợp đồng CGCN trong năm</div></div>
       <div class="card warn"><div class="stat">666,6tr</div><div class="stat-label">tổng doanh thu CGCN</div></div>
     </div>
-    <div class="sub" style="margin-top:1rem;">Đầu vào nghiên cứu không thiếu — nhưng kênh kết nối với doanh nghiệp để biến kết quả thành hợp đồng còn hẹp.</div>
+    <div class="sub" style="margin-top:1rem;">Đầu vào nghiên cứu không thiếu - nhưng kênh kết nối với doanh nghiệp để biến kết quả thành hợp đồng còn hẹp.</div>
   </div></div>
   <div class="cite small"><b>Nguồn:</b> Ban KHCN&amp;ĐMST HaUI, báo cáo dự thảo Hội nghị Viên chức năm học 2025–2026, tr.2–5.</div>
 </section>
@@ -491,8 +562,8 @@
   <h1 class="headline">Roadmap có <span class="accent">cổng quyết định</span></h1>
   <div class="body-col"><div class="fill">
     <div class="gtl">
-      <div class="gtl-item now"><div class="gtl-dot"></div><div class="gtl-when">2026 · Pha 1 · Hôm nay</div><div class="gtl-what">Khảo sát 9 đơn vị, mô hình đề xuất — trên giấy</div><div class="gtl-gate">Cổng: phê duyệt mô hình cuối 2026</div></div>
-      <div class="gtl-item"><div class="gtl-dot"></div><div class="gtl-when">2027 · Pha 2</div><div class="gtl-what">Vận hành hoá mô hình — 2,3–3 tỷ đồng</div><div class="gtl-gate">Cổng: bố trí kinh phí đầu năm</div></div>
+      <div class="gtl-item now"><div class="gtl-dot"></div><div class="gtl-when">2026 · Pha 1 · Hôm nay</div><div class="gtl-what">Khảo sát 9 đơn vị, mô hình đề xuất - trên giấy</div><div class="gtl-gate">Cổng: phê duyệt mô hình cuối 2026</div></div>
+      <div class="gtl-item"><div class="gtl-dot"></div><div class="gtl-when">2027 · Pha 2</div><div class="gtl-what">Vận hành hoá mô hình - 2,3–3 tỷ đồng</div><div class="gtl-gate">Cổng: bố trí kinh phí đầu năm</div></div>
       <div class="gtl-item"><div class="gtl-dot"></div><div class="gtl-when">2028 · Pha 3</div><div class="gtl-what">Nhân rộng</div><div class="gtl-gate">Cổng: đánh giá kết quả Pha 2</div></div>
     </div>
   </div></div>
@@ -507,7 +578,7 @@
   <table class="cmp">
     <thead><tr><th></th><th>BK Holdings/TTO</th><th>PTIT IEC</th><th>HaUI (2026)</th></tr></thead>
     <tbody>
-      <tr><td class="rowlabel">Pháp nhân chuyên trách</td><td class="ok">Có · từ 2008</td><td class="ok">Có</td><td class="hl">Chưa có — mô hình trên giấy</td></tr>
+      <tr><td class="rowlabel">Pháp nhân chuyên trách</td><td class="ok">Có · từ 2008</td><td class="ok">Có</td><td class="hl">Chưa có - mô hình trên giấy</td></tr>
       <tr><td class="rowlabel">Spin-off đã hình thành</td><td class="ok">Hàng chục</td><td class="ok">2</td><td class="hl">0</td></tr>
       <tr><td class="rowlabel">Vườn ươm khởi nghiệp</td><td class="ok">Có</td><td class="ok">Có · 10 dự án</td><td class="hl">Chưa có</td></tr>
     </tbody>
@@ -519,31 +590,66 @@
 
 <section class="slide" data-title="Bài học áp dụng">
   <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">16</span> Bài học có thể áp dụng</div>
-  <h1 class="headline">Tiếp nhận kinh nghiệm —<br><span class="accent2">không bê nguyên mô hình</span></h1>
+  <h1 class="headline">Tiếp nhận kinh nghiệm  - <br><span class="accent2">không bê nguyên mô hình</span></h1>
   <div class="body-col"><div class="fill">
     <div class="card-grid g2">
       <div class="card"><div class="card-title">Kinh phí đã được bố trí cho 2026</div><div class="card-body">QĐ 359/QĐ-BCT đã cấp ngân sách cho nhiệm vụ xây mô hình Trung tâm ĐMST.</div></div>
       <div class="card"><div class="card-title">Đã có kênh hợp tác quốc tế</div><div class="card-body">Swiss Entrepreneurship Programme đã chủ động đề nghị hợp tác với HaUI (21/8/2026).</div></div>
     </div>
-    <div class="sub" style="margin-top:.9rem;">Hai mô hình trong nước (BK, PTIT) cho lối vận hành cụ thể trong cùng khung pháp lý — HaUI cần chọn lọc phần phù hợp quy mô mình, không sao chép nguyên khối.</div>
+    <div class="sub" style="margin-top:.9rem;">Hai mô hình trong nước (BK, PTIT) cho lối vận hành cụ thể trong cùng khung pháp lý - HaUI cần chọn lọc phần phù hợp quy mô mình, không sao chép nguyên khối.</div>
   </div></div>
   <div class="cite small"><b>Nguồn:</b> QĐ 359/QĐ-BCT, 27/2/2026 · Ghi nhận làm việc với Swiss EP, 21/8/2026 (nội bộ dự án HaUI Innovation Center).</div>
 </section>
 
-<section class="slide" data-title="Tổng hợp nguyên nhân">
+<section class="slide" data-title="Thuận lợi và khó khăn">
   <div class="kicker"><span class="n">17</span> Tổng hợp</div>
-  <h1 class="headline">Nguyên nhân → <span class="accent2">hệ quả</span></h1>
+  <h1 class="headline">Thuận lợi <span class="accent2">và</span> khó khăn</h1>
   <div class="body-col"><div class="fill">
-    <div class="card-grid g3">
-      <div class="card"><div class="card-title">Nguyên nhân</div><div class="card-body">Chỉ tiêu ĐMST đã có nhưng thiếu cơ chế thực hiện · Phòng ĐMST chỉ 2 viên chức trực tiếp · không đứng tên cổ phần · khoảng trống định giá SHTT</div></div>
-      <div class="card warn"><div class="card-title">→ Thiếu cơ chế chuyển hoá</div><div class="card-body">Không có pháp nhân vận hành giữa nghiên cứu và thị trường</div></div>
-      <div class="card"><div class="card-title">Hệ quả</div><div class="card-body">4 hợp đồng CGCN · doanh thu 666,6 triệu · 0 spin-off · chỉ tiêu I2/I4/L3 cách xa mục tiêu</div></div>
+    <div class="proscons">
+      <div>
+        <div class="pc-col-head good">Thuận lợi</div>
+        <ul class="pc-list good">
+          <li><span class="pc-ico">+</span><span><b>Chỉ đạo xuyên suốt từ Trung ương:</b> Tổng Bí thư trực tiếp làm Trưởng Ban Chỉ đạo Trung ương về KHCN, ĐMST, CĐS</span></li>
+          <li><span class="pc-ico">+</span><span><b>Hành lang pháp lý mới đã mở:</b> Luật 93/2025/QH15 gỡ nút thắt sở hữu, cam kết tối thiểu 30% cho tác giả</span></li>
+          <li><span class="pc-ico">+</span><span><b>Lãnh đạo thống nhất tại HaUI:</b> Giám đốc kiêm Bí thư Đảng uỷ trực tiếp phụ trách, đồng thời chủ nhiệm nhiệm vụ xây mô hình Trung tâm ĐMST</span></li>
+          <li><span class="pc-ico">+</span><span><b>Được xây dựng từ đầu:</b> chưa có Trung tâm ĐMST nghĩa là thiết kế mới hoàn toàn theo đúng NĐ 268, không phải chuyển đổi, chắp vá mô hình cũ</span></li>
+          <li><span class="pc-ico">+</span><span><b>Đã có kinh phí và đối tác:</b> QĐ 359/QĐ-BCT cấp ngân sách 2026, Swiss EP chủ động đề nghị hợp tác</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="pc-col-head bad">Khó khăn</div>
+        <ul class="pc-list bad">
+          <li><span class="pc-ico">-</span><span><b>Tổ chức &amp; nhân lực:</b> chỉ 2 viên chức trực tiếp triển khai ĐMST</span></li>
+          <li><span class="pc-ico">-</span><span><b>Pháp lý &amp; SHTT:</b> luật quốc gia đã mở nhưng HaUI chưa có quy chế nội bộ, còn khoảng trống định giá</span></li>
+          <li><span class="pc-ico">-</span><span><b>Thị trường &amp; doanh nghiệp:</b> 4 hợp đồng CGCN, doanh thu 666,6 triệu - thấp so với quy mô 99 đề tài nghiên cứu</span></li>
+          <li><span class="pc-ico">-</span><span><b>Chỉ tiêu chiến lược:</b> I2 (SIR) cách Top 20 tới 7 bậc, I4 (spin-off) còn 0/5, L3 chưa đo được</span></li>
+        </ul>
+      </div>
     </div>
   </div></div>
 </section>
 
+<section class="slide" data-title="Chọn hướng chiến lược">
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị mở đầu</div>
+  <h1 class="headline">Trước hết, cần <span class="accent2">chọn hướng</span></h1>
+  <div class="body-col"><div class="fill">
+    <div class="card-grid g2">
+      <div class="card">
+        <div class="card-title">Hướng A - dựa trên nghiên cứu mạnh</div>
+        <div class="card-body">Mô hình MIT/Stanford: TTO cấp phép sáng chế, spin-off từ nghiên cứu sâu. Đòi hỏi đầu tư R&amp;D lớn, dài hạn - phù hợp đại học nghiên cứu đỉnh cao.</div>
+      </div>
+      <div class="card ok">
+        <div class="card-title">Hướng B - dựa trên hệ sinh thái, kết nối doanh nghiệp</div>
+        <div class="card-body">Mô hình cụm khu vực kiểu Cambridge-Boston (đại học - doanh nghiệp - chính quyền), gần hơn là BK Holdings/PTIT IEC: gắn đào tạo nhân lực ứng dụng với kết nối doanh nghiệp.</div>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:1rem; font-size:1.05rem;">HaUI là đại học công nghiệp - ứng dụng, không phải đại học nghiên cứu đỉnh cao → Hướng B phù hợp hơn với thế mạnh hiện có, không loại trừ kết hợp chọn lọc Hướng A khi đủ nguồn lực.</div>
+    <div class="sub" style="margin-top:.6rem; font-size:.82rem; color:var(--ink-faint);">Kiến nghị: lãnh đạo Đại học chính thức chọn và công bố hướng phát triển này trong Chiến lược 2026-2030, làm cơ sở thiết kế mô hình Trung tâm ĐMST ở Pha 1.</div>
+  </div></div>
+</section>
+
 <section class="slide" data-title="Kiến nghị 2026">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">18</span> Kiến nghị · 2026</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">19</span> Kiến nghị · 2026</div>
   <h1 class="headline">Ba việc giao được <span class="accent2">ngay trong quý IV</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -577,7 +683,7 @@
 </section>
 
 <section class="slide" data-title="Kiến nghị 2027-2030">
-  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">19</span> Kiến nghị · 2027–2030</div>
+  <div class="kicker teal"><span class="n" style="border-color:rgba(62,207,192,.5); color:var(--teal);">20</span> Kiến nghị · 2027–2030</div>
   <h1 class="headline">Chỉ tiêu theo <span class="accent2">từng mốc năm</span></h1>
   <div class="body-col"><div class="fill">
     <div class="job-card">
@@ -598,7 +704,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ Atlas">
-  <div class="kicker"><span class="n">20</span> Công cụ hỗ trợ · 1/2</div>
+  <div class="kicker"><span class="n">21</span> Công cụ hỗ trợ · 1/2</div>
   <h1 class="headline">Innovation Center <span class="accent">Atlas</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
@@ -607,8 +713,18 @@
     </div>
     <a class="tool-card" href="https://buitienson.github.io/innovation-center-atlas/" target="_blank" rel="noopener">
       <div class="tool-eyebrow">Phổ biến kiến thức · Hỗ trợ ĐMST</div>
-      <div class="tool-title">20.022 đơn vị</div>
-      <div class="tool-desc">Bản đồ + danh mục mô hình trung tâm ĐMST/CGCN đại học toàn cầu, tra theo 4 mô hình quản trị.</div>
+      <div class="stat-mini-row">
+        <div class="stat-mini"><div class="sm-num">20.022</div><div class="sm-label">đơn vị toàn cầu</div></div>
+        <div class="stat-mini"><div class="sm-num">9</div><div class="sm-label">case chuyên sâu</div></div>
+        <div class="stat-mini"><div class="sm-num">149</div><div class="sm-label">đơn vị VN</div></div>
+      </div>
+      <ul class="feature-list">
+        <li><b>Toàn cầu / Việt Nam</b> - bản đồ 3D các trung tâm ĐMST/CGCN đại học, tra theo mô hình quản trị</li>
+        <li><b>Xếp hạng</b> - tổng hợp bảng xếp hạng ĐMST đại học (WURI top 100...)</li>
+        <li><b>Tin tức</b> - cập nhật tin ĐMST/KHCN trong nước và quốc tế</li>
+        <li><b>Fund/Hackathon</b> - cơ hội tài trợ, cuộc thi, hackathon đang mở</li>
+        <li><b>Thuật ngữ</b> - giải nghĩa khái niệm ĐMST đại học</li>
+      </ul>
       <div class="tool-url">buitienson.github.io/innovation-center-atlas</div>
     </a>
   </div>
@@ -616,7 +732,7 @@
 </section>
 
 <section class="slide" data-title="Công cụ tra cứu tạp chí">
-  <div class="kicker"><span class="n">21</span> Công cụ hỗ trợ · 2/2</div>
+  <div class="kicker"><span class="n">22</span> Công cụ hỗ trợ · 2/2</div>
   <h1 class="headline">Web tra cứu <span class="accent2">tạp chí khoa học</span></h1>
   <div class="card-grid" style="grid-template-columns:1.2fr 1fr; align-items:stretch;">
     <div class="browser-frame">
@@ -625,19 +741,37 @@
     </div>
     <a class="tool-card" href="https://tra-cuu-tap-chi.pages.dev/" target="_blank" rel="noopener">
       <div class="tool-eyebrow">Phổ biến kiến thức · Hỗ trợ nghiên cứu</div>
-      <div class="tool-title">Tra cứu nhanh</div>
-      <div class="tool-desc">Bản demo nội bộ HaUI — tra nhanh tình trạng tạp chí (Scopus, Quartile) và cảnh báo tạp chí giả mạo/săn mồi trước khi gửi bài.</div>
+      <div class="stat-mini-row">
+        <div class="stat-mini"><div class="sm-num">48.889</div><div class="sm-label">tạp chí</div></div>
+        <div class="stat-mini"><div class="sm-num">1.014</div><div class="sm-label">hội nghị</div></div>
+        <div class="stat-mini"><div class="sm-num">5</div><div class="sm-label">chức năng tra cứu</div></div>
+      </div>
+      <ul class="feature-list">
+        <li><b>Tra cứu tạp chí</b> - tạp chí này thế nào? Scopus, Quartile, cảnh báo giả mạo/săn mồi</li>
+        <li><b>Tìm kiếm tạp chí</b> - lọc theo ngành, theo quartile</li>
+        <li><b>Tra cứu bài báo</b> - bài báo này thế nào?</li>
+        <li><b>Tìm hiểu hướng nghiên cứu</b> - hướng nghiên cứu này thế nào?</li>
+        <li><b>Tìm kiếm hội nghị, hội thảo</b> - hạn nộp, hạng CORE, tổ chức ở đâu</li>
+      </ul>
       <div class="tool-url">tra-cuu-tap-chi.pages.dev</div>
     </a>
   </div>
-  <div class="cite small">Cùng tinh thần với Trung tâm ĐMST: một công cụ nhỏ, tự làm, giải quyết đúng một điểm nghẽn thật trong quy trình nghiên cứu.</div>
+  <div class="cite small"><b>Nguồn dữ liệu:</b> Scopus Source List (7/2026), Scimago SJR 2025, Web of Science Master Journal List, Retraction Watch, Crossref, CORE2023. Cùng tinh thần với Trung tâm ĐMST: một công cụ nhỏ, tự làm, giải quyết đúng một điểm nghẽn thật.</div>
 </section>
 
 <section class="slide divider" data-title="Kết luận">
   <div class="kicker">Kết luận</div>
-  <h1 class="headline">Đã có đầu vào —<br>chưa có <span class="accent">cơ chế chuyển hoá</span></h1>
+  <h1 class="headline">Đã có đầu vào  - <br>chưa có <span class="accent">cơ chế chuyển hoá</span></h1>
   <div class="sub" style="margin:1rem auto 0;">3 quyết định cần có: quy chế SHTT (Q4/2026) · mô hình Trung tâm đúng NĐ 268 (2026) · thoả thuận học kinh nghiệm trong nước (Q1/2027)</div>
-  <div class="brandline"><span>Cảm ơn hội nghị</span><span class="dot"></span><span><b>Bùi Tiến Sơn</b> · Phòng Đổi mới sáng tạo</span></div>
+</section>
+
+<section class="slide cover" data-title="Cảm ơn">
+  <h1 class="headline">Cảm ơn <span class="accent">hội nghị</span></h1>
+  <div class="fields">
+    <div><span class="field-label">Người trình bày</span><span class="field-value">Bùi Tiến Sơn</span></div>
+    <div><span class="field-label">Đơn vị</span><span class="field-value">Phòng Đổi mới sáng tạo</span></div>
+  </div>
+  <div class="sub" style="margin-top:1.3rem;">Sẵn sàng trao đổi thêm</div>
 </section>
 
 </div>
