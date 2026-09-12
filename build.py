@@ -6,24 +6,20 @@ Usage: python3 build.py
 """
 import re
 import pathlib
-import subprocess
 import datetime
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src" / "talk.html"
 OUT = ROOT / "index.html"
 
-try:
-    commit = subprocess.check_output(
-        ["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, stderr=subprocess.DEVNULL
-    ).decode().strip()
-except Exception:
-    commit = "no-git"
 built_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+# Không nhúng mã commit: build.py chạy TRƯỚC khi chính commit chứa bản build này
+# được tạo ra, nên mã hash nhúng vào luôn luôn lệch 1 bước so với commit thật -
+# gây hiểu lầm "chưa deploy". Chỉ hiện giờ dựng, đủ để biết bản có mới hay không.
 version_tag = (
     '<div id="build-version" style="position:fixed;left:1rem;bottom:.6rem;z-index:10;'
     'font:11px -apple-system,Arial,sans-serif;pointer-events:none;">'
-    f'Bản dựng {built_at} · {commit}</div>'
+    f'Bản dựng {built_at}</div>'
 )
 
 body = SRC.read_text(encoding="utf-8")
